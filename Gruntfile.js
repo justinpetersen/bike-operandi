@@ -25,6 +25,9 @@ module.exports = function (grunt) {
         dist: 'dist'
     };
 
+    // Project configuration.
+    var pkg = require('./package.json');
+
     grunt.initConfig({
         yeoman: yeomanConfig,
         watch: {
@@ -269,6 +272,33 @@ module.exports = function (grunt) {
                         '/styles/fonts/{,*/}*.*',
                         'bower_components/sass-bootstrap/fonts/*.*'
                     ]
+                }
+            }
+        },
+        buildcontrol: {
+            options: {
+                dir: 'dist',
+                commit: true,
+                push: true,
+                message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
+            },
+            pages: {
+                options: {
+                    remote: 'git@github.com:justinpetersen/bike-operandi.git',
+                    branch: 'gh-pages'
+                }
+            },
+            // heroku: {
+            //     options: {
+            //         remote: 'git@heroku.com:example-heroku-webapp-1988.git',
+            //         branch: 'master',
+            //         tag: pkg.version
+            //     }
+            // },
+            local: {
+                options: {
+                    remote: '../',
+                    branch: 'build'
                 }
             }
         }
