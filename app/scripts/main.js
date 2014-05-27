@@ -21,7 +21,7 @@ require.config({
         },
         'backbone.tabletopSync': {
             deps: ['backbone'],
-            exports: 'Backbone.tabletopSync'
+            exports: 'Backbone'
         },
     }
 });
@@ -29,7 +29,7 @@ require.config({
 require([
     'tabletop',
     'backbone.tabletopSync'
-], function () {
+], function (Tabletop, Backbone) {
     console.log('Tabletop: ' + Tabletop);
     console.log('Backbone: ' + Backbone);
     Tabletop.init( { key: '0AmYzu_s7QHsmdDNZUzRlYldnWTZCLXdrMXlYQzVxSFE',
