@@ -20,7 +20,7 @@ require.config({
             exports: 'Tabletop'
         },
         'backbone.tabletopSync': {
-            deps: ['backbone', 'tabletop'],
+            deps: [],
             exports: 'Backbone'
         }
     }
@@ -28,7 +28,6 @@ require.config({
 
 require([
     'tabletop',
-    'backbone',
     'backbone.tabletopSync'
 ], function (Tabletop, Backbone) {
     console.log('Tabletop: ' + Tabletop);
