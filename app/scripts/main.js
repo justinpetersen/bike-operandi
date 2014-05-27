@@ -27,11 +27,7 @@ require.config({
 });
 
 require([
-    'tabletop',
-    'backbone.tabletopSync'
-], function (Tabletop, Backbone) {
-    Tabletop.init( { key: '0AmYzu_s7QHsmdDNZUzRlYldnWTZCLXdrMXlYQzVxSFE',
-                   callback: function(data, tabletop) { console.log(data) },
-                   simpleSheet: true } );
+    'backbone'
+], function (Backbone) {
     Backbone.history.start();
 });
