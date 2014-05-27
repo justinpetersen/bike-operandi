@@ -21,15 +21,16 @@ require.config({
         },
         'backbone.tabletopSync': {
             deps: ['backbone'],
-            exports: 'Backbone'
+            exports: 'Backbone.tabletopSync'
         },
     }
 });
 
 require([
+    'backbone',
     'tabletop',
     'backbone.tabletopSync'
-], function (Tabletop, Backbone) {
+], function (Backbone, Tabletop, tabletopSync) {
     console.log('Tabletop: ' + Tabletop);
     console.log('Backbone: ' + Backbone);
     Tabletop.init( { key: '0AmYzu_s7QHsmdDNZUzRlYldnWTZCLXdrMXlYQzVxSFE',
