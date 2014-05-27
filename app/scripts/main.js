@@ -18,17 +18,13 @@ require.config({
         tabletop: {
             deps: [],
             exports: 'Tabletop'
-        },
-        'backbone.tabletopSync': {
-            deps: ['backbone', 'tabletop'],
-            exports: 'Backbone'
-        },
+        }
     }
 });
 
 require([
     'tabletop',
-    'backbone.tabletopSync'
+    'backbone'
 ], function (Tabletop, Backbone) {
     console.log('Tabletop: ' + Tabletop);
     console.log('Backbone: ' + Backbone);
