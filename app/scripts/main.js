@@ -27,9 +27,9 @@ require.config({
 });
 
 require([
-    'backbone',
-    'tabletop'
-], function (Backbone, Tabletop) {
+    'tabletop',
+    'backbone.tabletopSync'
+], function (Tabletop, Backbone) {
     Tabletop.init( { key: '0AmYzu_s7QHsmdDNZUzRlYldnWTZCLXdrMXlYQzVxSFE',
                    callback: function(data, tabletop) { console.log(data) },
                    simpleSheet: true } );
