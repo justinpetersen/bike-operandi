@@ -27,7 +27,11 @@ require.config({
 });
 
 require([
-    'backbone'
-], function (Backbone) {
+    'backbone',
+    'tabletop'
+], function (Backbone, Tabletop) {
+    Tabletop.init( { key: '0AmYzu_s7QHsmdDNZUzRlYldnWTZCLXdrMXlYQzVxSFE',
+                   callback: function(data, tabletop) { console.log(data) },
+                   simpleSheet: true } );
     Backbone.history.start();
 });
