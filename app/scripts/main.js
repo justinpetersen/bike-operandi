@@ -8,7 +8,7 @@ require.config({
         underscore: '../bower_components/underscore/underscore',
         bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap',
         tabletop: '../bower_components/tabletop/src/tabletop',
-        'backbone.tabletopSync': '../bower_components/tabletop/src/backbone.tabletopSync'
+        'backbone.tabletopSync': '../scripts/helpers/backbone.tabletopSync'
     },
     shim: {
         bootstrap: {
@@ -18,16 +18,22 @@ require.config({
         tabletop: {
             deps: [],
             exports: 'Tabletop'
+        },
+        'backbone.tabletopSync': {
+            deps: ['backbone', 'tabletop'],
+            exports: 'Backbone'
         }
     }
 });
 
 require([
     'tabletop',
-    'backbone'
+    'backbone',
+    'backbone.tabletopSync'
 ], function (Tabletop, Backbone) {
     console.log('Tabletop: ' + Tabletop);
     console.log('Backbone: ' + Backbone);
+    console.log('Backbone.tabletopSync' + Backbone.tabletopSync);
     Tabletop.init( { key: '0AmYzu_s7QHsmdDNZUzRlYldnWTZCLXdrMXlYQzVxSFE',
                    callback: function(data, tabletop) { console.log(data) },
                    simpleSheet: true } );
