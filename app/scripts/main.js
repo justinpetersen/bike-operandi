@@ -27,10 +27,9 @@ require.config({
 });
 
 require([
-    'backbone',
     'tabletop',
     'backbone.tabletopSync'
-], function (Backbone, Tabletop, tabletopSync) {
+], function () {
     console.log('Tabletop: ' + Tabletop);
     console.log('Backbone: ' + Backbone);
     Tabletop.init( { key: '0AmYzu_s7QHsmdDNZUzRlYldnWTZCLXdrMXlYQzVxSFE',
