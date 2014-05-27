@@ -8,7 +8,7 @@ require.config({
         underscore: '../bower_components/underscore/underscore',
         bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap',
         tabletop: '../bower_components/tabletop/src/tabletop',
-        'backbone.tabletopSync': '../bower_components/tabletop/src/backbone.tabletopSync',
+        'backbone.tabletopSync': '../bower_components/tabletop/src/backbone.tabletopSync'
     },
     shim: {
         bootstrap: {
@@ -16,11 +16,11 @@ require.config({
             exports: 'jquery'
         },
         tabletop: {
-            deps: ['jquery'],
+            deps: [],
             exports: 'Tabletop'
         },
         'backbone.tabletopSync': {
-            deps: ['backbone'],
+            deps: ['backbone', 'tabletop'],
             exports: 'Backbone'
         },
     }
