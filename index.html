@@ -15,23 +15,25 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-
+        <!-- Start todos -->
         <header>
-          <h1>Todos</h1>
+          <h1>Bike Operandi</h1>
         </header>
         <div id="container"></div>
-        <footer>
-          <p>Double-click to edit a todo.</p>
-          <p>
-            Created by
-            <br>
-            <a href="http://kilon.org/">Uzi Kilon</a>.
-            <br>
-            </p><p><a href="./source.html">Click here for non-optimized version</a></p>
-          
-        </footer>
-        <a class="github" href="https://github.com/uzikilon/Todos"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+        <a class="github" href="https://github.com/justinpetersen/bike-operandi"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+        <!-- End todos -->
 
+        <!-- Start cats -->
+        <script id="cat-template" type="text/underscore-template">
+            <div class="entry">
+                <h2><%= name %>!</h2>
+                <h3>age <%= age %></h3>
+                <div class="body">
+                    <%= description %>
+                </div>
+            </div>
+        </script>
+        <!-- End cats -->
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
@@ -43,6 +45,6 @@
             ga('create','UA-XXXXX-X');ga('send','pageview');
         </script>
 
-        <script data-main="scripts/2b45a772.main" src="bower_components/requirejs/require.js"></script>
+        <script data-main="scripts/f7ffed97.main" src="bower_components/requirejs/require.js"></script>
 </body>
 </html>
