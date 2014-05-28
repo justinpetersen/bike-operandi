@@ -8,13 +8,13 @@
 */
 
 (function (factory) {
-        if (typeof define === 'function' && define.amd) {
-                // AMD. Register as an anonymous module.
-                define(['backbone'], factory);
-        } else {
-                // RequireJS isn't being used. Assume backbone is loaded in <script> tags
-                factory(Backbone);
-        }
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(['backbone'], factory);
+  } else {
+    // RequireJS isn't being used. Assume backbone is loaded in <script> tags
+    factory(Backbone);
+  }
 }(function (Backbone) {
 
   Backbone.tabletopSync = function(method, model, options, error) {
