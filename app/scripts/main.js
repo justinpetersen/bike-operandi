@@ -8,8 +8,9 @@ require.config({
         backbone: '../bower_components/backbone/backbone',
         'backbone.localStorage': '../bower_components/backbone.localStorage/backbone.localStorage',
         'backbone.tabletopSync': '../scripts/helpers/backbone.tabletopSync',
-        tabletop: '../bower_components/tabletop/src/tabletop'
-        // bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap'
+        tabletop: '../bower_components/tabletop/src/tabletop',
+        bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap',
+        'jquery.carousel.fullscreen': '../scripts/helpers/jquery.carousel.fullscreen'
     },
   shim: {
     underscore: {
@@ -18,21 +19,24 @@ require.config({
     tabletop: {
         deps: [],
         exports: 'Tabletop'
+    },
+    bootstrap: {
+        deps: ['jquery'],
+        exports: 'jquery'
     }
-    // bootstrap: {
-    //     deps: ['jquery'],
-    //     exports: 'jquery'
-    // }
+
   }
 });
 
 require([
-        'jquery',
+        'jquery.carousel.fullscreen',
         'tabletop',
         'backbone.tabletopSync',
         'models/Todo',
         'views/MasterView'
     ], function($, Tabletop, Backbone, Todo, MasterView) {
+
+    // return;
 
     // console.log('Tabletop: ' + Tabletop);
     // console.log('Backbone: ' + Backbone);
@@ -81,7 +85,8 @@ require([
 
     var CatView = Backbone.View.extend({
         tagname: 'div',
-        template: _.template($('#cat-template').html()),
+        attributes: {class: 'item'},
+        template: _.template($('#item-template').html()),
 
         render: function() {
             $(this.el).html(this.template(this.model.toJSON()));
@@ -97,6 +102,8 @@ require([
             var cat = new CatView({ model: cats.at(i) });
             $("#container").append(cat.render().el);
         }
+        // $('.carousel').carousel();
+        $.carouselFullscreen();
     }
  
 });
