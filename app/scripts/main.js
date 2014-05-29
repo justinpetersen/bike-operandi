@@ -43,33 +43,7 @@ require([
     //         },
     //         simpleSheet: true});
 
-    var Router = Backbone.Router.extend({
-            routes: {
-            "": "main"
-        },
-
-        main: function(){
-            var tasks = new Todo.Collection();
-            var view = new MasterView({collection: tasks});
-            tasks.fetch({
-                success: function(tasks){
-                    $("#container").html(view.render().el).show();
-                },
-                error: function(model, error) {
-                    // TODO: handle errors nicer
-                    alert(error);
-                }
-            });
-        }
-    });
-
-    // Preload CSS Sprite
-    $('<img/>').attr('src', "./styles/glyphicons.png");
-
-    var router = new Router();
-    Backbone.history.start();
-
-    var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?hl=en_US&hl=en_US&key=0AmYzu_s7QHsmdE5OcDE1SENpT1g2R2JEX2tnZ3ZIWHc&output=html';
+    var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1qfVHafHl01zYduxnwdHdjL1HN_3ljSF2UU5bZyJ0PWY/pubhtml';
 
     /* 
     You need to declare the tabletop instance separately, then feed it into the model/collection
@@ -86,7 +60,7 @@ require([
         idAttribute: 'name',
         tabletop: {
             instance: storage,
-            sheet: 'Cats'
+            sheet: 'bikes'
         },
         sync: Backbone.tabletopSync
     });
@@ -100,7 +74,7 @@ require([
         model: Cat,
         tabletop: {
             instance: storage,
-            sheet: 'Cats'
+            sheet: 'bikes'
         },
         sync: Backbone.tabletopSync
     });
@@ -115,37 +89,14 @@ require([
         }
     });
 
-    /*
-    You need to initialize Tabletop before you do aaaaanything.
-    You might think it'd be a good idea to put that into backbone.tabletopSync,
-      but IMHO the fact that you could put the key/url into any model anywhere
-      ever sounds like trouble.
-    */
-    // $(document).ready( function() {
-        var cats = new CatCollection();
-        cats.fetch({ success: showInfo });
-    // });
+    var cats = new CatCollection();
+    cats.fetch({ success: showInfo });
 
     function showInfo(cats) {
         for (var i=0; i<cats.length; i++) {
             var cat = new CatView({ model: cats.at(i) });
             $("#container").append(cat.render().el);
         }
-
-        // var bosco_view = new CatView({ model: cats.get('Bosco') });
-
-        // $("#content").append( bosco_view.render().el );
-
-        
-        //   Fetching on models works as long as you've specified a sheet
-        //   and an idAttribute for the Backbone.Model (you can always
-        //   use rowNumber, it comes baked in to Tabletop)
-        
-        // var thomas = new Cat({name: 'Thomas'});
-        // thomas.fetch();
-
-        // var thomas_view = new CatView({ model: thomas });
-        // $("#content").append( thomas_view.render().el );
     }
  
 });

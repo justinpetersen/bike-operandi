@@ -8,8 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <!-- build:css(.tmp) styles/main.css -->
-        <!-- <link rel="stylesheet" href="styles/main.css"> -->
-        <link rel="stylesheet" href="styles/todos.css">
+        <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
         <!-- build:js scripts/vendor/modernizr.js -->
         <script src="bower_components/modernizr/modernizr.js"></script>
@@ -25,17 +24,12 @@
           <h1>Bike Operandi</h1>
         </header>
         <div id="container"></div>
-        <a class="github" href="https://github.com/justinpetersen/bike-operandi"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
-        <!-- End todos -->
 
         <!-- Start cats -->
         <script id="cat-template" type="text/underscore-template">
             <div class="entry">
-                <h2><%= name %>!</h2>
-                <h3>age <%= age %></h3>
-                <div class="body">
-                    <%= description %>
-                </div>
+                <h2><%= title %></h2>
+                <img src="<%= image %>" />
             </div>
         </script>
         <!-- End cats -->
