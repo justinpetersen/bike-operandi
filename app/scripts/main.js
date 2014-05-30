@@ -108,6 +108,8 @@ require([
         }
         console.log($('#container').children().first().addClass);
         $('#container').children().first().addClass('active');
+
+        // TODO: Improve the structure of bootstrap.carousel.fullscreen
         $.carouselFullscreen();
         // $('.carousel').carousel();
     }
