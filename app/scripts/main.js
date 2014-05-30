@@ -106,8 +106,10 @@ require([
             var cat = new CatView({ model: cats.at(i) });
             var item = $('#container').append(cat.render().el);
         }
+        console.log($('#container').children().first().addClass);
         $('#container').children().first().addClass('active');
         $.carouselFullscreen();
+        // $('.carousel').carousel();
     }
  
 });
