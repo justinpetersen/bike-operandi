@@ -62,6 +62,10 @@ require([
     */
     var Cat = Backbone.Model.extend({
         idAttribute: 'name',
+        defaults: {
+            title: '',
+            image: ''
+        },
         tabletop: {
             instance: storage,
             sheet: 'bikes'
@@ -100,9 +104,9 @@ require([
     function showInfo(cats) {
         for (var i=0; i<cats.length; i++) {
             var cat = new CatView({ model: cats.at(i) });
-            $("#container").append(cat.render().el);
+            var item = $('#container').append(cat.render().el);
         }
-        // $('.carousel').carousel();
+        $('#container').children().first().addClass('active');
         $.carouselFullscreen();
     }
  
