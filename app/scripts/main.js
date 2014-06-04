@@ -73,9 +73,13 @@ require([
     var AppView = Backbone.View.extend({
         bikes: [],
 
+        onSync: function() {
+            this.render();
+        },
+
         initialize: function(bikes) {
             this.bikes = bikes;
-            this.listenTo(this.bikes, 'all', this.render);
+            this.listenTo(this.bikes, 'sync', this.onSync);
         },
 
         render: function() {
