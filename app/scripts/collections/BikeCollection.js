@@ -12,7 +12,7 @@ define([
         model: BikeModel,
 
         // TODO: Externalize Firebase URL
-    	firebase: new Firebase("https://bike-operandi.firebaseio.com/bikes")
+    	firebase: new Firebase('https://bike-operandi.firebaseio.com/bikes')
     });
 
     return BikeCollection;

@@ -33,7 +33,7 @@ require.config({
         exports: 'Firebase'
     },
     underscore: {
-      exports: "_"
+      exports: '_'
     }
   }
 });
