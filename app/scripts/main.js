@@ -6,12 +6,11 @@ require.config({
         jquery: '../bower_components/jquery/dist/jquery',
         underscore: '../bower_components/underscore/underscore',
         backbone: '../bower_components/backbone/backbone',
-        // 'backbone.localStorage': '../bower_components/backbone.localStorage/backbone.localStorage',
         bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap',
         'jquery.carousel.fullscreen': '../scripts/helpers/jquery.carousel.fullscreen',
         firebase: '../bower_components/firebase/firebase',
         'firebase-simple-login': '../bower_components/firebase-simple-login/firebase-simple-login',
-        'backfire': '../bower_components/backfire/backbone-firebase',
+        'backfire': '../bower_components/backfire/backbone-firebase'
     },
   shim: {
     underscore: {
@@ -40,34 +39,13 @@ require([
         'jquery.carousel.fullscreen',
         'backbone',
         'backfire',
-        'firebase-simple-login'
-    ], function($, Backbone, Firebase) {
-
-    // console.log('$: ' + $);
-    // console.log('Backbone: ' + Backbone);
-    // console.log('Firebase: ' + Firebase);
-
-    var Bike = Backbone.Model.extend({
-        defaults: {
-            title: '',
-            image: ''
-        }
-    })
+        'models/BikeModel',
+        'views/BikeView'
+    ], function($, Backbone, Firebase, BikeModel, BikeView) {
 
     var BikeCollection = Backbone.Firebase.Collection.extend({
-      model: Bike,
+      model: BikeModel,
       firebase: new Firebase("https://bike-operandi.firebaseio.com/bikes")
-    });
-
-    var BikeView = Backbone.View.extend({
-        tagname: 'div',
-        attributes: {class: 'item'},
-        template: _.template($('#item-template').html()),
-
-        render: function() {
-            $(this.el).html(this.template(this.model.toJSON()));
-            return this;
-        }
     });
 
     var AppView = Backbone.View.extend({
