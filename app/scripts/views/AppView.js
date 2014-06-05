@@ -36,6 +36,7 @@ define([
             for (var i=0; i<this.bikes.length; i++) {
                 var bike = new BikeView({ model: this.bikes.at(i) });
                 var item = $('#container').append(bike.render().el);
+                console.log(this.bikes.at(i).get('hotspots')[0].x + ', ' + this.bikes.at(i).get('hotspots')[0].y);
             }
 
             $('#container').children().first().addClass('active');

@@ -9,7 +9,8 @@ define([
     var BikeModel = Backbone.Model.extend({
         defaults: {
             title: '',
-            image: ''
+            image: '',
+            hotspots: []
         },
 
         initialize: function() {
