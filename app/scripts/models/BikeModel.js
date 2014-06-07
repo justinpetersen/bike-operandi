@@ -30,6 +30,7 @@ define([
             this.set('hotspots', new HotspotCollection());
             for (var i=0; i<hotspotArray.length; i++) {
                 var hotspot = new HotspotModel(hotspotArray[i]);
+                hotspot.set('id', 'hotspot-' + i);
                 this.get('hotspots').add(hotspot);
             }
         }

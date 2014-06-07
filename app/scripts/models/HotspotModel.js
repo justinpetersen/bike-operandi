@@ -8,8 +8,10 @@ define([
 
     var HotspotModel = Backbone.Model.extend({
         defaults: {
+            id: '',
             x: 0,
-            y: 0
+            y: 0,
+            url: 'http://www.amazon.com'
         },
 
         initialize: function() {
