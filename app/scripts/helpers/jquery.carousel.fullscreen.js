@@ -14,11 +14,6 @@
 	     http://www.responsivewebmobile.com
 	******************************************************************************/
 	$.carouselFullscreen = function() {
-		$('.carousel').carousel({
-	    	pause: "false",
-	    	interval: 4000
-		});
-
 		$('.carousel').css({'margin': 0, 'width': $(window).outerWidth(), 'height': $(window).outerHeight()});
 		$('.carousel .item').css({'position': 'fixed', 'width': '100%', 'height': '100%'});
 		$('.carousel-inner div.item img').each(function() {
