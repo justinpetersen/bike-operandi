@@ -29,6 +29,10 @@ define([
             this.render();
         },
 
+        onCarouselSlide: function() {
+            this.clearHotspots();
+        },
+
         onCarouselSlid: function() {
             var activeIndex = $('.carousel').data('bs.carousel').getActiveIndex();
             this.showHotspots(activeIndex);
@@ -62,17 +66,21 @@ define([
                 interval: 4000
             });
 
+            $('#bike-carousel').on('slide.bs.carousel', $.proxy(this.onCarouselSlide, this));
             $('#bike-carousel').on('slid.bs.carousel', $.proxy(this.onCarouselSlid, this));
         },
 
         showHotspots: function(index) {
-            // Clear existing hotspots
-            $('#bike-hotspots').empty();
+            this.clearHotspots();
             
             for (var i=0; i<this.bikes.at(index).get('hotspots').length; i++) {
                 var hotspotModel = this.bikes.at(index).get('hotspots').at(i);
                 this.createHotspot(hotspotModel);
             }
+        },
+
+        clearHotspots: function() {
+            $('#bike-hotspots').empty();
         },
 
         createHotspot: function(hotspotModel) {

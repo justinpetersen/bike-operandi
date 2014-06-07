@@ -94,6 +94,8 @@ body {
 }
 
 .hotspot {
-    background: #ff00ff;
     position: absolute;
+    background-image: url('hotspot-button.png');
+    width: 32px;
+    height: 32px;
 }
