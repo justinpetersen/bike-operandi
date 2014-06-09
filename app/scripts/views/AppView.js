@@ -38,9 +38,15 @@ define([
             this.showHotspots(activeIndex);
         },
 
+        onWindowResize: function() {
+            var activeIndex = $('.carousel').data('bs.carousel').getActiveIndex();
+            this.showHotspots(activeIndex);
+        },
+
         initialize: function(bikes) {
             this.bikes = bikes;
             this.listenTo(this.bikes, 'sync', this.onSync);
+            $(window).on('resize', $.proxy(this.onWindowResize, this));
         },
 
         render: function() {
@@ -63,7 +69,7 @@ define([
             $.carouselFullscreen();
             $('.carousel').carousel({
                 pause: "false",
-                interval: 4000
+                interval: 40000
             });
 
             $('#bike-carousel').on('slide.bs.carousel', $.proxy(this.onCarouselSlide, this));
@@ -88,9 +94,46 @@ define([
             $('#bike-hotspots').append(hotspotView.render().el);
 
             // Position hotspots
-            var x = hotspotModel.get('x') * document.documentElement.clientWidth;
-            var y = hotspotModel.get('y') * document.documentElement.clientHeight;
-            $('#' + hotspotModel.get('id')).css({left: x, top: y});
+            var hotspotPosition = this.getHotspotPosition(hotspotModel.get('x'), hotspotModel.get('y'));
+            hotspotPosition.x = hotspotPosition.x - 16;
+            hotspotPosition.y = hotspotPosition.y - 16;
+            $('#' + hotspotModel.get('id')).css(hotspotPosition);
+        },
+
+        getHotspotPosition: function(x, y) {
+            // Set browser and image dimensions
+            var clientWidth = document.documentElement.clientWidth;
+            var clientHeight = document.documentElement.clientHeight;
+            var nativeImageWidth = 1118
+            var nativeImageHeight = 629;
+
+            // Calculate browser and image ratios
+            var clientRatio = clientWidth / clientHeight;
+            var imageRatio = nativeImageWidth / nativeImageHeight;
+
+            // Determine scaled image dimensions. At first assume that the image and browser are the exact same ratio.
+            var scaledImageWidth = clientWidth;
+            var scaledImageHeight = clientHeight;
+
+            // Determine hotspot x, y within the browser viewport. At first assume that the image and browser are the exact same ratio.
+            var left = x * scaledImageWidth;
+            var top = y * scaledImageHeight;
+
+            // Adjust the scaled image dimensions and hotspot images in the case that the image and browser are different ratios.
+            if (clientRatio < imageRatio) {
+                scaledImageWidth = clientHeight * imageRatio;
+                left = x * scaledImageWidth - ((scaledImageWidth - clientWidth) / 2);
+            } else if (clientRatio > imageRatio) {
+                scaledImageHeight = clientWidth / imageRatio;
+                top = y * scaledImageHeight - ((scaledImageHeight - clientHeight) / 2);
+            }
+
+            var position = {
+                left: left,
+                top: top
+            }
+
+            return position;
         }
     });
 
