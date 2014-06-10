@@ -11,16 +11,20 @@ define([
             id: '',
             x: 0,
             y: 0,
-            url: 'http://www.amazon.com/gp/product/0439784549?ie=UTF8&creativeASIN=0439784549&link_code=as3&tag=bikeoper-20&creative=373489&camp=211189'
+            title: '',
+            asin: '',
+            url: 'http://www.amazon.com'
         },
 
         initialize: function() {
+            this.set('url', 'http://www.amazon.com/exec/obidos/ASIN/' + this.get('asin'));
         },
 
         validate: function(attrs, options) {
         },
 
         parse: function(response, options)  {
+            console.log('HotspotModel.parse()');
             return response;
         }
     });

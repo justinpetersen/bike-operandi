@@ -98,6 +98,11 @@ define([
             hotspotPosition.x = hotspotPosition.x - 16;
             hotspotPosition.y = hotspotPosition.y - 16;
             $('#' + hotspotModel.get('id')).css(hotspotPosition);
+            $('#' + hotspotModel.get('id')).tooltip({
+                title: hotspotModel.get('title') + '<img src="http://images.amazon.com/images/P/' + hotspotModel.get('asin') + '.01._SX60_.jpg">',
+                html: true,
+                placement: hotspotModel.get('x') > .5 ? 'left' : 'right'
+            })
         },
 
         getHotspotPosition: function(x, y) {
