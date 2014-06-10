@@ -43,10 +43,16 @@ define([
             this.showHotspots(activeIndex);
         },
 
+        onClick: function(eventData) {
+            var hotspotPosition = this.getHotspotPositionRatio(eventData.clientX, eventData.clientY);
+            console.log(hotspotPosition.left + ', ' + hotspotPosition.top);
+        },
+
         initialize: function(bikes) {
             this.bikes = bikes;
             this.listenTo(this.bikes, 'sync', this.onSync);
             $(window).on('resize', $.proxy(this.onWindowResize, this));
+            $(window).on('click', $.proxy(this.onClick, this));
         },
 
         render: function() {
@@ -95,19 +101,39 @@ define([
 
             // Position hotspots
             var hotspotPosition = this.getHotspotPosition(hotspotModel.get('x'), hotspotModel.get('y'));
-            hotspotPosition.x = hotspotPosition.x - 16;
-            hotspotPosition.y = hotspotPosition.y - 16;
+            hotspotPosition.left = hotspotPosition.left - 16;
+            hotspotPosition.top = hotspotPosition.top - 16;
             $('#' + hotspotModel.get('id')).css(hotspotPosition);
             $('#' + hotspotModel.get('id')).popover({
                 title: hotspotModel.get('title'),
-                content: '<img src="' + hotspotModel.get('image') + '" width="60">',
+                content: '<img src="' + hotspotModel.get('image') + '" width="100">',
                 html: true,
                 placement: hotspotModel.get('x') > .5 ? 'left' : 'right',
                 trigger: 'hover'
             });
         },
 
+        getHotspotPositionRatio: function(x, y) {
+            var imageData = this.getImageData();
+            var position = {
+                left: Math.round(100 * (x + imageData.overflowLeft) / imageData.scaledImageWidth) / 100,
+                top: Math.round(100 * (y + imageData.overflowTop) / imageData.scaledImageHeight) / 100
+            }
+
+            return position;
+        },
+
         getHotspotPosition: function(x, y) {
+            var imageData = this.getImageData();
+            var position = {
+                left: x * imageData.scaledImageWidth - imageData.overflowLeft,
+                top: y * imageData.scaledImageHeight - imageData.overflowTop
+            }
+
+            return position;
+        },
+
+        getImageData: function() {
             // Set browser and image dimensions
             var clientWidth = document.documentElement.clientWidth;
             var clientHeight = document.documentElement.clientHeight;
@@ -122,25 +148,23 @@ define([
             var scaledImageWidth = clientWidth;
             var scaledImageHeight = clientHeight;
 
-            // Determine hotspot x, y within the browser viewport. At first assume that the image and browser are the exact same ratio.
-            var left = x * scaledImageWidth;
-            var top = y * scaledImageHeight;
-
-            // Adjust the scaled image dimensions and hotspot images in the case that the image and browser are different ratios.
+            // Adjust the scaled image dimensions in the case that the image and browser are different ratios.
             if (clientRatio < imageRatio) {
                 scaledImageWidth = clientHeight * imageRatio;
-                left = x * scaledImageWidth - ((scaledImageWidth - clientWidth) / 2);
             } else if (clientRatio > imageRatio) {
                 scaledImageHeight = clientWidth / imageRatio;
-                top = y * scaledImageHeight - ((scaledImageHeight - clientHeight) / 2);
             }
 
-            var position = {
-                left: left,
-                top: top
+            var imageData = {
+                clientWidth: clientWidth,
+                clientHeight: clientHeight,
+                scaledImageWidth: scaledImageWidth,
+                scaledImageHeight: scaledImageHeight,
+                overflowLeft: (scaledImageWidth - clientWidth) / 2,
+                overflowTop: (scaledImageHeight - clientHeight) / 2
             }
 
-            return position;
+            return imageData;
         }
     });
 
