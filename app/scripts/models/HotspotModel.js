@@ -13,11 +13,15 @@ define([
             y: 0,
             title: '',
             asin: '',
+            image: '',
             url: 'http://www.amazon.com'
         },
 
         initialize: function() {
             this.set('url', 'http://www.amazon.com/exec/obidos/ASIN/' + this.get('asin'));
+            if (this.get('image') == '') {
+                this.set('image', 'http://images.amazon.com/images/P/' + this.get('asin') + '.01.MZZZZZZZ.jpg');
+            }
         },
 
         validate: function(attrs, options) {
