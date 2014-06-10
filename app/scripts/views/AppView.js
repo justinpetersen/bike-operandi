@@ -98,11 +98,13 @@ define([
             hotspotPosition.x = hotspotPosition.x - 16;
             hotspotPosition.y = hotspotPosition.y - 16;
             $('#' + hotspotModel.get('id')).css(hotspotPosition);
-            $('#' + hotspotModel.get('id')).tooltip({
-                title: hotspotModel.get('title') + '<img src="' + hotspotModel.get('image') + '" width="60">',
+            $('#' + hotspotModel.get('id')).popover({
+                title: hotspotModel.get('title'),
+                content: '<img src="' + hotspotModel.get('image') + '" width="60">',
                 html: true,
-                placement: hotspotModel.get('x') > .5 ? 'left' : 'right'
-            })
+                placement: hotspotModel.get('x') > .5 ? 'left' : 'right',
+                trigger: 'hover'
+            });
         },
 
         getHotspotPosition: function(x, y) {
