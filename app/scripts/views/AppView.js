@@ -106,7 +106,7 @@ define([
             $('#' + hotspotModel.get('id')).css(hotspotPosition);
             $('#' + hotspotModel.get('id')).popover({
                 title: hotspotModel.get('title'),
-                content: '<img src="' + hotspotModel.get('image') + '" width="100">',
+                content: '<img src="' + hotspotModel.get('image') + '" width="160">',
                 html: true,
                 placement: hotspotModel.get('x') > .5 ? 'left' : 'right',
                 trigger: 'hover'
@@ -134,13 +134,13 @@ define([
         },
 
         getImageData: function() {
-            // Set browser and image dimensions
+            // Get browser and image dimensions.
             var clientWidth = document.documentElement.clientWidth;
             var clientHeight = document.documentElement.clientHeight;
             var nativeImageWidth = 1118
             var nativeImageHeight = 629;
 
-            // Calculate browser and image ratios
+            // Calculate browser and image ratios.
             var clientRatio = clientWidth / clientHeight;
             var imageRatio = nativeImageWidth / nativeImageHeight;
 
