@@ -79,7 +79,10 @@ define([
 
         showHotspots: function(index) {
             var activeIndex = $('.carousel').data('bs.carousel').getActiveIndex();
-            this.hotspotCompositeView.showHotspots(this.bikeCollection.at(activeIndex).get('hotspots'));
+            var activeBikeModel = this.bikeCollection.at(activeIndex);
+            if (activeBikeModel) {
+                this.hotspotCompositeView.showHotspots(activeBikeModel.get('hotspots'));
+            }
         }
     });
 

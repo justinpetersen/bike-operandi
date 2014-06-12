@@ -10,11 +10,12 @@ require.config({
         'firebase-simple-login': '../bower_components/firebase-simple-login/firebase-simple-login',
         jquery: '../bower_components/jquery/dist/jquery',
         'jquery.carousel.fullscreen': '../scripts/helpers/jquery.carousel.fullscreen',
+        marionette: '../bower_components/marionette/lib/backbone.marionette',
         underscore: '../bower_components/underscore/underscore'
     },
   shim: {
     backbone: {
-        deps: ['underscore', 'jquery'],
+        deps: ['jquery', 'underscore'],
         exports: 'Backbone'
     },
     backfire: {
@@ -32,6 +33,10 @@ require.config({
         deps: ['firebase'],
         exports: 'Firebase'
     },
+    marionette : {
+        deps : ['backbone', 'jquery', 'underscore'],
+        exports : 'Marionette'
+    },
     underscore: {
       exports: '_'
     }
@@ -40,8 +45,11 @@ require.config({
 
 require([
     'collections/BikeCollection',
-    'views/AppView'
-], function(BikeCollection, AppView) {
-    var bikes = new BikeCollection();
-    var appView = new AppView(bikes);
+    'views/AppView',
+    'BikeApplication'
+], function(BikeCollection, AppView, app) {
+    // var bikes = new BikeCollection();
+    // var appView = new AppView(bikes);
+
+    app.start();
 });
