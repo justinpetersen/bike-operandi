@@ -20,12 +20,26 @@ define([
 
         updateHotspotPositions: function() {
             var that = this;
-            this.children.each(function(view) {
-                var hotspotPosition = that.getHotspotPosition(view.model.get('x'), view.model.get('y'));
+            this.children.each(function(itemView) {
+                var hotspotPosition = that.getHotspotPosition(itemView.model.get('x'), itemView.model.get('y'));
                 hotspotPosition.left = hotspotPosition.left - 16;
                 hotspotPosition.top = hotspotPosition.top - 16;
-                view.$el.css(hotspotPosition);
+                itemView.$el.css(hotspotPosition);
+
+                that.addPopover(itemView)
             });
+        },
+
+        addPopover: function(itemView) {
+            var hotspotPosition = this.getHotspotPosition(itemView.model.get('x'), itemView.model.get('y'));
+            var options = {
+                title: itemView.model.get('title'),
+                content: '<img src="' + itemView.model.get('image') + '" width="160">',
+                html: true,
+                placement: this.getPopoverPlacement(hotspotPosition.left, hotspotPosition.top),
+                trigger: 'hover'
+            };
+            $('#' + itemView.model.get('id')).popover(options);
         },
 
         getPopoverPlacement: function(x, y) {

@@ -36,22 +36,31 @@ define([
             this.initCarousel();
         },
 
+        onCarouselSlide: function() {
+            this.trigger('onCarouselSlide', [$('.carousel').data('bs.carousel').getActiveIndex()]);
+        },
+
+        onCarouselSlid: function() {
+            this.trigger('onCarouselSlid', [$('.carousel').data('bs.carousel').getActiveIndex()]);
+        },
+
         initialize: function() {
             this.listenTo(this.collection, 'sync', this.onSync);
         },
 
         initCarousel: function() {
+            // TODO: Remove hard-coded selectors and use Marionette where possible
             // Make the first slide active
             $('#container').children().first().addClass('active');
 
             $.carouselFullscreen();
             $('.carousel').carousel({
                 pause: "false",
-                interval: 40000
+                interval: 4000
             });
 
-            // $('#bike-carousel').on('slide.bs.carousel', $.proxy(this.onCarouselSlide, this));
-            // $('#bike-carousel').on('slid.bs.carousel', $.proxy(this.onCarouselSlid, this));
+            $('#bike-carousel').on('slide.bs.carousel', $.proxy(this.onCarouselSlide, this));
+            $('#bike-carousel').on('slid.bs.carousel', $.proxy(this.onCarouselSlid, this));
         }
     });
 

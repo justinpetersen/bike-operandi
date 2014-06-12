@@ -20,11 +20,19 @@ define([
             this.showHotspots(0);
         },
 
+        onCarouselSlide: function(index) {
+            this.bikeApplicationLayout.hotspots.close();
+        },
+
+        onCarouselSlid: function(index) {
+            this.showHotspots(index);
+        },
+
         showHotspots: function(index) {
             var activeIndex = $('.carousel').data('bs.carousel').getActiveIndex();
             var activeBikeModel = this.bikeCollection.at(activeIndex);
             if (activeBikeModel) {
-                // this.hotspotsCollectionView.showHotspots(activeBikeModel.get('hotspots'));
+                this.bikeApplicationLayout.hotspots.show(this.hotspotsCollectionView);
                 this.hotspotsCollectionView.collection = activeBikeModel.get('hotspots');
                 this.hotspotsCollectionView.render();
             }
@@ -51,6 +59,8 @@ define([
         this.hotspotsCollectionView = new HotspotsCollectionView();
         this.bikeApplicationLayout.hotspots.show(this.hotspotsCollectionView);
 
+        this.listenTo(this.bikesCompositeView, 'onCarouselSlide', this.onCarouselSlide);
+        this.listenTo(this.bikesCompositeView, 'onCarouselSlid', this.onCarouselSlid);
         this.listenTo(this.bikeCollection, 'sync', this.onSync);
     });
 
