@@ -1,72 +1,31 @@
-/*global define*/
-
 define([
-    'jquery',
-    'underscore',
-    'backbone',
-    'templates',
-    'models/HotspotModel',
-    'views/HotspotView'
-], function ($, _, Backbone, JST, HotspotModel, HotspotView) {
+    'marionette'
+], function (Marionette) {
     'use strict';
 
-    var HotspotCompositeView = Backbone.View.extend({
-        template: JST['app/scripts/templates/HotspotComposite.ejs'],
-
+    var HotspotItemView = Marionette.ItemView.extend({
         tagName: 'div',
 
-        id: '',
+        attributes: {class: 'hotspot-holder'},
 
-        className: '',
+        template: JST['app/scripts/templates/Hotspot.ejs'],
+    });
 
-        events: {},
+    var HotspotsCollectionView = Marionette.CollectionView.extend({
+        itemView: HotspotItemView,
 
-        onClick: function(eventData) {
-            var hotspotPosition = this.getHotspotPositionRatio(eventData.clientX, eventData.clientY);
-            console.log(hotspotPosition.left + ', ' + hotspotPosition.top);
+        onRender: function() {
+            this.updateHotspotPositions();
         },
 
-        initialize: function () {
-            // this.listenTo(this.model, 'change', this.render);
-            $(window).on('click', $.proxy(this.onClick, this));
-        },
-
-        render: function () {
-            // this.$el.html(this.template(this.model.toJSON()));
-
-            return this;
-        },
-
-        showHotspots: function(hotspots) {
-            this.clearHotspots();
-            
-            for (var i=0; i<hotspots.length; i++) {
-                this.createHotspot(hotspots.at(i));
-            }
-        },
-
-        clearHotspots: function() {
-            $('#hotspot-holder').empty();
-        },
-
-        createHotspot: function(hotspotModel) {
-            var hotspotView = new HotspotView({ model: hotspotModel });
-            $('#hotspot-holder').append(hotspotView.render().el);
-
-            // Position hotspots
-            var hotspotPosition = this.getHotspotPosition(hotspotModel.get('x'), hotspotModel.get('y'));
-            hotspotPosition.left = hotspotPosition.left - 16;
-            hotspotPosition.top = hotspotPosition.top - 16;
-            $('#' + hotspotModel.get('id')).css(hotspotPosition);
-
-            var options = {
-                title: hotspotModel.get('title'),
-                content: '<img src="' + hotspotModel.get('image') + '" width="160">',
-                html: true,
-                placement: this.getPopoverPlacement(hotspotPosition.left, hotspotPosition.top),
-                trigger: 'hover'
-            };
-            $('#' + hotspotModel.get('id')).popover(options);
+        updateHotspotPositions: function() {
+            var that = this;
+            this.children.each(function(view) {
+                var hotspotPosition = that.getHotspotPosition(view.model.get('x'), view.model.get('y'));
+                hotspotPosition.left = hotspotPosition.left - 16;
+                hotspotPosition.top = hotspotPosition.top - 16;
+                view.$el.css(hotspotPosition);
+            });
         },
 
         getPopoverPlacement: function(x, y) {
@@ -135,5 +94,5 @@ define([
         }
     });
 
-    return HotspotCompositeView;
+    return HotspotsCollectionView;
 });

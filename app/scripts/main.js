@@ -15,7 +15,7 @@ require.config({
     },
   shim: {
     backbone: {
-        deps: ['jquery', 'underscore'],
+        deps: ['jquery', 'underscore', 'templates'],
         exports: 'Backbone'
     },
     backfire: {
@@ -34,7 +34,7 @@ require.config({
         exports: 'Firebase'
     },
     marionette : {
-        deps : ['backbone', 'jquery', 'underscore'],
+        deps : ['jquery', 'underscore', 'backbone'],
         exports : 'Marionette'
     },
     underscore: {
@@ -44,12 +44,7 @@ require.config({
 });
 
 require([
-    'collections/BikeCollection',
-    'views/AppView',
     'BikeApplication'
-], function(BikeCollection, AppView, app) {
-    // var bikes = new BikeCollection();
-    // var appView = new AppView(bikes);
-
-    app.start();
+], function(application) {
+    application.start();
 });

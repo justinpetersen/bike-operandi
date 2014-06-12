@@ -89,12 +89,16 @@ body {
     }
 }
 
-.hotspots {
+.hotspots-holder {
+    position: absolute;
+    top: 0px;
+}
+
+.hotspot-holder {
     position: absolute;
 }
 
-.hotspot {
-    position: absolute;
+.hotspot-button {
     background-image: url('../images/hotspot-button.png');
     width: 32px;
     height: 32px;

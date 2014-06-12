@@ -1,6 +1,9 @@
 define([
-    'marionette'
-], function (Marionette) {
+    'jquery',
+    'templates',
+    'marionette',
+    'jquery.carousel.fullscreen'
+], function ($, JST, Marionette) {
     'use strict';
 
     var BikeItemView = Marionette.ItemView.extend({
