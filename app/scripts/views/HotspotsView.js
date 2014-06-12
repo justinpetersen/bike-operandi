@@ -18,6 +18,15 @@ define([
             this.updateHotspotPositions();
         },
 
+        onClick: function(eventData) {
+            var hotspotPosition = this.getHotspotPositionRatio(eventData.clientX, eventData.clientY);
+            console.log(hotspotPosition.left + ', ' + hotspotPosition.top);
+        },
+
+        initialize: function() {
+            $(window).on('click', $.proxy(this.onClick, this));
+        },
+
         updateHotspotPositions: function() {
             var that = this;
             this.children.each(function(itemView) {
