@@ -64,7 +64,7 @@ define([
 
         initCarousel: function() {
             // Make the first slide active
-            $('#container').children().first().addClass('active');
+            $('#container').children().first().addClass('active'); 
 
             // TODO: Improve the structure of bootstrap.carousel.fullscreen
             $.carouselFullscreen();
