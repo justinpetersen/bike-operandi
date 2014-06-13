@@ -1,15 +1,9 @@
 define([
-    'marionette'
-], function (Marionette) {
+    'jquery',
+    'marionette',
+    'views/HotspotItemView'
+], function ($, Marionette, HotspotItemView) {
     'use strict';
-
-    var HotspotItemView = Marionette.ItemView.extend({
-        tagName: 'div',
-
-        attributes: {class: 'hotspot-holder'},
-
-        template: JST['app/scripts/templates/Hotspot.ejs'],
-    });
 
     var HotspotsCollectionView = Marionette.CollectionView.extend({
         itemView: HotspotItemView,
@@ -23,8 +17,13 @@ define([
             console.log(hotspotPosition.left + ', ' + hotspotPosition.top);
         },
 
+        onResize: function(eventData) {
+            this.updateHotspotPositions();
+        },
+
         initialize: function() {
             $(window).on('click', $.proxy(this.onClick, this));
+            $(window).on('resize', $.proxy(this.onResize, this));
         },
 
         updateHotspotPositions: function() {
@@ -52,10 +51,10 @@ define([
         },
 
         getPopoverPlacement: function(x, y) {
-            var placement = x > document.documentElement.clientWidth / 2 ? 'left' : 'right';
+            var placement = x > $(window).outerWidth() / 2 ? 'left' : 'right';
             if (y < 150) {
                 placement = 'bottom';
-            } else if (y > document.documentElement.clientHeight - 150) {
+            } else if (y > $(window).outerHeight() - 150) {
                 placement = 'top';
             }
 
@@ -84,8 +83,8 @@ define([
 
         getImageData: function() {
             // Get browser and image dimensions.
-            var clientWidth = document.documentElement.clientWidth;
-            var clientHeight = document.documentElement.clientHeight;
+            var clientWidth = $(window).outerWidth();
+            var clientHeight = $(window).outerHeight();
             var nativeImageWidth = 1118
             var nativeImageHeight = 629;
 

@@ -1,10 +1,10 @@
 define([
     'marionette',
     'collections/BikeCollection',
-    'views/BikesView',
-    'views/HotspotsView',
+    'views/CarouselCompositeView',
+    'views/HotspotsCollectionView',
     'views/layout/BikeApplicationLayout'
-], function (Marionette, BikeCollection, BikesCompositeView, HotspotsCollectionView, BikeApplicationLayout) {
+], function (Marionette, BikeCollection, CarouselCompositeView, HotspotsCollectionView, BikeApplicationLayout) {
     'use strict';
 
     var BikeApplication = Marionette.Application.extend({
@@ -28,6 +28,35 @@ define([
             this.showHotspots(index);
         },
 
+        initialize: function() {
+            this.addRegions({
+                main: '#main-container'
+            });
+
+            this.addInitializer(function(options){
+                this.initializeViews();
+            });
+        },
+
+        initializeViews: function() {
+            this.bikeApplicationLayout = new BikeApplicationLayout();
+            this.bikeApplicationLayout.render();
+
+            this.main.show(this.bikeApplicationLayout);
+
+            this.bikeCollection = new BikeCollection();
+
+            this.carouselCompositeView = new CarouselCompositeView({ collection: this.bikeCollection });
+            this.bikeApplicationLayout.carousel.show(this.carouselCompositeView);
+
+            this.hotspotsCollectionView = new HotspotsCollectionView();
+            this.bikeApplicationLayout.hotspots.show(this.hotspotsCollectionView);
+
+            this.listenTo(this.carouselCompositeView, 'onCarouselSlide', this.onCarouselSlide);
+            this.listenTo(this.carouselCompositeView, 'onCarouselSlid', this.onCarouselSlid);
+            this.listenTo(this.bikeCollection, 'sync', this.onSync);
+        },
+
         showHotspots: function(index) {
             var activeIndex = $('.carousel').data('bs.carousel').getActiveIndex();
             var activeBikeModel = this.bikeCollection.at(activeIndex);
@@ -40,29 +69,7 @@ define([
     });
 
     var application = new BikeApplication();
-
-    application.addRegions({
-        main: '#main-container'
-    });
-
-    application.addInitializer(function(options){
-        this.bikeApplicationLayout = new BikeApplicationLayout();
-        this.bikeApplicationLayout.render();
-
-        this.main.show(this.bikeApplicationLayout);
-
-        this.bikeCollection = new BikeCollection();
-
-        this.bikesCompositeView = new BikesCompositeView({ collection: this.bikeCollection });
-        this.bikeApplicationLayout.carousel.show(this.bikesCompositeView);
-
-        this.hotspotsCollectionView = new HotspotsCollectionView();
-        this.bikeApplicationLayout.hotspots.show(this.hotspotsCollectionView);
-
-        this.listenTo(this.bikesCompositeView, 'onCarouselSlide', this.onCarouselSlide);
-        this.listenTo(this.bikesCompositeView, 'onCarouselSlid', this.onCarouselSlid);
-        this.listenTo(this.bikeCollection, 'sync', this.onSync);
-    });
+    application.initialize();
 
     return application;
 });

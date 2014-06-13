@@ -2,19 +2,12 @@ define([
     'jquery',
     'templates',
     'marionette',
-    'jquery.carousel.fullscreen'
-], function ($, JST, Marionette) {
+    'views/CarouselItemView',
+    'bootstrap'
+], function ($, JST, Marionette, CarouselItemView) {
     'use strict';
 
-    var BikeItemView = Marionette.ItemView.extend({
-        tagName: 'div',
-
-        attributes: {class: 'item'},
-
-        template: JST['app/scripts/templates/Bike.ejs'],
-    });
-
-    var BikesCompositeView = Marionette.CompositeView.extend({
+    var CarouselCompositeView = Marionette.CompositeView.extend({
         tagName: 'div',
 
         attributes: {
@@ -22,11 +15,11 @@ define([
             class: 'carousel slide'
         },
 
-        itemView: BikeItemView,
+        itemView: CarouselItemView,
 
         itemViewContainer: '#container',
 
-        template: JST['app/scripts/templates/Bikes.ejs'],
+        template: JST['app/scripts/templates/CarouselComposite.ejs'],
 
         onSync: function() {
             this.render();
@@ -49,20 +42,28 @@ define([
         },
 
         initCarousel: function() {
-            // TODO: Remove hard-coded selectors and use Marionette where possible
             // Make the first slide active
             $('#container').children().first().addClass('active');
 
-            $.carouselFullscreen();
+            this.carouselFullscreen();
+
             $('.carousel').carousel({
                 pause: "false",
-                interval: 4000
+                interval: 30000
             });
 
             $('#bike-carousel').on('slide.bs.carousel', $.proxy(this.onCarouselSlide, this));
             $('#bike-carousel').on('slid.bs.carousel', $.proxy(this.onCarouselSlid, this));
+        },
+
+        carouselFullscreen: function() {
+            $('.carousel-inner div.item img').each(function() {
+                var imgSrc = $(this).attr('src');
+                $(this).parent().css({ 'background-image': 'url(' + imgSrc + ')' });
+                $(this).remove();
+            });
         }
     });
 
-    return BikesCompositeView;
+    return CarouselCompositeView;
 });

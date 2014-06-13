@@ -1,16 +1,18 @@
 define([
-    'marionette',
-    'collections/BikeCollection',
-    'views/BikesView'
-], function (Marionette, BikeCollection, BikesCompositeView) {
+    'marionette'
+], function (Marionette) {
     'use strict';
 
     var BikeApplicationLayout = Marionette.Layout.extend({
         template: JST['app/scripts/templates/BikeApplicationLayout.ejs'],
 
+        attributes: {
+            id: 'hotspots-carousel-container'
+        },
+
         regions: {
-            carousel: '#carousel-holder',
-            hotspots: '#hotspots-holder'
+            carousel: '#carousel-container',
+            hotspots: '#hotspots-container'
         }
     });
 
