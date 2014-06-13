@@ -34,8 +34,8 @@ require.config({
         exports: 'Firebase'
     },
     marionette : {
-        deps : ['jquery', 'underscore', 'backbone'],
-        exports : 'Marionette'
+        deps : ['backbone'],
+        exports: 'Backbone.Marionette'
     },
     underscore: {
       exports: '_'
