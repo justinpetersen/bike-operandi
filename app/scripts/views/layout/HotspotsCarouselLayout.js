@@ -4,7 +4,7 @@ define([
     'use strict';
 
     var BikeApplicationLayout = Marionette.Layout.extend({
-        template: JST['app/scripts/templates/BikeApplicationLayout.ejs'],
+        template: JST['app/scripts/templates/HotspotsCarouselLayout.ejs'],
 
         attributes: {
             id: 'hotspots-carousel-container'
