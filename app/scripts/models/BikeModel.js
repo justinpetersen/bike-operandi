@@ -10,6 +10,7 @@ define([
         defaults: {
             title: '',
             image: '',
+            tags: '',
             hotspots: []
         },
 
