@@ -12,7 +12,7 @@ define([
         defaults: {
             title: '',
             image: '',
-            hotspots: null
+            hotspots: []
         },
 
         initialize: function(attrs, options) {
