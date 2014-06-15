@@ -27,6 +27,16 @@ define([
             }
         },
 
+        setFilter: function(filter) {
+            $('#thumbnails-row-container').isotope({
+                filter: function() {
+                    var tags = $(this).find('.tags').text();
+                    var match = tags.indexOf(filter) > -1;
+                    return match;
+                }
+            });
+        },
+
         initialize: function() {
             $.bridget('isotope', Isotope);
             this.listenTo(this.collection, 'sync', this.onSync);
@@ -39,10 +49,6 @@ define([
                 getSortData: {
                     title: '.title'
                 }
-            });
-
-            $('#thumbnails-row-container').isotope({
-                sortBy: 'title'
             });
         }
     });

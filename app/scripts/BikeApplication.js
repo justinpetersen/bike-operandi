@@ -40,6 +40,10 @@ define([
             this.showHotspots(index);
         },
 
+        onFilterClick: function(filter) {
+            this.thumbnailsCompositeView.setFilter(filter);
+        },
+
         initialize: function() {
             this.addRegions({
                 main: '#main-container',
@@ -91,6 +95,7 @@ define([
             this.listenTo(this.bikeCollection, 'sync', this.onSync);
             this.listenTo(this.carouselCompositeView, 'onCarouselSlide', this.onCarouselSlide);
             this.listenTo(this.carouselCompositeView, 'onCarouselSlid', this.onCarouselSlid);
+            this.listenTo(this.filterButtonCollectionView, 'onFilterClick', this.onFilterClick);
         },
 
         showHotspots: function(index) {
