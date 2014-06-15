@@ -3,7 +3,8 @@ define([
     'templates',
     'marionette',
     'views/ThumbnailItemView',
-    'isotope'
+    'isotope',
+    'jquery-bridget'
 ], function ($, JST, Marionette, ThumbnailItemView, Isotope) {
     'use strict';
 
@@ -22,19 +23,27 @@ define([
 
         onRender: function() {
             if (this.collection.length > 0) {
-                var iso = new Isotope('#thumbnails-row-container', {
-                    itemSelector: '.thumbnail-container',
-                    layoutMode: 'fitRows',
-                    getSortData: {
-                        title: '.title'
-                    },
-                    sortBy: 'title'
-                });
+                this.initIsotope();
             }
         },
 
         initialize: function() {
+            $.bridget('isotope', Isotope);
             this.listenTo(this.collection, 'sync', this.onSync);
+        },
+
+        initIsotope: function() {
+            $('#thumbnails-row-container').isotope({
+                itemSelector: '.thumbnail-container',
+                layoutMode: 'fitRows',
+                getSortData: {
+                    title: '.title'
+                }
+            });
+
+            $('#thumbnails-row-container').isotope({
+                sortBy: 'title'
+            });
         }
     });
 

@@ -10,6 +10,7 @@ require.config({
         'firebase-simple-login': '../bower_components/firebase-simple-login/firebase-simple-login',
         isotope: '../bower_components/isotope/dist/isotope.pkgd',
         jquery: '../bower_components/jquery/dist/jquery',
+        'jquery-bridget': '../bower_components/jquery-bridget/jquery.bridget',
         'jquery.carousel.fullscreen': '../scripts/helpers/jquery.carousel.fullscreen',
         marionette: '../bower_components/marionette/lib/backbone.marionette',
         underscore: '../bower_components/underscore/underscore'

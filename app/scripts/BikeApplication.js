@@ -1,21 +1,30 @@
 define([
     'marionette',
     'collections/BikeCollection',
+    'collections/BikeFilterCollection',
     'views/CarouselCompositeView',
     'views/HotspotsCollectionView',
     'views/layout/HotspotsCarouselLayout',
+    'views/layout/ThumbnailFiltersLayout',
+    'views/FilterButtonCollectionView',
     'views/ThumbnailsCompositeView'
-], function (Marionette, BikeCollection, CarouselCompositeView, HotspotsCollectionView, HotspotsCarouselLayout, ThumbnailsCompositeView) {
+], function (Marionette, BikeCollection, BikeFilterCollection, CarouselCompositeView, HotspotsCollectionView, HotspotsCarouselLayout, ThumbnailFiltersLayout, FilterButtonCollectionView, ThumbnailsCompositeView) {
     'use strict';
 
     var BikeApplication = Marionette.Application.extend({
         bikeCollection: null,
+
+        bikeFilterCollection: null,
 
         hotspotsCarouselLayout: null,
 
         carouselCompositeView: null,
 
         hotspotsCollectionView: null,
+
+        thumbnailFiltersLayout: null,
+
+        filterButtonCollectionView: null,
 
         thumbnailsCompositeView: null,
 
@@ -46,6 +55,7 @@ define([
 
         initCollections: function() {
             this.bikeCollection = new BikeCollection();
+            this.bikeFilterCollection = new BikeFilterCollection();
         },
 
         initViews: function() {
@@ -56,7 +66,6 @@ define([
         initHotspotCarousel: function() {
             this.hotspotsCarouselLayout = new HotspotsCarouselLayout();
             this.hotspotsCarouselLayout.render();
-
             this.main.show(this.hotspotsCarouselLayout);
 
             this.carouselCompositeView = new CarouselCompositeView({ collection: this.bikeCollection });
@@ -67,8 +76,15 @@ define([
         },
 
         initThumbnails: function() {
+            this.thumbnailFiltersLayout = new ThumbnailFiltersLayout();
+            this.thumbnailFiltersLayout.render();
+            this.content.show(this.thumbnailFiltersLayout);
+
+            this.filterButtonCollectionView = new FilterButtonCollectionView({ collection: this.bikeFilterCollection });
+            this.thumbnailFiltersLayout.filters.show(this.filterButtonCollectionView);
+
             this.thumbnailsCompositeView = new ThumbnailsCompositeView({ collection: this.bikeCollection });
-            this.content.show(this.thumbnailsCompositeView);
+            this.thumbnailFiltersLayout.thumbnails.show(this.thumbnailsCompositeView);
         },
 
         initEvents: function() {

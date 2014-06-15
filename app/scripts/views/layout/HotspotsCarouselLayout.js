@@ -3,7 +3,7 @@ define([
 ], function (Marionette) {
     'use strict';
 
-    var BikeApplicationLayout = Marionette.Layout.extend({
+    var HotspotsCarouselLayout = Marionette.Layout.extend({
         template: JST['app/scripts/templates/HotspotsCarouselLayout.ejs'],
 
         attributes: {
@@ -16,5 +16,5 @@ define([
         }
     });
 
-    return BikeApplicationLayout;
+    return HotspotsCarouselLayout;
 });
