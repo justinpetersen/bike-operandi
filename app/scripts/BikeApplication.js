@@ -41,7 +41,7 @@ define([
         },
 
         onFilterClick: function(filter) {
-            this.thumbnailsCompositeView.setFilter(filter);
+            // this.thumbnailsCompositeView.setFilter(filter);
         },
 
         initialize: function() {
