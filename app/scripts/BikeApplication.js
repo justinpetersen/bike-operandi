@@ -59,7 +59,8 @@ define([
 
         initCollections: function() {
             this.bikeCollection = new BikeCollection();
-            this.bikeFilterCollection = new BikeFilterCollection();
+            var RootBikeFilterCollection = BikeFilterCollection.extend({ firebase: 'https://bike-operandi.firebaseio.com/filters' });
+            this.bikeFilterCollection = new RootBikeFilterCollection();
         },
 
         initViews: function() {

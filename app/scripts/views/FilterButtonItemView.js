@@ -12,7 +12,7 @@ define([
         	'class': 'btn btn-default'
         },
 
-        template: JST['app/scripts/templates/FilterButton.ejs'],
+        template: JST['app/scripts/templates/FilterButton.ejs']
     });
 
     return FilterButtonItemView;
