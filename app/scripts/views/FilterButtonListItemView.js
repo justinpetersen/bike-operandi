@@ -17,6 +17,12 @@ define([
             'click a': 'onFilterListItemClick'
         },
 
+        initialize: function() {
+        	if (this.model.get('label') == '-') {
+        		this.$el.addClass('divider');
+        	}
+        },
+
         onFilterListItemClick: function(event) {
         	event.preventDefault();
             this.trigger('onFilterListItemClick');

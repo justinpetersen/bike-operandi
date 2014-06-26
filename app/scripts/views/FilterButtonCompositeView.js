@@ -23,7 +23,7 @@ define([
         },
 
         onFilterListItemClick: function(event) {
-            this.setSelected(event.model.get('label'));
+            this.setSelected(event.model.get('value'));
         },
 
         initialize: function() {

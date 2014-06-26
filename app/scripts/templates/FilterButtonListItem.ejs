@@ -1,1 +1,6 @@
-<a href='#'><%= label %></a>
+<a href='#'>
+	<% if (label == 'Clear') { %>
+	    <span class='glyphicon glyphicon-ban-circle'></span>
+	<% } %>
+	<%= label %>
+</a>
