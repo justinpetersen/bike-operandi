@@ -42,7 +42,7 @@ define([
             var hotspotPosition = this.getHotspotPosition(itemView.model.get('x'), itemView.model.get('y'));
             var options = {
                 title: itemView.model.get('title'),
-                content: '<img src="' + itemView.model.get('image') + '" width="160">',
+                content: '<div class="popover-image-container"><img class="popover-image" src="' + itemView.model.get('image') + '"></div>',
                 html: true,
                 placement: this.getPopoverPlacement(hotspotPosition.left, hotspotPosition.top),
                 trigger: 'hover'
@@ -51,11 +51,9 @@ define([
         },
 
         getPopoverPlacement: function(x, y) {
-            var placement = x > $(window).outerWidth() / 2 ? 'left' : 'right';
-            if (y < 150) {
-                placement = 'bottom';
-            } else if (y > $(window).outerHeight() - 150) {
-                placement = 'top';
+            var placement = y > $(window).outerHeight() / 2 ? 'top' : 'bottom';
+            if (x < $(window).outerWidth() / 2) {
+                placement = 'right';
             }
 
             return placement;

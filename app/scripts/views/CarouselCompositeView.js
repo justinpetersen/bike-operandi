@@ -48,8 +48,8 @@ define([
             this.carouselFullscreen();
 
             $('.carousel').carousel({
-                pause: "false",
-                interval: 30000
+                pause: 'hover',
+                interval: 4000
             });
 
             $('#bike-carousel').on('slide.bs.carousel', $.proxy(this.onCarouselSlide, this));
