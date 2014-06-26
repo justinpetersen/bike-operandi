@@ -14,12 +14,12 @@ define([
         template: JST['app/scripts/templates/FilterButtonListItem.ejs'],
 
         events: {
-            'click a': 'onFilterClick'
+            'click a': 'onFilterListItemClick'
         },
 
-        onFilterClick: function(event) {
+        onFilterListItemClick: function(event) {
         	event.preventDefault();
-            this.trigger('onFilterClick');
+            this.trigger('onFilterListItemClick');
         }
     });
 

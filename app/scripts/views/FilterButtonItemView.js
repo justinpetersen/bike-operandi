@@ -15,12 +15,12 @@ define([
         template: JST['app/scripts/templates/FilterButton.ejs'],
 
         events: {
-            'click .filter-btn': 'onFilterClick'
+            'click': 'onFilterButtonClick'
         },
 
-        onFilterClick: function(event) {
-            console.log('label: ' + this.model.get('label'));
-            return false;
+        onFilterButtonClick: function(event) {
+            event.preventDefault();
+            this.trigger('onFilterButtonClick');
         }
     });
 

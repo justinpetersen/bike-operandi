@@ -22,18 +22,20 @@ define([
             this.setElement(this.$el);
         },
 
-        onFilterClick: function(event) {
+        onFilterListItemClick: function(event) {
             this.setSelected(event.model.get('label'));
         },
 
         initialize: function() {
             this.collection = this.model.children;
-            this.on('itemview:onFilterClick', $.proxy(this.onFilterClick, this));
+            this.on('itemview:onFilterListItemClick', $.proxy(this.onFilterListItemClick, this));
         },
 
         setSelected: function(selected) {
             this.model.selected = selected;
-            this.$el.find('.btn:first-child').html(selected + ' <span class="caret"></span>');
+
+            var selectedLabel = this.model.selected == '*' ? this.model.get('label') : this.model.selected;
+            this.$el.find('.btn:first-child').html(selectedLabel + ' <span class="caret"></span>');
             this.trigger('onSelectedChanged');
         }
     });
