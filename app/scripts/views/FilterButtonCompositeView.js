@@ -1,7 +1,8 @@
 define([
+    'jquery',
     'marionette',
     'views/FilterButtonListItemView'
-], function (Marionette, FilterButtonListItemView) {
+], function ($, Marionette, FilterButtonListItemView) {
     'use strict';
 
     var FilterButtonCompositeView = Marionette.CompositeView.extend({
@@ -12,16 +13,6 @@ define([
 
         template: JST['app/scripts/templates/FilterButtonComposite.ejs'],
 
-        events: {
-            'click .btn': 'onFilterClick'
-        },
-
-        onFilterClick: function(event) {
-            // TODO: Use the BikeFilterModel or a button ID to access filter value instead of textContent
-            var filter = event.currentTarget.textContent;
-            this.trigger('onFilterClick', [filter]);
-        },
-
         onRender: function() {
             // Get rid of the wrapping-div.
             // Assumes 1 child element present in template.
@@ -31,8 +22,19 @@ define([
             this.setElement(this.$el);
         },
 
+        onFilterClick: function(event) {
+            this.setSelected(event.model.get('label'));
+        },
+
         initialize: function() {
             this.collection = this.model.children;
+            this.on('itemview:onFilterClick', $.proxy(this.onFilterClick, this));
+        },
+
+        setSelected: function(selected) {
+            this.model.selected = selected;
+            this.$el.find('.btn:first-child').html(selected + ' <span class="caret"></span>');
+            this.trigger('onSelectedChanged');
         }
     });
 

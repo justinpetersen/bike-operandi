@@ -27,11 +27,16 @@ define([
             }
         },
 
-        setFilter: function(filter) {
+        setFilters: function(filters) {
             $('#thumbnails-row-container').isotope({
                 filter: function() {
                     var tags = $(this).find('.tags').text();
-                    var match = tags.indexOf(filter) > -1;
+                    var match = true;
+                    for (var i=0; i<filters.length; i++) {
+                        if (filters[i] != '*' && tags.indexOf(filters[i]) == -1) {
+                            match = false
+                        }
+                    }
                     return match;
                 }
             });

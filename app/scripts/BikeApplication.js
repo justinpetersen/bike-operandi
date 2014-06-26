@@ -40,8 +40,8 @@ define([
             this.showHotspots(index);
         },
 
-        onFilterClick: function(filter) {
-            // this.thumbnailsCompositeView.setFilter(filter);
+        onSelectedFiltersChanged: function() {
+            this.thumbnailsCompositeView.setFilters(this.bikeFilterCollection.selectedFilters);
         },
 
         initialize: function() {
@@ -96,7 +96,7 @@ define([
             this.listenTo(this.bikeCollection, 'sync', this.onSync);
             this.listenTo(this.carouselCompositeView, 'onCarouselSlide', this.onCarouselSlide);
             this.listenTo(this.carouselCompositeView, 'onCarouselSlid', this.onCarouselSlid);
-            this.listenTo(this.filterButtonCollectionView, 'onFilterClick', this.onFilterClick);
+            this.listenTo(this.filterButtonCollectionView, 'onSelectedFiltersChanged', this.onSelectedFiltersChanged);
         },
 
         showHotspots: function(index) {

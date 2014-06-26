@@ -13,19 +13,32 @@ define([
 
         nodeItemView: FilterButtonItemView,
 
-        events: {
-            'click .btn': 'onFilterClick'
+        // events: {
+        //     'click .filter-btn': 'onFilterClick'
+        // },
+
+        onSelectedChanged: function(event) {
+            this.updateSelectedFilters();
         },
 
-        onFilterClick: function(event) {
-            // TODO: Use the BikeFilterModel or a button ID to access filter value instead of textContent
-            var filter = event.currentTarget.textContent;
-            this.trigger('onFilterClick', [filter]);
+        initialize: function() {
+            this.on('itemview:onSelectedChanged', $.proxy(this.onSelectedChanged, this));
         },
 
         getItemView: function(item) {
             var view = item.children ? this.itemView : this.nodeItemView;
             return view;
+        },
+
+        updateSelectedFilters: function() {
+            this.collection.clearSelectedFilters();
+
+            var that = this;
+            this.children.each(function(itemView) {
+                that.collection.addSelectedFilter(itemView.model.selected);
+            });
+
+            this.trigger('onSelectedFiltersChanged');
         }
     });
 
