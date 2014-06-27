@@ -44,6 +44,14 @@ define([
             this.thumbnailsCompositeView.setFilters(this.bikeFilterCollection.selectedFilters);
         },
 
+        onPopoverShown: function() {
+            this.carouselCompositeView.pauseCarousel();
+        },
+
+        onPopoverHidden: function() {
+            this.carouselCompositeView.resumeCarousel();
+        },
+
         initialize: function() {
             this.addRegions({
                 main: '#main-container',
@@ -96,6 +104,9 @@ define([
             this.listenTo(this.bikeCollection, 'sync', this.onSync);
             this.listenTo(this.carouselCompositeView, 'onCarouselSlide', this.onCarouselSlide);
             this.listenTo(this.carouselCompositeView, 'onCarouselSlid', this.onCarouselSlid);
+            this.listenTo(this.carouselCompositeView, 'onCarouselSlid', this.onCarouselSlid);
+            this.listenTo(this.hotspotsCollectionView, 'onPopoverShown', this.onPopoverShown);
+            this.listenTo(this.hotspotsCollectionView, 'onPopoverHidden', this.onPopoverHidden);
             this.listenTo(this.filterButtonCollectionView, 'onSelectedFiltersChanged', this.onSelectedFiltersChanged);
         },
 

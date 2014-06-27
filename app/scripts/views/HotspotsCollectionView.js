@@ -17,6 +17,14 @@ define([
             console.log(hotspotPosition.left + ', ' + hotspotPosition.top);
         },
 
+        onPopoverShown: function() {
+            this.trigger('onPopoverShown');
+        },
+
+        onPopoverHidden: function() {
+            this.trigger('onPopoverHidden');
+        },
+
         onResize: function(eventData) {
             this.updateHotspotPositions();
         },
@@ -42,12 +50,15 @@ define([
             var hotspotPosition = this.getHotspotPosition(itemView.model.get('x'), itemView.model.get('y'));
             var options = {
                 title: itemView.model.get('title'),
+                // TODO: Move the popover HTML to a template
                 content: '<div class="popover-image-container"><img class="popover-image" src="' + itemView.model.get('image') + '"></div>',
                 html: true,
                 placement: this.getPopoverPlacement(hotspotPosition.left, hotspotPosition.top),
                 trigger: 'hover'
             };
-            $('#' + itemView.model.get('id')).popover(options);
+            var popover = $('#' + itemView.model.get('id')).popover(options);
+            popover.on('shown.bs.popover', $.proxy(this.onPopoverShown, this));
+            popover.on('hidden.bs.popover', $.proxy(this.onPopoverHidden, this));
         },
 
         getPopoverPlacement: function(x, y) {

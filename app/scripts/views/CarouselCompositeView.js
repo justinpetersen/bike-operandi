@@ -37,6 +37,14 @@ define([
             this.trigger('onCarouselSlid', [$('.carousel').data('bs.carousel').getActiveIndex()]);
         },
 
+        pauseCarousel: function() {
+            $('.carousel').carousel('pause');
+        },
+
+        resumeCarousel: function() {
+            $('.carousel').carousel('cycle');
+        },
+
         initialize: function() {
             this.listenTo(this.collection, 'sync', this.onSync);
         },
