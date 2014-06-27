@@ -7,6 +7,7 @@ define([
     var BikeFilterModel = Backbone.Model.extend({
         defaults: {
             label: '',
+            value: '',
             children: []
         },
 
