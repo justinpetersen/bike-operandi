@@ -5,10 +5,11 @@ define([
     'views/CarouselCompositeView',
     'views/HotspotsCollectionView',
     'views/layout/HotspotsCarouselLayout',
+    'views/PartsModalCompositeView',
     'views/layout/ThumbnailFiltersLayout',
     'views/FilterButtonCollectionView',
     'views/ThumbnailsCompositeView'
-], function (Marionette, BikeCollection, BikeFilterCollection, CarouselCompositeView, HotspotsCollectionView, HotspotsCarouselLayout, ThumbnailFiltersLayout, FilterButtonCollectionView, ThumbnailsCompositeView) {
+], function (Marionette, BikeCollection, BikeFilterCollection, CarouselCompositeView, HotspotsCollectionView, HotspotsCarouselLayout, PartsModalCompositeView, ThumbnailFiltersLayout, FilterButtonCollectionView, ThumbnailsCompositeView) {
     'use strict';
 
     var BikeApplication = Marionette.Application.extend({
@@ -22,11 +23,15 @@ define([
 
         hotspotsCollectionView: null,
 
+        partsModalCompositeView: null,
+
         thumbnailFiltersLayout: null,
 
         filterButtonCollectionView: null,
 
         thumbnailsCompositeView: null,
+
+        hotspotsOn: true,
 
         onSync: function() {
             this.showHotspots(0);
@@ -37,7 +42,9 @@ define([
         },
 
         onCarouselSlid: function(index) {
-            this.showHotspots(index);
+            if (this.hotspotsOn) {
+                this.showHotspots(index);
+            }
         },
 
         onSelectedFiltersChanged: function() {
@@ -48,12 +55,17 @@ define([
             this.carouselCompositeView.pauseCarousel();
         },
 
-        onPopoverHidden: function() {
-            this.carouselCompositeView.resumeCarousel();
+        onPartsClick: function(index) {
+            this.showPartsModal(index);
+        },
+
+        onHotspotsClick: function(index) {
+            this.toggleHotspots();
         },
 
         initialize: function() {
             this.addRegions({
+                modal: '#modal-container',
                 main: '#main-container',
                 content: '#content-container'
             });
@@ -72,6 +84,7 @@ define([
         },
 
         initViews: function() {
+            this.initPartsModal();
             this.initHotspotCarousel();
             this.initThumbnails();
         },
@@ -86,6 +99,11 @@ define([
 
             this.hotspotsCollectionView = new HotspotsCollectionView();
             this.hotspotsCarouselLayout.hotspots.show(this.hotspotsCollectionView);
+        },
+
+        initPartsModal: function() {
+            this.partsModalCompositeView = new PartsModalCompositeView();
+            this.modal.show(this.partsModalCompositeView);
         },
 
         initThumbnails: function() {
@@ -104,19 +122,32 @@ define([
             this.listenTo(this.bikeCollection, 'sync', this.onSync);
             this.listenTo(this.carouselCompositeView, 'onCarouselSlide', this.onCarouselSlide);
             this.listenTo(this.carouselCompositeView, 'onCarouselSlid', this.onCarouselSlid);
-            this.listenTo(this.carouselCompositeView, 'onCarouselSlid', this.onCarouselSlid);
             this.listenTo(this.hotspotsCollectionView, 'onPopoverShown', this.onPopoverShown);
             this.listenTo(this.hotspotsCollectionView, 'onPopoverHidden', this.onPopoverHidden);
+            this.listenTo(this.carouselCompositeView, 'onPartsClick', this.onPartsClick);
+            this.listenTo(this.carouselCompositeView, 'onHotspotsClick', this.onHotspotsClick);
             this.listenTo(this.filterButtonCollectionView, 'onSelectedFiltersChanged', this.onSelectedFiltersChanged);
         },
 
         showHotspots: function(index) {
-            var activeIndex = $('.carousel').data('bs.carousel').getActiveIndex();
-            var activeBikeModel = this.bikeCollection.at(activeIndex);
-            if (activeBikeModel) {
-                this.hotspotsCarouselLayout.hotspots.show(this.hotspotsCollectionView);
-                this.hotspotsCollectionView.collection = activeBikeModel.get('hotspots');
-                this.hotspotsCollectionView.render();
+            this.hotspotsCarouselLayout.hotspots.show(this.hotspotsCollectionView);
+            this.hotspotsCollectionView.collection = this.bikeCollection.at(index).get('hotspots');
+            this.hotspotsCollectionView.render();
+        },
+
+        showPartsModal: function(index) {
+            this.partsModalCompositeView.collection = this.bikeCollection.at(index).get('hotspots');
+            this.partsModalCompositeView.render();
+            this.partsModalCompositeView.showModal();
+        },
+
+        toggleHotspots: function() {
+            if (this.hotspotsOn) {
+                this.hotspotsCarouselLayout.hotspots.close();
+                this.hotspotsOn = false;
+            } else {
+                this.showHotspots(this.carouselCompositeView.getActiveIndex());
+                this.hotspotsOn = true;
             }
         }
     });

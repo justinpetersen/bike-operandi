@@ -30,11 +30,19 @@ define([
         },
 
         onCarouselSlide: function() {
-            this.trigger('onCarouselSlide', [$('.carousel').data('bs.carousel').getActiveIndex()]);
+            this.trigger('onCarouselSlide', [this.getActiveIndex()]);
         },
 
         onCarouselSlid: function() {
-            this.trigger('onCarouselSlid', [$('.carousel').data('bs.carousel').getActiveIndex()]);
+            this.trigger('onCarouselSlid', [this.getActiveIndex()]);
+        },
+
+        onPartsClick: function() {
+            this.trigger('onPartsClick', [this.getActiveIndex()]);
+        },
+
+        onHotspotsClick: function() {
+            this.trigger('onHotspotsClick', [this.getActiveIndex()]);
         },
 
         pauseCarousel: function() {
@@ -45,8 +53,15 @@ define([
             $('.carousel').carousel('cycle');
         },
 
+        getActiveIndex: function() {
+            var activeIndex = $('.carousel').data('bs.carousel').getActiveIndex();
+            return activeIndex;
+        },
+
         initialize: function() {
             this.listenTo(this.collection, 'sync', this.onSync);
+            this.on('itemview:onPartsClick', $.proxy(this.onPartsClick, this));
+            this.on('itemview:onHotspotsClick', $.proxy(this.onHotspotsClick, this));
         },
 
         initCarousel: function() {
