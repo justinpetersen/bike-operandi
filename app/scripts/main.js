@@ -8,6 +8,7 @@ require.config({
         bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap',
         firebase: '../bower_components/firebase/firebase',
         'firebase-simple-login': '../bower_components/firebase-simple-login/firebase-simple-login',
+        imagesloaded: '../bower_components/imagesloaded/imagesloaded.pkgd',
         isotope: '../bower_components/isotope/dist/isotope.pkgd',
         jquery: '../bower_components/jquery/dist/jquery',
         'jquery-bridget': '../bower_components/jquery-bridget/jquery.bridget',

@@ -48,12 +48,15 @@ define([
         },
 
         initIsotope: function() {
-            $('#thumbnails-row-container').isotope({
-                itemSelector: '.thumbnail-container',
-                layoutMode: 'fitRows',
-                getSortData: {
-                    title: '.title'
-                }
+            var container = $('#thumbnails-row-container');
+            container.imagesLoaded(function() {
+                container.isotope({
+                    itemSelector: '.thumbnail-container',
+                    layoutMode: 'fitRows',
+                    getSortData: {
+                        title: '.title'
+                    }
+                });
             });
         }
     });

@@ -10,6 +10,7 @@ define([
 
         onRender: function() {
             this.updateHotspotPositions();
+            this.fadeInHotspots();
         },
 
         onClick: function(eventData) {
@@ -43,6 +44,16 @@ define([
                 itemView.$el.css(hotspotPosition);
 
                 that.addPopover(itemView)
+            });
+        },
+
+        fadeInHotspots: function() {
+            var that = this;
+            var i = 0;
+            this.children.each(function(itemView) {
+                itemView.$el.hide();
+                itemView.$el.delay(100 * i).fadeIn(400);
+                i++;
             });
         },
 
