@@ -52,7 +52,7 @@ define([
             var i = 0;
             this.children.each(function(itemView) {
                 itemView.$el.hide();
-                itemView.$el.delay(100 * i).fadeIn(400);
+                itemView.$el.fadeIn(400);
                 i++;
             });
         },
