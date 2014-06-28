@@ -67,6 +67,11 @@ define([
             this.carouselCompositeView.resumeCarousel();
         },
 
+        onShowAllClick: function() {
+            this.clearFilters();
+            return false;
+        },
+
         initialize: function() {
             this.addRegions({
                 modal: '#modal-container',
@@ -133,6 +138,7 @@ define([
             this.listenTo(this.carouselCompositeView, 'onHotspotsClick', this.onHotspotsClick);
             this.listenTo(this.partsModalCompositeView, 'onModalHidden', this.onModalHidden);
             this.listenTo(this.filterButtonCollectionView, 'onSelectedFiltersChanged', this.onSelectedFiltersChanged);
+            this.listenTo(this.thumbnailsCompositeView, 'onShowAllClick', this.onShowAllClick);
         },
 
         showHotspots: function(index) {
@@ -157,6 +163,11 @@ define([
                 this.showHotspots(this.carouselCompositeView.getActiveIndex());
                 this.hotspotsOn = true;
             }
+        },
+
+        clearFilters: function() {
+            this.filterButtonCollectionView.clearSelectedFilters();
+            this.thumbnailsCompositeView.setFilters(['*']);
         }
     });
 

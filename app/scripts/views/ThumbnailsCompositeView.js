@@ -4,8 +4,9 @@ define([
     'marionette',
     'views/ThumbnailItemView',
     'isotope',
+    'imagesloaded',
     'jquery-bridget'
-], function ($, JST, Marionette, ThumbnailItemView, Isotope) {
+], function ($, JST, Marionette, ThumbnailItemView, Isotope, ImagesLoaded) {
     'use strict';
 
     var ThumbnailsCompositeView = Marionette.CompositeView.extend({
@@ -16,6 +17,10 @@ define([
         itemViewContainer: '#thumbnails-row-container',
 
         template: JST['app/scripts/templates/ThumbnailsComposite.ejs'],
+
+        triggers: {
+            'click #show-all-button': 'onShowAllClick'
+        },
 
         onSync: function() {
             this.render();
@@ -28,7 +33,7 @@ define([
         },
 
         setFilters: function(filters) {
-            $('#thumbnails-row-container').isotope({
+            var result = $('#thumbnails-row-container').isotope({
                 filter: function() {
                     var tags = $(this).find('.tags').text();
                     var match = true;
@@ -40,10 +45,23 @@ define([
                     return match;
                 }
             });
+
+            this.showNoResultsAlert();
+        },
+
+        showNoResultsAlert: function() {
+            // TODO: Find a better way to check for no results
+            if ($('#thumbnails-row-container').css('height') == '0px') {
+                $('#no-results-container').show();
+            } else {
+                $('#no-results-container').hide();
+            }
         },
 
         initialize: function() {
             $.bridget('isotope', Isotope);
+            $.bridget('imagesLoaded', ImagesLoaded);
+            $('#no-results-container').hide();
             this.listenTo(this.collection, 'sync', this.onSync);
         },
 
