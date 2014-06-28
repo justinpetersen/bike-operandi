@@ -18,6 +18,12 @@ html, body {
 
 #main-container {
   height: 100%;
+  @media (max-width: 768px) {
+    max-height: 400px;
+  }
+  @media (min-width: 768px) and (max-width: 1200px) {
+    max-height: 600px;
+  }
 
   box-shadow: 0 2px 15px rgba(0,0,0,0.5);
   -moz-box-shadow: 0 2px 15px rgba(0,0,0,0.5);
@@ -28,33 +34,32 @@ html, body {
   height: 100%;
 }
 
-#carousel-container {
-  height: 100%;
-}
-
 #filters-container {
   margin-top: 20px;
-}
-
-#thumbnails-container {
-  margin-top: 20px;
-  min-height: 800px;
-}
-
-#no-results-container {
-  display: none;
 }
 
 /* PARTS MODAL
 -------------------------------------------------- */
 
 .modal-body {
-  max-height: 800px;
+  @media (max-width: 768px) {
+    max-height: 400px;
+  }
+  @media (min-width: 768px) and (max-width: 1200px) {
+    max-height: 600px;
+  }
+  @media (min-width: 1200px) {
+    max-height: 800px;
+  }
   overflow: scroll;
 }
 
 /* CAROUSEL
 -------------------------------------------------- */
+
+#carousel-container {
+  height: 100%;
+}
 
 .carousel, .item {
   height: 100%;
@@ -74,9 +79,10 @@ html, body {
 /* HOTSPOTS
 -------------------------------------------------- */
 
-.hotspots-container {
-  position: absolute;
-  top: 0px;
+#hotspots-container {
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 .hotspot-container {
@@ -105,6 +111,15 @@ html, body {
 
 /* THUMBNAILS
 -------------------------------------------------- */
+
+#thumbnails-container {
+  margin-top: 20px;
+  min-height: 800px;
+}
+
+#no-results-container {
+  display: none;
+}
 
 .title {
   display: none;

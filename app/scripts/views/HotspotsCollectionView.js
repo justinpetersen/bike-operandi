@@ -108,6 +108,14 @@ define([
             var nativeImageWidth = 1118
             var nativeImageHeight = 629;
 
+            // Adjust client height on small screens
+            if (clientWidth < 1200) {
+                clientHeight = 600;
+            }
+            if (clientWidth < 768) {
+                clientHeight = 400;
+            }
+
             // Calculate browser and image ratios.
             var clientRatio = clientWidth / clientHeight;
             var imageRatio = nativeImageWidth / nativeImageHeight;
