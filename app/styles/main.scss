@@ -114,10 +114,12 @@ html, body {
   padding: 0px;
 }
 
-.img-responsive:hover {
+.thumbnail-container:hover {
   box-shadow: 0 2px 15px rgba(0,0,0,0.5);
   -moz-box-shadow: 0 2px 15px rgba(0,0,0,0.5);
   -webkit-box-shadow: 0 2px 15px rgba(0,0,0,0.5);
+
+  z-index: 100;
 }
 
 /* NAVBAR
