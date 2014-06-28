@@ -7,10 +7,7 @@ define([
     'use strict';
 
     var BikeCollection = Backbone.Firebase.Collection.extend({
-        model: BikeModel,
-
-        // TODO: Externalize Firebase URL
-    	firebase: new Firebase('https://bike-operandi.firebaseio.com/bikes')
+        model: BikeModel
     });
 
     return BikeCollection;

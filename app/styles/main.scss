@@ -115,9 +115,9 @@ html, body {
 }
 
 .thumbnail-container:hover {
-  box-shadow: 0 2px 15px rgba(0,0,0,0.5);
-  -moz-box-shadow: 0 2px 15px rgba(0,0,0,0.5);
-  -webkit-box-shadow: 0 2px 15px rgba(0,0,0,0.5);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0 2px 20px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0 2px 20px rgba(0,0,0,0.75);
 
   z-index: 100;
 }

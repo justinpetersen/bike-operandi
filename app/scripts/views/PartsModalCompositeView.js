@@ -13,6 +13,14 @@ define([
 
         template: JST['app/scripts/templates/PartsModalComposite.ejs'],
 
+        onRender: function() {
+            $('#parts-modal').on('hidden.bs.modal', $.proxy(this.onModalHidden, this));
+        },
+
+        onModalHidden: function() {
+            this.trigger('onModalHidden');
+        },
+
         showModal: function() {
             $('#parts-modal').modal('show');
         }

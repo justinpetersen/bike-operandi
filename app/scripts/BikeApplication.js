@@ -63,6 +63,10 @@ define([
             this.toggleHotspots();
         },
 
+        onModalHidden: function() {
+            this.carouselCompositeView.resumeCarousel();
+        },
+
         initialize: function() {
             this.addRegions({
                 modal: '#modal-container',
@@ -78,7 +82,8 @@ define([
         },
 
         initCollections: function() {
-            this.bikeCollection = new BikeCollection();
+            var RootBikeCollection = BikeCollection.extend({ firebase: 'https://bike-operandi.firebaseio.com/bikes' });
+            this.bikeCollection = new RootBikeCollection();
             var RootBikeFilterCollection = BikeFilterCollection.extend({ firebase: 'https://bike-operandi.firebaseio.com/filters' });
             this.bikeFilterCollection = new RootBikeFilterCollection();
         },
@@ -126,6 +131,7 @@ define([
             this.listenTo(this.hotspotsCollectionView, 'onPopoverHidden', this.onPopoverHidden);
             this.listenTo(this.carouselCompositeView, 'onPartsClick', this.onPartsClick);
             this.listenTo(this.carouselCompositeView, 'onHotspotsClick', this.onHotspotsClick);
+            this.listenTo(this.partsModalCompositeView, 'onModalHidden', this.onModalHidden);
             this.listenTo(this.filterButtonCollectionView, 'onSelectedFiltersChanged', this.onSelectedFiltersChanged);
         },
 
@@ -139,6 +145,8 @@ define([
             this.partsModalCompositeView.collection = this.bikeCollection.at(index).get('hotspots');
             this.partsModalCompositeView.render();
             this.partsModalCompositeView.showModal();
+
+            this.carouselCompositeView.pauseCarousel();
         },
 
         toggleHotspots: function() {
