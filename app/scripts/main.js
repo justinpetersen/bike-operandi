@@ -13,6 +13,7 @@ require.config({
         jquery: '../bower_components/jquery/dist/jquery',
         'jquery-bridget': '../bower_components/jquery-bridget/jquery.bridget',
         'jquery.carousel.fullscreen': '../scripts/helpers/jquery.carousel.fullscreen',
+        'jquery-ui': '../bower_components/jquery-ui/jquery-ui',
         marionette: '../bower_components/marionette/lib/backbone.marionette',
         underscore: '../bower_components/underscore/underscore'
     },

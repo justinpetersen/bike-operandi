@@ -1,7 +1,8 @@
 define([
     'jquery',
     'marionette',
-    'views/HotspotItemView'
+    'views/HotspotItemView',
+    'jquery-ui'
 ], function ($, Marionette, HotspotItemView) {
     'use strict';
 
@@ -30,6 +31,12 @@ define([
             this.updateHotspotPositions();
         },
 
+        onDragStop: function(itemView) {
+            var position = this.getHotspotPositionRatio(itemView.$el.position().left + 16, itemView.$el.position().top + 16);
+            itemView.model.set('x', position.left);
+            itemView.model.set('y', position.top);
+        },
+
         initialize: function() {
             $(window).on('click', $.proxy(this.onClick, this));
             $(window).on('resize', $.proxy(this.onResize, this));
@@ -43,7 +50,11 @@ define([
                 hotspotPosition.top = hotspotPosition.top - 16;
                 itemView.$el.css(hotspotPosition);
 
-                that.addPopover(itemView)
+                if (that.getUrlVars()['edit']) {
+                    that.initDraggable(itemView);
+                }
+
+                that.addPopover(itemView);
             });
         },
 
@@ -67,9 +78,14 @@ define([
                 placement: this.getPopoverPlacement(hotspotPosition.left, hotspotPosition.top),
                 trigger: 'hover'
             };
+            // TODO: Remove use of id
             var popover = $('#' + itemView.model.get('id')).popover(options);
             popover.on('shown.bs.popover', $.proxy(this.onPopoverShown, this));
             popover.on('hidden.bs.popover', $.proxy(this.onPopoverHidden, this));
+        },
+
+        initDraggable: function(itemView) {
+            itemView.$el.draggable( { stop: $.proxy(this.onDragStop, this, itemView) } );
         },
 
         getPopoverPlacement: function(x, y) {
@@ -141,6 +157,18 @@ define([
             }
 
             return imageData;
+        },
+
+        getUrlVars: function() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++)
+            {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
         }
     });
 

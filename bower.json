@@ -9,6 +9,7 @@
     "imagesloaded": "~3.1.8",
     "isotope": "~2.0.0",
     "jquery": "~2.1.0",
+    "jquery-ui": "~1.11.0",
     "marionette": "~1.8.7",
     "modernizr": "~2.7.1",
     "requirejs": "~2.1.10",

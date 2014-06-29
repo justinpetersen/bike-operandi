@@ -1,10 +1,9 @@
 define([
-    'underscore',
-    'backbone'
-], function (_, Backbone) {
+    'backfire'
+], function (Backbone) {
     'use strict';
 
-    var HotspotModel = Backbone.Model.extend({
+    var HotspotModel = Backbone.Firebase.Model.extend({
         defaults: {
             id: '',
             x: 0,
@@ -12,7 +11,7 @@ define([
             title: '',
             asin: '',
             image: '',
-            url: 'http://www.amazon.com'
+            url: '#'
         },
 
         initialize: function() {
@@ -20,14 +19,6 @@ define([
             if (this.get('image') == '') {
                 this.set('image', 'http://images.amazon.com/images/P/' + this.get('asin') + '.01.MZZZZZZZ.jpg');
             }
-        },
-
-        validate: function(attrs, options) {
-        },
-
-        parse: function(response, options)  {
-            console.log('HotspotModel.parse()');
-            return response;
         }
     });
 

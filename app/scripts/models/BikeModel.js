@@ -18,17 +18,12 @@ define([
             this.parseHotspots(attrs.hotspots);
         },
 
-        validate: function(attrs, options) {
-        },
-
-        parse: function(response, options)  {
-            return response;
-        },
-
         parseHotspots: function(hotspotArray) {
             this.set('hotspots', new HotspotCollection());
             for (var i=0; i<hotspotArray.length; i++) {
-                var hotspot = new HotspotModel(hotspotArray[i]);
+                var FirebaseHotspotModel = HotspotModel.extend( { firebase: this.collection.firebase.child(this.id).child('hotspots').child(i) } );
+                var hotspot = new FirebaseHotspotModel(hotspotArray[i]);
+                // TODO: Remove use of id
                 hotspot.set('id', 'hotspot-' + i);
                 this.get('hotspots').add(hotspot);
             }
