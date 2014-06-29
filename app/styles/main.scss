@@ -41,6 +41,12 @@ html, body {
 /* PARTS MODAL
 -------------------------------------------------- */
 
+.modal-dialog {
+  @media (min-width: 768px) {
+    width: 90%;
+  }
+}
+
 .modal-body {
   @media (max-width: 768px) {
     max-height: 400px;
@@ -52,6 +58,36 @@ html, body {
     max-height: 800px;
   }
   overflow: scroll;
+}
+
+.part-container {
+  height: 350px;
+  padding: 20px 0 0 0;
+  text-align: center;
+}
+
+.part-container:hover {
+  box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+  -webkit-box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+
+  z-index: 100;
+}
+
+.part-image-container {
+  height: 250px;
+  text-align: center;
+}
+
+.part-image {
+  max-width: 250px;
+  max-height: 250px;
+}
+
+.part-title {
+  padding-top: 20px;
+  margin-left: 50px;
+  margin-right: 50px;
 }
 
 /* CAROUSEL
@@ -134,9 +170,9 @@ html, body {
 }
 
 .thumbnail-container:hover {
-  box-shadow: 0 2px 20px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0 2px 20px rgba(0,0,0,0.75);
-  -webkit-box-shadow: 0 2px 20px rgba(0,0,0,0.75);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 0 2px 20px rgba(0,0,0,0.5);
 
   z-index: 100;
 }
