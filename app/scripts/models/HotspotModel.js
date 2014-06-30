@@ -15,8 +15,10 @@ define([
         },
 
         initialize: function() {
-            this.set('url', 'http://www.amazon.com/exec/obidos/ASIN/' + this.get('asin'));
-            if (this.get('image') == '') {
+            if (this.get('url') == this.defaults.url) {
+                this.set('url', 'http://www.amazon.com/exec/obidos/ASIN/' + this.get('asin'));
+            }
+            if (this.get('image') == this.defaults.image) {
                 this.set('image', 'http://images.amazon.com/images/P/' + this.get('asin') + '.01.MZZZZZZZ.jpg');
             }
         }

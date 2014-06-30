@@ -1,8 +1,9 @@
 define([
+    'jquery',
     'marionette',
     'views/FilterButtonCompositeView',
     'views/FilterButtonItemView'
-], function (Marionette, FilterButtonCompositeView, FilterButtonItemView) {
+], function ($, Marionette, FilterButtonCompositeView, FilterButtonItemView) {
     'use strict';
 
     var FilterButtonCollectionView = Marionette.CollectionView.extend({
@@ -26,9 +27,14 @@ define([
             this.updateSelectedFilters();
         },
 
+        onScroll: function() {
+            this.updateDropDownDirection();
+        },
+
         initialize: function() {
             this.on('itemview:onFilterButtonClick', $.proxy(this.onFilterButtonClick, this));
             this.on('itemview:onSelectedChanged', $.proxy(this.onSelectedChanged, this));
+            $(window).on('scroll', $.proxy(this.onScroll, this));
         },
 
         getItemView: function(item) {
@@ -54,6 +60,10 @@ define([
             });
 
             this.trigger('onSelectedFiltersChanged');
+        },
+
+        updateDropDownDirection: function() {
+            this.$el.find('.btn-group').toggleClass('dropup', (this.$el.offset().top - $(window).scrollTop() > 200));
         }
     });
 
