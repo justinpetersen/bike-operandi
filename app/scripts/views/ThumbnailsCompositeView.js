@@ -32,6 +32,10 @@ define([
             }
         },
 
+        onThumbnailClick: function(event) {
+            this.trigger('onThumbnailClick', event);
+        },
+
         setFilters: function(filters) {
             var result = $('#thumbnails-row-container').isotope({
                 filter: function() {
@@ -63,6 +67,7 @@ define([
             $.bridget('imagesLoaded', ImagesLoaded);
             $('#no-results-container').hide();
             this.listenTo(this.collection, 'sync', this.onSync);
+            this.on('itemview:onClick', $.proxy(this.onThumbnailClick, this));
         },
 
         initIsotope: function() {

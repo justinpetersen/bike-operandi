@@ -37,12 +37,12 @@ define([
             this.trigger('onCarouselSlid', [this.getActiveIndex()]);
         },
 
-        onPartsClick: function() {
-            this.trigger('onPartsClick', [this.getActiveIndex()]);
+        onPartsClick: function(itemView) {
+            this.trigger('onPartsClick', itemView);
         },
 
         onHotspotsClick: function() {
-            this.trigger('onHotspotsClick', [this.getActiveIndex()]);
+            this.trigger('onHotspotsClick');
         },
 
         pauseCarousel: function() {
