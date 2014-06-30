@@ -1,11 +1,15 @@
 define([
     'marionette',
-    'views/PartItemView'
-], function (Marionette, PartItemView) {
+    'views/PartListItemView'
+], function (Marionette, PartListItemView) {
     'use strict';
 
     var PartsCollectionView = Marionette.CollectionView.extend({
-        itemView: PartItemView
+    	tagName: 'table',
+
+    	attributes: { 'class': 'table table-condensed' },
+
+        itemView: PartListItemView
     });
 
     return PartsCollectionView;

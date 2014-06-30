@@ -1,6 +1,7 @@
 define([
+    'templates',
     'marionette'
-], function (Marionette) {
+], function (JST, Marionette) {
     'use strict';
 
     var HotspotsCarouselLayout = Marionette.Layout.extend({

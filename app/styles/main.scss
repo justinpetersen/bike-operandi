@@ -25,9 +25,9 @@ html, body {
     max-height: 600px;
   }
 
-  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-  -moz-box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-  -webkit-box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
 #hotspots-carousel-container {
@@ -98,6 +98,20 @@ html, body {
 
 .bike-image {
   width: 100%;
+}
+
+.part-container-sm {
+  height: 270px;
+}
+
+.part-image-container-sm {
+  height: 150px;
+  text-align: center;
+}
+
+.part-image-sm {
+  max-width: 150px;
+  max-height: 150px;
 }
 
 /* CAROUSEL
