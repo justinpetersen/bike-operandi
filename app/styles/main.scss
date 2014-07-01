@@ -66,6 +66,9 @@ html, body {
   border: none;
 }
 
+/* PART BUTTON
+-------------------------------------------------- */
+
 .part-container {
   height: 350px;
   padding: 20px 0 0 0;
@@ -96,6 +99,25 @@ html, body {
   padding-top: 20px;
   margin-left: 50px;
   margin-right: 50px;
+}
+
+/* PART EDIT FORM
+-------------------------------------------------- */
+
+.form-group {
+  margin-bottom: 5px;
+}
+
+.part-edit-form {
+  padding: 0 10px 0 10px;
+  display: none;
+}
+
+.part-edit-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: none;
 }
 
 /* BIKE DETAIL MODAL
