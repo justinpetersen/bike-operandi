@@ -14,7 +14,8 @@ define([
 		triggers: {
 			'click #part-edit-button': 'onEditClick',
 			'click #part-edit-cancel-button': 'onCancelClick',
-			'click #part-edit-save-button': 'onSaveClick'
+			'click #part-edit-save-button': 'onSaveClick',
+			'click #part-edit-delete-button': 'onDeleteClick'
 		},
 
         onRender: function() {
@@ -39,10 +40,15 @@ define([
         	this.saveFormValues();
         },
 
+        onDeleteClick: function() {
+        	this.model.collection.remove(this.model);
+        },
+
         initialize: function() {
         	this.listenTo(this, 'onEditClick', this.onEditClick);
         	this.listenTo(this, 'onCancelClick', this.onCancelClick);
         	this.listenTo(this, 'onSaveClick', this.onSaveClick);
+        	this.listenTo(this, 'onDeleteClick', this.onDeleteClick);
         	this.listenTo(this.model, 'sync', this.onSync);
         },
 
