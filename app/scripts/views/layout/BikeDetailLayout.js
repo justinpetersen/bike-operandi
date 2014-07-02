@@ -1,17 +1,21 @@
 define([
     'marionette',
+    'views/BikeHeaderView',
     'views/BikeView',
     'views/PartsCollectionView'
-], function (Marionette, BikeView, PartsCollectionView) {
+], function (Marionette, BikeHeaderView, BikeView, PartsCollectionView) {
     'use strict';
 
     var BikeDetailLayout = Marionette.Layout.extend({
         template: JST['app/scripts/templates/BikeDetailLayout.ejs'],
 
         regions: {
+            header: '#header-container',
             bike: '#bike-container',
             parts: '#parts-container'
         },
+
+        bikeHeaderView: null,
 
         bikeView: null,
 
@@ -26,6 +30,9 @@ define([
         },
 
         showModal: function(model) {
+            this.bikeHeaderView = new BikeHeaderView({ model: model });
+            this.header.show(this.bikeHeaderView);
+
             this.bikeView = new BikeView({ model: model });
             this.bike.show(this.bikeView);
 

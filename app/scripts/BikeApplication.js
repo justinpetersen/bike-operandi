@@ -79,10 +79,6 @@ define([
             return false;
         },
 
-        onPartEditClick: function(itemView) {
-            console.log(itemView.model.get('title'));
-        },
-
         initialize: function() {
             this.addRegions({
                 modal: '#modal-container',
@@ -155,7 +151,6 @@ define([
             this.listenTo(this.filterButtonCollectionView, 'onSelectedFiltersChanged', this.onSelectedFiltersChanged);
             this.listenTo(this.thumbnailsCompositeView, 'onThumbnailClick', this.onThumbnailClick);
             this.listenTo(this.thumbnailsCompositeView, 'onShowAllClick', this.onShowAllClick);
-            this.listenTo(this.bikeDetailLayout, 'onPartEditClick', this.onPartEditClick);
         },
 
         showHotspots: function(index) {
