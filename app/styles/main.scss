@@ -236,12 +236,13 @@ h6 {
 
 .thumbnail-container {
   padding: 0px;
+  border: none;
 }
 
 .thumbnail-container:hover {
-  box-shadow: 0 2px 20px rgba(0,0,0,0.5);
-  -moz-box-shadow: 0 2px 20px rgba(0,0,0,0.5);
-  -webkit-box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 0 2px 10px rgba(0,0,0,0.5);
 
   z-index: 100;
 }
