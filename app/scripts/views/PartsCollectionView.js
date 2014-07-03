@@ -1,11 +1,19 @@
 define([
     'marionette',
-    'views/PartListItemView'
-], function (Marionette, PartListItemView) {
+    'views/PartItemView'
+], function (Marionette, PartItemView) {
     'use strict';
 
     var PartsCollectionView = Marionette.CollectionView.extend({
-    	itemView: PartListItemView
+    	itemView: PartItemView,
+
+    	onDeleteClick: function(itemView) {
+    		this.collection.remove(itemView.model);
+    	},
+
+    	initialize: function() {
+            this.on('itemview:onDeleteClick', $.proxy(this.onDeleteClick, this));
+    	}
     });
 
     return PartsCollectionView;

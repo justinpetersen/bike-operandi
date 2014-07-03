@@ -1,9 +1,7 @@
 define([
-    'underscore',
     'backfire',
-    'models/BikeModel',
-    'firebase'
-], function (_, Backbone, BikeModel, Firebase) {
+    'models/BikeModel'
+], function (Backbone, BikeModel) {
     'use strict';
 
     var BikeCollection = Backbone.Firebase.Collection.extend({

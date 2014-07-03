@@ -29,14 +29,14 @@ define([
             this.trigger('onModalHidden');
         },
 
-        showModal: function(model) {
-            this.bikeHeaderView = new BikeHeaderView({ model: model });
+        showModal: function(bikeModel, partCollection) {
+            this.bikeHeaderView = new BikeHeaderView({ model: bikeModel });
             this.header.show(this.bikeHeaderView);
 
-            this.bikeView = new BikeView({ model: model });
+            this.bikeView = new BikeView({ model: bikeModel });
             this.bike.show(this.bikeView);
 
-            this.partsCollectionView = new PartsCollectionView({ collection: model.get('hotspots') });
+            this.partsCollectionView = new PartsCollectionView({ collection: partCollection });
             this.parts.show(this.partsCollectionView);
 
             $('#bike-detail-modal').modal('show');
