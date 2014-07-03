@@ -1,10 +1,10 @@
 define([
-    'backbone',
+    'backfire',
     'models/HotspotModel'
 ], function (Backbone, HotspotModel) {
     'use strict';
 
-    var HotspotCollection = Backbone.Collection.extend({
+    var HotspotCollection = Backbone.Firebase.Collection.extend({
         model: HotspotModel
     });
 

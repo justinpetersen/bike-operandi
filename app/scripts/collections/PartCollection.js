@@ -7,9 +7,6 @@ define([
     var PartCollection = Backbone.Firebase.Collection.extend({
         model: PartModel,
 
-        onSync: function() {
-        },
-
         getParts: function(ids) {
         	var partsCollection = new Backbone.Collection();
         	for (var i in ids) {
@@ -18,10 +15,6 @@ define([
         		}
         	}
         	return partsCollection;
-        },
-
-        initialize: function() {
-            this.listenTo(this, 'sync', this.onSync);
         }
     });
 

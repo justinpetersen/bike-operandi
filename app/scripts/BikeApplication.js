@@ -1,8 +1,9 @@
 define([
     'marionette',
-    'collections/BikeCollection',
-    'collections/BikeFilterCollection',
-    'collections/PartCollection',
+    // 'collections/BikeCollection',
+    // 'collections/BikeFilterCollection',
+    // 'collections/PartCollection',
+    'controllers/BikeManager',
     'views/CarouselCompositeView',
     'views/HotspotsCollectionView',
     'views/layout/HotspotsCarouselLayout',
@@ -10,17 +11,19 @@ define([
     'views/layout/ThumbnailFiltersLayout',
     'views/FilterButtonCollectionView',
     'views/ThumbnailsCompositeView'
-], function (Marionette, BikeCollection, BikeFilterCollection, PartCollection, CarouselCompositeView, HotspotsCollectionView, HotspotsCarouselLayout, BikeDetailLayout, ThumbnailFiltersLayout, FilterButtonCollectionView, ThumbnailsCompositeView) {
+], function (Marionette, BikeManager, CarouselCompositeView, HotspotsCollectionView, HotspotsCarouselLayout, BikeDetailLayout, ThumbnailFiltersLayout, FilterButtonCollectionView, ThumbnailsCompositeView) {
     'use strict';
 
     var BikeApplication = Marionette.Application.extend({
-        RESET_FIREBASE: false,
+        // RESET_FIREBASE: false,
 
-        bikeCollection: null,
+        // bikeCollection: null,
 
-        bikeFilterCollection: null,
+        // bikeFilterCollection: null,
 
-        partCollection: null,
+        // partCollection: null,
+
+        bikeManager: null,
 
         hotspotsCarouselLayout: null,
 
@@ -38,10 +41,15 @@ define([
 
         hotspotsOn: true,
 
-        onSync: function() {
-            if (this.RESET_FIREBASE) {
-                this.resetFirebase();
-            }
+        // onBikeSync: function() {
+        //     if (this.RESET_FIREBASE) {
+        //         this.resetFirebase();
+        //     }
+        //     this.showHotspots(0);
+        // },
+
+        onSyncComplete: function() {
+            // this.initViews();
             this.showHotspots(0);
         },
 
@@ -56,7 +64,7 @@ define([
         },
 
         onSelectedFiltersChanged: function() {
-            this.thumbnailsCompositeView.setFilters(this.bikeFilterCollection.selectedFilters);
+            this.thumbnailsCompositeView.setFilters(this.bikeManager.bikeFilterCollection.selectedFilters);
         },
 
         onPopoverShown: function() {
@@ -92,25 +100,31 @@ define([
             });
 
             this.addInitializer(function(options){
-                this.initCollections();
+                this.initBikeManager();
+                // this.initCollections();
                 this.initViews();
-                this.initEvents();
             });
         },
 
-        initCollections: function() {
-            var FirebaseBikeCollection = BikeCollection.extend({ firebase: 'https://bike-operandi.firebaseio.com/bikes' });
-            this.bikeCollection = new FirebaseBikeCollection();
-            var FirebaseBikeFilterCollection = BikeFilterCollection.extend({ firebase: 'https://bike-operandi.firebaseio.com/filters' });
-            this.bikeFilterCollection = new FirebaseBikeFilterCollection();
-            var FirebasePartCollection = PartCollection.extend({ firebase: 'https://bike-operandi.firebaseio.com/parts' });
-            this.partCollection = new FirebasePartCollection();
+        initBikeManager: function() {
+            this.bikeManager = new BikeManager();
+            this.listenTo(this.bikeManager, 'onSyncComplete', this.onSyncComplete);
         },
 
+        // initCollections: function() {
+        //     var FirebaseBikeCollection = BikeCollection.extend({ firebase: 'https://bike-operandi.firebaseio.com/bikes' });
+        //     this.bikeCollection = new FirebaseBikeCollection();
+        //     var FirebaseBikeFilterCollection = BikeFilterCollection.extend({ firebase: 'https://bike-operandi.firebaseio.com/filters' });
+        //     this.bikeFilterCollection = new FirebaseBikeFilterCollection();
+        //     var FirebasePartCollection = PartCollection.extend({ firebase: 'https://bike-operandi.firebaseio.com/parts' });
+        //     this.partCollection = new FirebasePartCollection();
+        // },
+
         initViews: function() {
-            this.initBikeDetailLayout();
             this.initHotspotCarousel();
+            this.initBikeDetailLayout();
             this.initThumbnails();
+            this.initViewEvents();
         },
 
         initHotspotCarousel: function() {
@@ -118,7 +132,7 @@ define([
             this.hotspotsCarouselLayout.render();
             this.main.show(this.hotspotsCarouselLayout);
 
-            this.carouselCompositeView = new CarouselCompositeView({ collection: this.bikeCollection });
+            this.carouselCompositeView = new CarouselCompositeView({ collection: this.bikeManager.bikeCollection });
             this.hotspotsCarouselLayout.carousel.show(this.carouselCompositeView);
 
             this.hotspotsCollectionView = new HotspotsCollectionView();
@@ -134,15 +148,15 @@ define([
             this.thumbnailFiltersLayout.render();
             this.content.show(this.thumbnailFiltersLayout);
 
-            this.filterButtonCollectionView = new FilterButtonCollectionView({ collection: this.bikeFilterCollection });
+            this.filterButtonCollectionView = new FilterButtonCollectionView({ collection: this.bikeManager.bikeFilterCollection });
             this.thumbnailFiltersLayout.filters.show(this.filterButtonCollectionView);
 
-            this.thumbnailsCompositeView = new ThumbnailsCompositeView({ collection: this.bikeCollection });
+            this.thumbnailsCompositeView = new ThumbnailsCompositeView({ collection: this.bikeManager.bikeCollection });
             this.thumbnailFiltersLayout.thumbnails.show(this.thumbnailsCompositeView);
         },
 
-        initEvents: function() {
-            this.listenTo(this.bikeCollection, 'sync', this.onSync);
+        initViewEvents: function() {
+            // this.listenTo(this.bikeCollection, 'sync', this.onBikeSync);
             this.listenTo(this.carouselCompositeView, 'onCarouselSlide', this.onCarouselSlide);
             this.listenTo(this.carouselCompositeView, 'onCarouselSlid', this.onCarouselSlid);
             this.listenTo(this.hotspotsCollectionView, 'onPopoverShown', this.onPopoverShown);
@@ -156,18 +170,20 @@ define([
         },
 
         showHotspots: function(index) {
-            // TODO: Re-enable hotspots
-            return;
+            var bikeModel = this.bikeManager.bikeCollection.at(index);
+            var partCollection = this.bikeManager.partCollection.getParts(bikeModel.get('parts'));
+            bikeModel.setPartCollection(partCollection);
 
             this.hotspotsCarouselLayout.hotspots.show(this.hotspotsCollectionView);
-            this.hotspotsCollectionView.collection = this.bikeCollection.at(index).get('part-hotspots');
+            this.hotspotsCollectionView.collection = bikeModel.getHotspotCollection();
             this.hotspotsCollectionView.render();
         },
 
         showBikeDetailLayout: function(bikeModel, showBikeImage) {
-            this.modal.show(this.bikeDetailLayout);
-            var partCollection = this.partCollection.getParts(bikeModel.get('parts'));
+            var partCollection = this.bikeManager.partCollection.getParts(bikeModel.get('parts'));
             bikeModel.setPartCollection(partCollection);
+
+            this.modal.show(this.bikeDetailLayout);
             this.bikeDetailLayout.showModal(bikeModel, partCollection, showBikeImage);
             this.carouselCompositeView.pauseCarousel();
         },
@@ -185,25 +201,6 @@ define([
         clearFilters: function() {
             this.filterButtonCollectionView.clearSelectedFilters();
             this.thumbnailsCompositeView.setFilters(['*']);
-        },
-
-        resetFirebase: function() {
-            this.createGlobalPartCollection();
-            this.createGlobalHotspotCollection();
-        },
-
-        createGlobalPartCollection: function() {
-            var hotspots;
-            for (var i=0; i<this.bikeCollection.length; i++) {
-                hotspots = this.bikeCollection.at(i).get('part-hotspots');
-                for (var j=0; j<hotspots.length; j++) {
-                    this.partCollection.add( { id: hotspots[j].asin, title: hotspots[j].title, image: hotspots[j].image } );
-                }
-            }
-        },
-
-        createGlobalHotspotCollection: function() {
-            
         }
     });
 
