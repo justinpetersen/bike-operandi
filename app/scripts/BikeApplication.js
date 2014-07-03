@@ -6,12 +6,11 @@ define([
     'views/CarouselCompositeView',
     'views/HotspotsCollectionView',
     'views/layout/HotspotsCarouselLayout',
-    'views/PartsModalCompositeView',
     'views/layout/BikeDetailLayout',
     'views/layout/ThumbnailFiltersLayout',
     'views/FilterButtonCollectionView',
     'views/ThumbnailsCompositeView'
-], function (Marionette, BikeCollection, BikeFilterCollection, PartCollection, CarouselCompositeView, HotspotsCollectionView, HotspotsCarouselLayout, PartsModalCompositeView, BikeDetailLayout, ThumbnailFiltersLayout, FilterButtonCollectionView, ThumbnailsCompositeView) {
+], function (Marionette, BikeCollection, BikeFilterCollection, PartCollection, CarouselCompositeView, HotspotsCollectionView, HotspotsCarouselLayout, BikeDetailLayout, ThumbnailFiltersLayout, FilterButtonCollectionView, ThumbnailsCompositeView) {
     'use strict';
 
     var BikeApplication = Marionette.Application.extend({
@@ -28,8 +27,6 @@ define([
         carouselCompositeView: null,
 
         hotspotsCollectionView: null,
-
-        partsModalCompositeView: null,
 
         bikeDetailLayout: null,
 
@@ -67,7 +64,7 @@ define([
         },
 
         onPartsClick: function(itemView) {
-            this.showPartsModal(itemView.model);
+            this.showBikeDetailLayout(itemView.model, false);
         },
 
         onHotspotsClick: function() {
@@ -79,7 +76,7 @@ define([
         },
 
         onThumbnailClick: function(itemView) {
-            this.showBikeDetailLayout(itemView.model);
+            this.showBikeDetailLayout(itemView.model, true);
         },
 
         onShowAllClick: function() {
@@ -111,7 +108,6 @@ define([
         },
 
         initViews: function() {
-            this.initPartsModal();
             this.initBikeDetailLayout();
             this.initHotspotCarousel();
             this.initThumbnails();
@@ -127,10 +123,6 @@ define([
 
             this.hotspotsCollectionView = new HotspotsCollectionView();
             this.hotspotsCarouselLayout.hotspots.show(this.hotspotsCollectionView);
-        },
-
-        initPartsModal: function() {
-            this.partsModalCompositeView = new PartsModalCompositeView();
         },
 
         initBikeDetailLayout: function() {
@@ -157,7 +149,7 @@ define([
             this.listenTo(this.hotspotsCollectionView, 'onPopoverHidden', this.onPopoverHidden);
             this.listenTo(this.carouselCompositeView, 'onPartsClick', this.onPartsClick);
             this.listenTo(this.carouselCompositeView, 'onHotspotsClick', this.onHotspotsClick);
-            this.listenTo(this.partsModalCompositeView, 'onModalHidden', this.onModalHidden);
+            this.listenTo(this.bikeDetailLayout, 'onModalHidden', this.onModalHidden);
             this.listenTo(this.filterButtonCollectionView, 'onSelectedFiltersChanged', this.onSelectedFiltersChanged);
             this.listenTo(this.thumbnailsCompositeView, 'onThumbnailClick', this.onThumbnailClick);
             this.listenTo(this.thumbnailsCompositeView, 'onShowAllClick', this.onShowAllClick);
@@ -172,22 +164,12 @@ define([
             this.hotspotsCollectionView.render();
         },
 
-        showPartsModal: function(bikeModel) {
-            this.modal.show(this.partsModalCompositeView);
-            // this.partsModalCompositeView.collection = bikeModel.get('hotspots');
-            var partCollection = this.partCollection.getParts(bikeModel.get('parts'));
-            bikeModel.setPartCollection(partCollection);
-            this.partsModalCompositeView.collection = partCollection;
-            this.partsModalCompositeView.render();
-            this.partsModalCompositeView.showModal();
-            this.carouselCompositeView.pauseCarousel();
-        },
-
-        showBikeDetailLayout: function(bikeModel) {
+        showBikeDetailLayout: function(bikeModel, showBikeImage) {
             this.modal.show(this.bikeDetailLayout);
             var partCollection = this.partCollection.getParts(bikeModel.get('parts'));
             bikeModel.setPartCollection(partCollection);
-            this.bikeDetailLayout.showModal(bikeModel, partCollection);
+            this.bikeDetailLayout.showModal(bikeModel, partCollection, showBikeImage);
+            this.carouselCompositeView.pauseCarousel();
         },
 
         toggleHotspots: function() {

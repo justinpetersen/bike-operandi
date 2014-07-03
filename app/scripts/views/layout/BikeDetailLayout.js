@@ -29,12 +29,14 @@ define([
             this.trigger('onModalHidden');
         },
 
-        showModal: function(bikeModel, partCollection) {
+        showModal: function(bikeModel, partCollection, showBikeImage) {
             this.bikeHeaderView = new BikeHeaderView({ model: bikeModel });
             this.header.show(this.bikeHeaderView);
 
-            this.bikeView = new BikeView({ model: bikeModel });
-            this.bike.show(this.bikeView);
+            if (showBikeImage) {
+                this.bikeView = new BikeView({ model: bikeModel });
+                this.bike.show(this.bikeView);
+            }
 
             this.partsCollectionView = new PartsCollectionView({ collection: partCollection });
             this.parts.show(this.partsCollectionView);

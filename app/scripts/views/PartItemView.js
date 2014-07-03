@@ -40,15 +40,10 @@ define([
         	this.saveFormValues();
         },
 
-        // onDeleteClick: function() {
-        // 	this.model.collection.remove(this.model);
-        // },
-
         initialize: function() {
         	this.listenTo(this, 'onEditClick', this.onEditClick);
         	this.listenTo(this, 'onCancelClick', this.onCancelClick);
         	this.listenTo(this, 'onSaveClick', this.onSaveClick);
-        	// this.listenTo(this, 'onDeleteClick', this.onDeleteClick);
         	this.listenTo(this.model, 'change', this.onModelChange);
         },
 
