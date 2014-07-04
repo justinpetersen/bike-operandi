@@ -11,7 +11,6 @@ define([
 
         onRender: function() {
             this.updateHotspotPositions();
-            this.fadeInHotspots();
         },
 
         onClick: function(eventData) {
@@ -35,6 +34,14 @@ define([
             var position = this.getHotspotPositionRatio(itemView.$el.position().left + 16, itemView.$el.position().top + 16);
             itemView.model.set('x', position.left);
             itemView.model.set('y', position.top);
+        },
+
+        showHotspots: function(collection) {
+            // TODO: There is probably a better way to reset the collection and trigger a render
+            this.collection = collection;
+            this.listenTo(this.collection, 'remove', this.render);
+            this.render();
+            this.fadeInHotspots();
         },
 
         initialize: function() {
@@ -154,6 +161,12 @@ define([
                 scaledImageHeight: scaledImageHeight,
                 overflowLeft: (scaledImageWidth - clientWidth) / 2,
                 overflowTop: (scaledImageHeight - clientHeight) / 2
+                // clientWidth: 1148,
+                // clientHeight: 646,
+                // scaledImageWidth: 1148,
+                // scaledImageHeight: 646,
+                // overflowLeft: 0,
+                // overflowTop: 0
             }
 
             return imageData;

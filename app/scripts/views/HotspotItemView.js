@@ -9,7 +9,7 @@ define([
 
         attributes: {class: 'hotspot-container'},
 
-        template: JST['app/scripts/templates/Hotspot.ejs'],
+        template: JST['app/scripts/templates/Hotspot.ejs']
     });
 
     return HotspotItemView;

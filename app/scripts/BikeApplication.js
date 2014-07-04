@@ -1,8 +1,5 @@
 define([
     'marionette',
-    // 'collections/BikeCollection',
-    // 'collections/BikeFilterCollection',
-    // 'collections/PartCollection',
     'controllers/BikeManager',
     'views/CarouselCompositeView',
     'views/HotspotsCollectionView',
@@ -15,14 +12,6 @@ define([
     'use strict';
 
     var BikeApplication = Marionette.Application.extend({
-        // RESET_FIREBASE: false,
-
-        // bikeCollection: null,
-
-        // bikeFilterCollection: null,
-
-        // partCollection: null,
-
         bikeManager: null,
 
         hotspotsCarouselLayout: null,
@@ -41,15 +30,7 @@ define([
 
         hotspotsOn: true,
 
-        // onBikeSync: function() {
-        //     if (this.RESET_FIREBASE) {
-        //         this.resetFirebase();
-        //     }
-        //     this.showHotspots(0);
-        // },
-
         onSyncComplete: function() {
-            // this.initViews();
             this.showHotspots(0);
         },
 
@@ -101,7 +82,6 @@ define([
 
             this.addInitializer(function(options){
                 this.initBikeManager();
-                // this.initCollections();
                 this.initViews();
             });
         },
@@ -110,15 +90,6 @@ define([
             this.bikeManager = new BikeManager();
             this.listenTo(this.bikeManager, 'onSyncComplete', this.onSyncComplete);
         },
-
-        // initCollections: function() {
-        //     var FirebaseBikeCollection = BikeCollection.extend({ firebase: 'https://bike-operandi.firebaseio.com/bikes' });
-        //     this.bikeCollection = new FirebaseBikeCollection();
-        //     var FirebaseBikeFilterCollection = BikeFilterCollection.extend({ firebase: 'https://bike-operandi.firebaseio.com/filters' });
-        //     this.bikeFilterCollection = new FirebaseBikeFilterCollection();
-        //     var FirebasePartCollection = PartCollection.extend({ firebase: 'https://bike-operandi.firebaseio.com/parts' });
-        //     this.partCollection = new FirebasePartCollection();
-        // },
 
         initViews: function() {
             this.initHotspotCarousel();
@@ -156,7 +127,6 @@ define([
         },
 
         initViewEvents: function() {
-            // this.listenTo(this.bikeCollection, 'sync', this.onBikeSync);
             this.listenTo(this.carouselCompositeView, 'onCarouselSlide', this.onCarouselSlide);
             this.listenTo(this.carouselCompositeView, 'onCarouselSlid', this.onCarouselSlid);
             this.listenTo(this.hotspotsCollectionView, 'onPopoverShown', this.onPopoverShown);
@@ -175,8 +145,7 @@ define([
             bikeModel.setPartCollection(partCollection);
 
             this.hotspotsCarouselLayout.hotspots.show(this.hotspotsCollectionView);
-            this.hotspotsCollectionView.collection = bikeModel.getHotspotCollection();
-            this.hotspotsCollectionView.render();
+            this.hotspotsCollectionView.showHotspots(bikeModel.getHotspotCollection());
         },
 
         showBikeDetailLayout: function(bikeModel, showBikeImage) {

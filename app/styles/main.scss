@@ -115,27 +115,56 @@ h6 {
   margin-right: 50px;
 }
 
-/* PART EDIT FORM
+/* EDIT FORMS
 -------------------------------------------------- */
+
+#bike-edit-form {
+  padding-top: 5px;
+  display: none;
+}
+
+#bike-edit-button {
+  display: none;
+}
+
+#bike-edit-delete-button {
+  display: none;
+}
+
+#bike-edit-cancel-button {
+  display: none;
+}
+
+#part-edit-form {
+  padding: 0 10px 0 10px;
+  display: none;
+}
+
+#part-edit-button {
+  display: none;
+}
+
+#part-edit-cancel-button {
+  display: none;
+}
 
 .form-group {
   margin-bottom: 5px;
 }
 
-.part-edit-form {
-  padding: 0 10px 0 10px;
-  display: none;
-}
-
-.part-edit-button {
+.absolute-edit-button {
   position: absolute;
   top: 10px;
   left: 10px;
-  display: none;
 }
 
 /* BIKE DETAIL MODAL
 -------------------------------------------------- */
+
+#detail-hotspots-container {
+  display: none;
+  position: absolute;
+}
 
 .bike-image {
   width: 100%;

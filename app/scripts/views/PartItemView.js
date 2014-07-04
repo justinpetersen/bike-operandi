@@ -5,8 +5,6 @@ define([
     'use strict';
 
     var PartItemView = Marionette.ItemView.extend({
-        tagName: 'div',
-
         attributes: { 'class': 'part-container part-container-sm col-lg-3 col-sm-4 col-xs-12' },
 
         template: JST['app/scripts/templates/PartItem.ejs'],
@@ -20,7 +18,7 @@ define([
 
         onRender: function() {
             if (this.getUrlVars()['edit']) {
-                this.$el.find('#part-edit-button').show();
+                this.hidePartEditForm();
             }
         },
 

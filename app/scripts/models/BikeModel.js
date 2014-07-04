@@ -1,7 +1,6 @@
 define([
     'backbone',
     'collections/PartCollection',
-    // 'models/HotspotModel',
     'collections/HotspotCollection'
 ], function (Backbone, PartCollection, HotspotCollection) {
     'use strict';
@@ -54,25 +53,16 @@ define([
         },
 
         initialize: function(attrs, options) {
-            // this.parseHotspots(attrs['part-hotspots']);
             this.listenTo(this, 'add', this.onAdd);
         },
-
-        // parseHotspots: function(hotspotArray) {
-        //     this.set('part-hotspots', new HotspotCollection());
-        //     for (var i=0; i<hotspotArray.length; i++) {
-        //         var FirebaseHotspotModel = HotspotModel.extend( { firebase: this.collection.firebase.child(this.id).child('part-hotspots').child(i) } );
-        //         var hotspot = new FirebaseHotspotModel(hotspotArray[i]);
-        //         hotspot.set('id', 'hotspot-' + i);
-        //         this.get('part-hotspots').add(hotspot);
-        //     }
-        // },
 
         removePart: function(id) {
             var partsNew = this.get('parts');
             partsNew[id] = false;
             this.unset('parts');
             this.set('parts', partsNew);
+
+            this.hotspotCollection.remove(this.hotspotCollection.where( { 'part-id': id } ))
         },
 
         resetFirebase: function() {
