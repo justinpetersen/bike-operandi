@@ -1,6 +1,7 @@
 define([
     'marionette',
     'controllers/BikeManager',
+    'views/layout/NavLayout',
     'views/CarouselCompositeView',
     'views/HotspotsCollectionView',
     'views/layout/HotspotsCarouselLayout',
@@ -8,11 +9,13 @@ define([
     'views/layout/ThumbnailFiltersLayout',
     'views/FilterButtonCollectionView',
     'views/ThumbnailsCompositeView'
-], function (Marionette, BikeManager, CarouselCompositeView, HotspotsCollectionView, HotspotsCarouselLayout, BikeDetailLayout, ThumbnailFiltersLayout, FilterButtonCollectionView, ThumbnailsCompositeView) {
+], function (Marionette, BikeManager, NavLayout, CarouselCompositeView, HotspotsCollectionView, HotspotsCarouselLayout, BikeDetailLayout, ThumbnailFiltersLayout, FilterButtonCollectionView, ThumbnailsCompositeView) {
     'use strict';
 
     var BikeApplication = Marionette.Application.extend({
         bikeManager: null,
+
+        navLayout: null,
 
         hotspotsCarouselLayout: null,
 
@@ -75,6 +78,7 @@ define([
 
         initialize: function() {
             this.addRegions({
+                nav: '#nav-container',
                 modal: '#modal-container',
                 main: '#main-container',
                 content: '#content-container'
@@ -92,10 +96,17 @@ define([
         },
 
         initViews: function() {
+            this.initNavLayout();
             this.initHotspotCarousel();
             this.initBikeDetailLayout();
             this.initThumbnails();
             this.initViewEvents();
+        },
+
+        initNavLayout: function() {
+            this.navLayout = new NavLayout();
+            this.nav.show(this.navLayout);
+            this.navLayout.showNav();
         },
 
         initHotspotCarousel: function() {
