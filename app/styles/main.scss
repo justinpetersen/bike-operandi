@@ -9,6 +9,10 @@ html, body {
   background: #eee;
 }
 
+body {
+  padding-top: 50px;
+}
+
 body,
 input,
 button,
@@ -28,28 +32,6 @@ h6 {
   background: #ccc;
   color: #000;
   padding: 0.2em 0;
-}
-
-#main-container {
-  height: 100%;
-  @media (max-width: 768px) {
-    max-height: 400px;
-  }
-  @media (min-width: 768px) and (max-width: 1200px) {
-    max-height: 600px;
-  }
-
-  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-  -moz-box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-  -webkit-box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
-
-#hotspots-carousel-container {
-  height: 100%;
-}
-
-#filters-container {
-  margin-top: 20px;
 }
 
 /* PARTS MODAL
@@ -87,6 +69,7 @@ h6 {
   height: 350px;
   padding: 20px 0 0 0;
   text-align: center;
+  background: #fff;
   border-right: 1px solid #e5e5e5;
   border-bottom: 1px solid #e5e5e5;
 }
@@ -191,19 +174,60 @@ h6 {
 /* CAROUSEL
 -------------------------------------------------- */
 
+#hero-container {
+  height: 100%;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    max-height: 400px;
+  }
+  @media (min-width: 768px) and (max-width: 1200px) {
+    max-height: 600px;
+  }
+  @media (min-width: 1200px) {
+    max-height: 700px;
+    width: 1200px;
+  }
+
+  #hotspots-carousel-container {
+    height: 100%;
+  }
+
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
 #carousel-container {
   height: 100%;
 }
 
-.carousel, .item {
+.carousel-inner {
+  height: 100%;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.carousel,
+.item {
   height: 100%;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
 }
 
-.carousel-inner {
-  height: 100%;
+.carousel-control {
+  width: 40px;
+  opacity: 1;
+}
+
+.carousel-control:hover {
+  opacity: 1;
+}
+
+.carousel-control.left,
+.carousel-control.right {
+  background-image: none;
 }
 
 .carousel-caption {
@@ -246,6 +270,10 @@ h6 {
 /* THUMBNAILS
 -------------------------------------------------- */
 
+#filters-container {
+  margin-top: 20px;
+}
+
 #thumbnails-container {
   margin-top: 20px;
   min-height: 800px;
@@ -284,7 +312,7 @@ h6 {
   top: 0;
   right: 0;
   left: 0;
-  z-index: 20;
+  z-index: 200;
 
   box-shadow: 0 2px 5px rgba(0,0,0,0.5);
   -moz-box-shadow: 0 2px 5px rgba(0,0,0,0.5);

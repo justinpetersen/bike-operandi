@@ -34,8 +34,10 @@ define([
         },
 
         showModal: function(bikeModel, partCollection, showBikeImage) {
-            this.bikeHeaderView = new BikeHeaderView({ model: bikeModel });
-            this.header.show(this.bikeHeaderView);
+            if (bikeModel) {
+                this.bikeHeaderView = new BikeHeaderView({ model: bikeModel });
+                this.header.show(this.bikeHeaderView);
+            }
 
             if (showBikeImage) {
                 this.bikeView = new BikeView({ model: bikeModel });

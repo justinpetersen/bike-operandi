@@ -8,8 +8,9 @@ define([
     'views/layout/BikeDetailLayout',
     'views/layout/ThumbnailFiltersLayout',
     'views/FilterButtonCollectionView',
-    'views/ThumbnailsCompositeView'
-], function (Marionette, BikeManager, NavLayout, CarouselCompositeView, HotspotsCollectionView, HotspotsCarouselLayout, BikeDetailLayout, ThumbnailFiltersLayout, FilterButtonCollectionView, ThumbnailsCompositeView) {
+    'views/ThumbnailsCompositeView',
+    'views/PartsCollectionView'
+], function (Marionette, BikeManager, NavLayout, CarouselCompositeView, HotspotsCollectionView, HotspotsCarouselLayout, BikeDetailLayout, ThumbnailFiltersLayout, FilterButtonCollectionView, ThumbnailsCompositeView, PartsCollectionView) {
     'use strict';
 
     var BikeApplication = Marionette.Application.extend({
@@ -31,10 +32,24 @@ define([
 
         thumbnailsCompositeView: null,
 
+        partsCollectionView: null,
+
         hotspotsOn: true,
 
         onSyncComplete: function() {
             this.showHotspots(0);
+        },
+
+        onNavButtonClick: function(event) {
+            switch (event.model.get('id')) {
+                case 'bikes':
+                    this.showBikes();
+                    break;
+                case 'parts':
+                    this.showParts();
+                    break;
+            }
+            $('body').animate({ scrollTop: 0 }, '500');
         },
 
         onCarouselSlide: function(index) {
@@ -80,7 +95,7 @@ define([
             this.addRegions({
                 nav: '#nav-container',
                 modal: '#modal-container',
-                main: '#main-container',
+                hero: '#hero-container',
                 content: '#content-container'
             });
 
@@ -112,7 +127,7 @@ define([
         initHotspotCarousel: function() {
             this.hotspotsCarouselLayout = new HotspotsCarouselLayout();
             this.hotspotsCarouselLayout.render();
-            this.main.show(this.hotspotsCarouselLayout);
+            this.hero.show(this.hotspotsCarouselLayout);
 
             this.carouselCompositeView = new CarouselCompositeView({ collection: this.bikeManager.bikeCollection });
             this.hotspotsCarouselLayout.carousel.show(this.carouselCompositeView);
@@ -138,6 +153,7 @@ define([
         },
 
         initViewEvents: function() {
+            this.listenTo(this.navLayout, 'onNavButtonClick', this.onNavButtonClick);
             this.listenTo(this.carouselCompositeView, 'onCarouselSlide', this.onCarouselSlide);
             this.listenTo(this.carouselCompositeView, 'onCarouselSlid', this.onCarouselSlid);
             this.listenTo(this.hotspotsCollectionView, 'onPopoverShown', this.onPopoverShown);
@@ -151,6 +167,9 @@ define([
         },
 
         showHotspots: function(index) {
+            // TODO: Enable hotspots
+            return;
+
             var bikeModel = this.bikeManager.bikeCollection.at(index);
             var partCollection = this.bikeManager.partCollection.getParts(bikeModel.get('parts'));
             bikeModel.setPartCollection(partCollection);
@@ -166,6 +185,26 @@ define([
             this.modal.show(this.bikeDetailLayout);
             this.bikeDetailLayout.showModal(bikeModel, partCollection, showBikeImage);
             this.carouselCompositeView.pauseCarousel();
+        },
+
+        showBikes: function() {
+            // TODO: Improve how regions are shown
+            $('#hero-container').show();
+            this.carouselCompositeView.resumeCarousel();
+
+            this.content.show(this.thumbnailFiltersLayout);
+            this.thumbnailFiltersLayout.filters.show(this.filterButtonCollectionView);
+            this.thumbnailFiltersLayout.thumbnails.show(this.thumbnailsCompositeView);
+        },
+
+        showParts: function() {
+            // TODO: Improve how regions are shown
+            this.carouselCompositeView.pauseCarousel();
+            $('#hero-container').hide();
+            this.content.close();
+
+            this.partsCollectionView = new PartsCollectionView({ collection: this.bikeManager.partCollection });
+            this.content.show(this.partsCollectionView);
         },
 
         toggleHotspots: function() {

@@ -14,13 +14,17 @@ define([
 
         navButtonCompositeView: null,
 
+        onNavButtonClick: function(event) {
+            this.trigger('onNavButtonClick', event);
+        },
+
         showNav: function() {
             var navButtonCollection = new NavButtonCollection([
                 { label: 'Bikes', id: 'bikes', active: true },
-                { label: 'Parts', id: 'parts' },
-                { label: 'Add a Bike', id: 'add' }
+                { label: 'Components', id: 'parts' }
             ]);
             this.navButtonCompositeView = new NavButtonCompositeView({ collection: navButtonCollection });
+            this.listenTo(this.navButtonCompositeView, 'onNavButtonClick', this.onNavButtonClick);
             this.buttons.show(this.navButtonCompositeView);
         }
     });
