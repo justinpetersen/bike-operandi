@@ -37,11 +37,11 @@ define([
         setFilters: function(filters) {
             var result = $('#thumbnails-row-container').isotope({
                 filter: function() {
-                    var tags = $(this).find('.tags').text();
+                    var tags = $(this).find('.tags').text().toLowerCase();
                     var match = true;
                     for (var i=0; i<filters.length; i++) {
-                        if (filters[i] != '*' && tags.indexOf(filters[i]) == -1) {
-                            match = false
+                        if (filters[i] != '*' && tags.indexOf(filters[i].toLowerCase()) == -1) {
+                            match = false;
                         }
                     }
                     return match;
