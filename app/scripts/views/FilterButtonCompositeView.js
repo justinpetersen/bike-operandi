@@ -34,7 +34,7 @@ define([
         setSelected: function(selected) {
             this.model.selected = selected;
 
-            var selectedLabel = this.model.selected == '*' ? this.model.get('label') : this.model.selected;
+            var selectedLabel = this.model.selected == '*' ? this.model.get('label') : this.collection.findWhere( { value: this.model.selected } ).get('label');
             this.$el.find('.btn:first-child').html(selectedLabel + ' <span class="caret"></span>');
             this.trigger('onSelectedChanged');
         }

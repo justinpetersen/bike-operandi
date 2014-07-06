@@ -13,6 +13,8 @@ define([
 
         bikeFilterCollection: null,
 
+        partCategoryCollection: null,
+
         partCollection: null,
 
         onBikesSync: function() {
@@ -38,11 +40,15 @@ define([
 
             var FirebaseBikeFilterCollection = BikeFilterCollection.extend({ firebase: 'https://bike-operandi.firebaseio.com/filters' });
             this.bikeFilterCollection = new FirebaseBikeFilterCollection();
+
+            var PartCategoryCollection = BikeFilterCollection.extend({ firebase: 'https://bike-operandi.firebaseio.com/part-categories' });
+            this.partCategoryCollection = new PartCategoryCollection();
         },
 
         initSecondaryCollections: function() {
             var FirebasePartCollection = PartCollection.extend({ firebase: 'https://bike-operandi.firebaseio.com/parts' });
             this.partCollection = new FirebasePartCollection();
+            this.partCollection.comparator = 'title';
             this.listenTo(this.partCollection, 'sync', this.onPartsSync);
         },
 

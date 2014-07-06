@@ -9,8 +9,8 @@ define([
     'views/layout/ThumbnailFiltersLayout',
     'views/FilterButtonCollectionView',
     'views/ThumbnailsCompositeView',
-    'views/PartsCollectionView'
-], function (Marionette, BikeManager, NavLayout, CarouselCompositeView, HotspotsCollectionView, HotspotsCarouselLayout, BikeDetailLayout, ThumbnailFiltersLayout, FilterButtonCollectionView, ThumbnailsCompositeView, PartsCollectionView) {
+    'views/layout/PartFiltersLayout'
+], function (Marionette, BikeManager, NavLayout, CarouselCompositeView, HotspotsCollectionView, HotspotsCarouselLayout, BikeDetailLayout, ThumbnailFiltersLayout, FilterButtonCollectionView, ThumbnailsCompositeView, PartFiltersLayout) {
     'use strict';
 
     var BikeApplication = Marionette.Application.extend({
@@ -33,6 +33,8 @@ define([
         thumbnailsCompositeView: null,
 
         partsCollectionView: null,
+
+        partFiltersLayout: null,
 
         hotspotsOn: true,
 
@@ -201,10 +203,11 @@ define([
             // TODO: Improve how regions are shown
             this.carouselCompositeView.pauseCarousel();
             $('#hero-container').hide();
-            this.content.close();
 
-            this.partsCollectionView = new PartsCollectionView({ collection: this.bikeManager.partCollection });
-            this.content.show(this.partsCollectionView);
+            this.partFiltersLayout = new PartFiltersLayout();
+            this.partFiltersLayout.render();
+            this.content.show(this.partFiltersLayout);
+            this.partFiltersLayout.showPartFilters(this.bikeManager.partCategoryCollection, this.bikeManager.partCollection);
         },
 
         toggleHotspots: function() {
