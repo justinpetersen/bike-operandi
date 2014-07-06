@@ -32,7 +32,7 @@ define([
             this.filters.show(this.filterButtonCollectionView);
 
             this.partCompositeView = new PartCompositeView({ collection: partCollection });
-            this.listenTo(this.filterButtonCollectionView, 'onShowAllClick', this.onShowAllClick);
+            this.listenTo(this.partCompositeView, 'onShowAllClick', this.onShowAllClick);
             this.parts.show(this.partCompositeView);
         },
 
