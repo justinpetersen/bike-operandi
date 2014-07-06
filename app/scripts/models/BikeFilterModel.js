@@ -14,6 +14,9 @@ define([
         selected: '*',
 
         initialize: function() {
+            // The id is a string by default. Parse it to an integer so that the models will be sorted correctly.
+            this.id = parseInt(this.id);
+
             var children = this.get('children');
             if (children.length > 0) {
                 var BikeFilterCollection = require('collections/BikeFilterCollection');

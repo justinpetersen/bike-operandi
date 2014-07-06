@@ -2,19 +2,19 @@ define([
     'jquery',
     'templates',
     'marionette',
-    'views/ThumbnailItemView',
+    'views/PartListItemView',
     'isotope',
     'imagesloaded',
     'jquery-bridget'
-], function ($, JST, Marionette, ThumbnailItemView, Isotope, ImagesLoaded) {
+], function ($, JST, Marionette, PartListItemView, Isotope, ImagesLoaded) {
     'use strict';
 
-    var ThumbnailsCompositeView = Marionette.CompositeView.extend({
-        itemView: ThumbnailItemView,
+    var PartCompositeView = Marionette.CompositeView.extend({
+        itemView: PartListItemView,
 
-        itemViewContainer: '#thumbnails-row-container',
+        itemViewContainer: '#parts-row-container',
 
-        template: JST['app/scripts/templates/ThumbnailsComposite.ejs'],
+        template: JST['app/scripts/templates/PartComposite.ejs'],
 
         triggers: {
             'click #show-all-button': 'onShowAllClick'
@@ -30,20 +30,17 @@ define([
             }
         },
 
-        onThumbnailClick: function(event) {
-            this.trigger('onThumbnailClick', event);
-        },
-
         setFilters: function(filters) {
-            var result = $('#thumbnails-row-container').isotope({
+            var result = $('#parts-row-container').isotope({
                 filter: function() {
-                    var tags = $(this).find('.tags').text();
+                    var tags = $(this).find('.part-title').text();
                     var match = true;
                     for (var i=0; i<filters.length; i++) {
                         if (filters[i] != '*' && tags.indexOf(filters[i]) == -1) {
                             match = false
                         }
                     }
+                    console.log(match);
                     return match;
                 }
             });
@@ -53,7 +50,7 @@ define([
 
         showNoResultsAlert: function() {
             // TODO: Find a better way to check for no results
-            if ($('#thumbnails-row-container').css('height') == '0px') {
+            if ($('#parts-row-container').css('height') == '0px') {
                 $('#no-results-container').show();
             } else {
                 $('#no-results-container').hide();
@@ -65,22 +62,21 @@ define([
             $.bridget('imagesLoaded', ImagesLoaded);
             $('#no-results-container').hide();
             this.listenTo(this.collection, 'sync', this.onSync);
-            this.on('itemview:onClick', $.proxy(this.onThumbnailClick, this));
         },
 
         initIsotope: function() {
-            var container = $('#thumbnails-row-container');
+            var container = $('#parts-row-container');
             container.imagesLoaded(function() {
                 container.isotope({
-                    itemSelector: '.thumbnail-container',
+                    itemSelector: '.part-container',
                     layoutMode: 'fitRows',
                     getSortData: {
-                        title: '.title'
+                        title: '.part-title'
                     }
                 });
             });
         }
     });
 
-    return ThumbnailsCompositeView;
+    return PartCompositeView;
 });
