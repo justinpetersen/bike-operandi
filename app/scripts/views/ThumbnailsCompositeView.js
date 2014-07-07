@@ -35,9 +35,6 @@ define([
         },
 
         setFilters: function(filters) {
-            // KLUDGE: This should be happening on images loaded, but it is currently failing.
-            this.resetIsotope();
-
             var result = $('#thumbnails-row-container').isotope({
                 filter: function() {
                     var tags = $(this).find('.tags').text().toLowerCase();
@@ -65,14 +62,13 @@ define([
 
         initialize: function() {
             $.bridget('isotope', Isotope);
-            $.bridget('imagesLoaded', ImagesLoaded);
             $('#no-results-container').hide();
             this.listenTo(this.collection, 'sync', this.onSync);
             this.on('itemview:onClick', $.proxy(this.onThumbnailClick, this));
         },
 
         initIsotope: function() {
-            $('#thumbnails-row-container').imagesLoaded($.proxy(this.resetIsotope, this));
+            ImagesLoaded($('#thumbnails-row-container'), $.proxy(this.resetIsotope, this));
         },
 
         resetIsotope: function() {
