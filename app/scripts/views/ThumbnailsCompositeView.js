@@ -35,6 +35,9 @@ define([
         },
 
         setFilters: function(filters) {
+            // KLUDGE: This should be happening on images loaded, but it is currently failing.
+            this.resetIsotope();
+
             var result = $('#thumbnails-row-container').isotope({
                 filter: function() {
                     var tags = $(this).find('.tags').text().toLowerCase();
@@ -69,15 +72,16 @@ define([
         },
 
         initIsotope: function() {
-            var container = $('#thumbnails-row-container');
-            container.imagesLoaded(function() {
-                container.isotope({
-                    itemSelector: '.thumbnail-container',
-                    layoutMode: 'fitRows',
-                    getSortData: {
-                        title: '.title'
-                    }
-                });
+            $('#thumbnails-row-container').imagesLoaded($.proxy(this.resetIsotope, this));
+        },
+
+        resetIsotope: function() {
+            $('#thumbnails-row-container').isotope({
+                itemSelector: '.thumbnail-container',
+                layoutMode: 'fitRows',
+                getSortData: {
+                    title: '.title'
+                }
             });
         }
     });

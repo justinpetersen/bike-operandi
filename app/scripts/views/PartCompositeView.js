@@ -57,16 +57,6 @@ define([
             this.showNoResultsAlert();
         },
 
-        resetIsotope: function() {
-            $('#parts-row-container').isotope({
-                itemSelector: '.part-container',
-                layoutMode: 'fitRows',
-                getSortData: {
-                    title: '.part-title'
-                }
-            });
-        },
-
         showNoResultsAlert: function() {
             // TODO: Find a better way to check for no results
             if ($('#parts-row-container').css('height') == '0px') {
@@ -84,15 +74,16 @@ define([
         },
 
         initIsotope: function() {
-            var container = $('#parts-row-container');
-            container.imagesLoaded(function() {
-                container.isotope({
-                    itemSelector: '.part-container',
-                    layoutMode: 'fitRows',
-                    getSortData: {
-                        title: '.part-title'
-                    }
-                });
+            $('#parts-row-container').imagesLoaded($.proxy(this.resetIsotope, this));
+        },
+
+        resetIsotope: function() {
+            $('#parts-row-container').isotope({
+                itemSelector: '.part-container',
+                layoutMode: 'fitRows',
+                getSortData: {
+                    title: '.part-title'
+                }
             });
         }
     });
