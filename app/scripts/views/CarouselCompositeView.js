@@ -72,7 +72,7 @@ define([
 
             $('.carousel').carousel({
                 pause: 'hover',
-                interval: 4000
+                interval: 300000
             });
 
             $('#bike-carousel').on('slide.bs.carousel', $.proxy(this.onCarouselSlide, this));

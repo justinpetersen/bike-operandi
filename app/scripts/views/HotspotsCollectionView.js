@@ -125,9 +125,15 @@ define([
         },
 
         getImageData: function() {
+            console.log('HotspotsCollectionView.getImageData');
             // Get browser and image dimensions.
-            var clientWidth = $(window).outerWidth();
-            var clientHeight = $(window).outerHeight();
+            // var clientWidth = $(window).outerWidth();
+            // var clientHeight = $(window).outerHeight();
+
+            // KLUDGE: There is probably a more elegant way to access these dimensions.
+            var clientWidth = $('#hero-container').width();
+            var clientHeight = $('#hero-container').height();
+
             var nativeImageWidth = 1118
             var nativeImageHeight = 629;
 
@@ -161,12 +167,6 @@ define([
                 scaledImageHeight: scaledImageHeight,
                 overflowLeft: (scaledImageWidth - clientWidth) / 2,
                 overflowTop: (scaledImageHeight - clientHeight) / 2
-                // clientWidth: 1148,
-                // clientHeight: 646,
-                // scaledImageWidth: 1148,
-                // scaledImageHeight: 646,
-                // overflowLeft: 0,
-                // overflowTop: 0
             }
 
             return imageData;

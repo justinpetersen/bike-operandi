@@ -170,7 +170,7 @@ define([
 
         showHotspots: function(index) {
             // TODO: Enable hotspots
-            return;
+            // return;
 
             var bikeModel = this.bikeManager.bikeCollection.at(index);
             var partCollection = this.bikeManager.partCollection.getParts(bikeModel.get('parts'));
