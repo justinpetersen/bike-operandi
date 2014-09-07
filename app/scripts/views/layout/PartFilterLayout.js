@@ -1,8 +1,10 @@
 define([
     'marionette',
     'views/FilterButtonCollectionView',
-    'views/PartCompositeView'
-], function (Marionette, FilterButtonCollectionView, PartCompositeView) {
+    'views/PartCompositeView',
+    'collections/ButtonCollection',
+    'views/ButtonCompositeView'
+], function (Marionette, FilterButtonCollectionView, PartCompositeView, ButtonCollection, ButtonCompositeView) {
     'use strict';
 
     var PartFilterLayout = Marionette.Layout.extend({
@@ -10,10 +12,13 @@ define([
 
         regions: {
             filters: '#filters-container',
+            operations: '#operations-container',
             parts: '#parts-list-container'
         },
 
         filterButtonCollectionView: null,
+
+        operationButtonCollectionView: null,
 
         partCompositeView: null,
 
@@ -27,13 +32,23 @@ define([
         },
 
         showPartFilters: function(filterCollection, partCollection) {
-            this.filterButtonCollectionView = new FilterButtonCollectionView({ collection: filterCollection,  });
+            this.filterButtonCollectionView = new FilterButtonCollectionView({ collection: filterCollection });
             this.listenTo(this.filterButtonCollectionView, 'onSelectedFiltersChanged', this.onSelectedFiltersChanged);
             this.filters.show(this.filterButtonCollectionView);
 
             this.partCompositeView = new PartCompositeView({ collection: partCollection });
             this.listenTo(this.partCompositeView, 'onShowAllClick', this.onShowAllClick);
             this.parts.show(this.partCompositeView);
+
+            this.showOperations();
+        },
+
+        showOperations: function() {
+            var operationsCollection = new ButtonCollection([
+                { label: 'Add New', value: 'add' }
+            ]);
+            this.operationButtonCompositeView = new ButtonCompositeView({ collection: operationsCollection });
+            this.operations.show(this.operationButtonCompositeView);
         },
 
         clearFilters: function() {

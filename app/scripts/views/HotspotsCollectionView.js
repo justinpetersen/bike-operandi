@@ -15,7 +15,7 @@ define([
 
         onClick: function(eventData) {
             var hotspotPosition = this.getHotspotPositionRatio(eventData.clientX, eventData.clientY);
-            console.log(hotspotPosition.left + ', ' + hotspotPosition.top);
+            // console.log(hotspotPosition.left + ', ' + hotspotPosition.top);
         },
 
         onPopoverShown: function() {
