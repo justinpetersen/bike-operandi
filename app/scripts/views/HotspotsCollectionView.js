@@ -125,25 +125,12 @@ define([
         },
 
         getImageData: function() {
-            console.log('HotspotsCollectionView.getImageData');
-            // Get browser and image dimensions.
-            // var clientWidth = $(window).outerWidth();
-            // var clientHeight = $(window).outerHeight();
-
             // KLUDGE: There is probably a more elegant way to access these dimensions.
             var clientWidth = $('#hero-container').width();
             var clientHeight = $('#hero-container').height();
 
             var nativeImageWidth = 1118
             var nativeImageHeight = 629;
-
-            // Adjust client height on small screens
-            if (clientWidth < 1200) {
-                clientHeight = 600;
-            }
-            if (clientWidth < 768) {
-                clientHeight = 400;
-            }
 
             // Calculate browser and image ratios.
             var clientRatio = clientWidth / clientHeight;
