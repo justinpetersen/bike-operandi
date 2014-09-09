@@ -7,7 +7,7 @@ define([
         template: JST['app/scripts/templates/AddPartLayout.ejs'],
 
         onRender: function() {
-            $('#bike-detail-modal').on('hidden.bs.modal', $.proxy(this.onModalHidden, this));
+            $('#add-part-modal').on('hidden.bs.modal', $.proxy(this.onModalHidden, this));
         },
 
         onModalHidden: function() {
@@ -15,7 +15,7 @@ define([
         },
 
         showModal: function() {
-            $('#bike-detail-modal').modal('show');
+            $('#add-part-modal').modal('show');
         }
     });
 
