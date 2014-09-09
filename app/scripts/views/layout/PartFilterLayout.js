@@ -31,6 +31,10 @@ define([
             return false;
         },
 
+        onOperationsButtonClick: function(event) {
+            this.trigger('onOperationsButtonClick', event);
+        },
+
         showPartFilters: function(filterCollection, partCollection) {
             this.filterButtonCollectionView = new FilterButtonCollectionView({ collection: filterCollection });
             this.listenTo(this.filterButtonCollectionView, 'onSelectedFiltersChanged', this.onSelectedFiltersChanged);
@@ -48,6 +52,7 @@ define([
                 { label: 'Add New', value: 'add' }
             ]);
             this.operationButtonCompositeView = new ButtonCompositeView({ collection: operationsCollection });
+            this.listenTo(this.operationButtonCompositeView, 'onButtonClick', this.onOperationsButtonClick);
             this.operations.show(this.operationButtonCompositeView);
         },
 

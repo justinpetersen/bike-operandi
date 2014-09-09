@@ -9,7 +9,15 @@ define([
 
         itemViewContainer: 'div',
 
-        template: JST['app/scripts/templates/ButtonComposite.ejs']
+        template: JST['app/scripts/templates/ButtonComposite.ejs'],
+
+        onButtonClick: function(event) {
+            this.trigger('onButtonClick', event);
+        },
+
+        initialize: function() {
+            this.on('itemview:onClick', $.proxy(this.onButtonClick, this));
+        }
     });
 
     return ButtonCompositeView;
