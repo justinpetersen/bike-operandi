@@ -203,7 +203,7 @@ define([
 
         showAddPartLayout: function() {
             this.modal.show(this.addPartLayout);
-            this.addPartLayout.showModal();
+            this.addPartLayout.showModal(this.bikeManager.partCollection);
         },
 
         showBikes: function() {

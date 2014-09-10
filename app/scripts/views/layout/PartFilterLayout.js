@@ -22,6 +22,12 @@ define([
 
         partCompositeView: null,
 
+        onRender: function() {
+            if (this.getUrlVars()['edit']) {
+                this.showEditButtons();
+            }
+        },
+
         onSelectedFiltersChanged: function() {
             this.partCompositeView.setFilters(this.filterButtonCollectionView.collection.selectedFilters);
         },
@@ -59,6 +65,23 @@ define([
         clearFilters: function() {
             this.filterButtonCollectionView.clearSelectedFilters();
             this.partCompositeView.setFilters(['*']);
+        },
+
+        showEditButtons: function() {
+            this.$el.find('#operations-container').show();
+        },
+
+        // TODO: Move this to router
+        getUrlVars: function() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++)
+            {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
         }
     });
 

@@ -30,6 +30,18 @@ define([
             }
         },
 
+        onAddChild: function(childView) {
+            $('#parts-row-container').isotope('prepended', childView.$el);
+        },
+
+        onDeleteClick: function(itemView) {
+            this.collection.remove(itemView.model);
+        },
+
+        onRemoveChild: function(childView) {
+            $('#parts-row-container').isotope('layout');
+        },
+
         setFilters: function(filters) {
             var result = $('#parts-row-container').isotope({
                 filter: function() {
@@ -67,6 +79,9 @@ define([
             $.bridget('isotope', Isotope);
             $('#no-results-container').hide();
             this.listenTo(this.collection, 'sync', this.onSync);
+            this.on('after:item:added', $.proxy(this.onAddChild, this));
+            this.on('itemview:onDeleteClick', $.proxy(this.onDeleteClick, this));
+            this.on('item:removed', $.proxy(this.onRemoveChild, this));
         },
 
         initIsotope: function() {
