@@ -51,7 +51,8 @@ define([
         },
 
         hidePartEditForm: function() {
-        	this.$el.find('#bike-edit-button').show();
+            // TODO: Completely remove edit button if it is not needed
+        	// this.$el.find('#bike-edit-button').show();
         	this.$el.find('#bike-edit-cancel-button').hide();
         	this.$el.find('#bike-title').show();
         	this.$el.find('#bike-edit-form').hide();
