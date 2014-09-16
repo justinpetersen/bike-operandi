@@ -3,10 +3,11 @@ define([
     'views/BikeHeaderView',
     'views/BikeView',
     'views/HotspotsCollectionView',
+    'views/PartListCollectionView',
     'views/PartsCollectionView',
     'collections/ButtonCollection',
     'views/ButtonCompositeView'
-], function (Marionette, BikeHeaderView, BikeView, HotspotsCollectionView, PartsCollectionView, ButtonCollection, ButtonCompositeView) {
+], function (Marionette, BikeHeaderView, BikeView, HotspotsCollectionView, PartListCollectionView, PartsCollectionView, ButtonCollection, ButtonCompositeView) {
     'use strict';
 
     var BikeDetailLayout = Marionette.Layout.extend({
@@ -17,6 +18,7 @@ define([
             bike: '#bike-container',
             hotspots: '#detail-hotspots-container',
             operations: '#operations-container',
+            addParts: '#add-parts-container',
             parts: '#parts-container'
         },
 
@@ -27,6 +29,8 @@ define([
         hotspotsCollectionView: null,
 
         operationButtonCollectionView: null,
+
+        addPartsCollectionView: null,
 
         partsCollectionView: null,
 
@@ -44,7 +48,7 @@ define([
                     this.bikeHeaderView.showPartEditForm();
                     break;
                 case 'parts':
-                    console.log('Add part!');
+                    this.showAddPartsLayout();
                     break;
             }
         },
@@ -53,7 +57,7 @@ define([
             this.trigger('onModalHidden');
         },
 
-        showModal: function(bikeModel, partCollection, showBikeImage) {
+        showModal: function(bikeModel, partCollection, allPartsCollection, showBikeImage) {
             if (bikeModel) {
                 this.bikeHeaderView = new BikeHeaderView({ model: bikeModel });
                 this.header.show(this.bikeHeaderView);
@@ -68,6 +72,9 @@ define([
                 this.hotspotsCollectionView.showHotspots(bikeModel.getHotspotCollection());
                 this.hotspots.show(this.hotspotsCollectionView);
             }
+
+            this.addPartsCollectionView = new PartListCollectionView({ collection: allPartsCollection });
+            this.addParts.show(this.addPartsCollectionView);
 
             this.partsCollectionView = new PartsCollectionView({ collection: partCollection });
             this.parts.show(this.partsCollectionView);
@@ -89,6 +96,10 @@ define([
 
         showEditButtons: function() {
             this.$el.find('#operations-container').show();
+        },
+
+        showAddPartsLayout: function() {
+            this.$el.find('#add-parts-container').show();
         },
 
         // TODO: Move this to router

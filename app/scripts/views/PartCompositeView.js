@@ -2,15 +2,15 @@ define([
     'jquery',
     'templates',
     'marionette',
-    'views/PartListItemView',
+    'views/PartItemView',
     'isotope',
     'imagesloaded',
     'jquery-bridget'
-], function ($, JST, Marionette, PartListItemView, Isotope, ImagesLoaded) {
+], function ($, JST, Marionette, PartItemView, Isotope, ImagesLoaded) {
     'use strict';
 
     var PartCompositeView = Marionette.CompositeView.extend({
-        itemView: PartListItemView,
+        itemView: PartItemView,
 
         itemViewContainer: '#parts-row-container',
 

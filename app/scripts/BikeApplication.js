@@ -197,7 +197,7 @@ define([
             bikeModel.setPartCollection(partCollection);
 
             this.modal.show(this.bikeDetailLayout);
-            this.bikeDetailLayout.showModal(bikeModel, partCollection, showBikeImage);
+            this.bikeDetailLayout.showModal(bikeModel, partCollection, this.bikeManager.partCollection, showBikeImage);
             this.carouselCompositeView.pauseCarousel();
         },
 
