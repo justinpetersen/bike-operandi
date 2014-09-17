@@ -56,13 +56,20 @@ define([
             this.listenTo(this, 'add', this.onAdd);
         },
 
+        addPart: function(id) {
+            var partsNew = this.get('parts');
+            partsNew[id] = true;
+            this.unset('parts');
+            this.set('parts', partsNew);
+        },
+
         removePart: function(id) {
             var partsNew = this.get('parts');
             partsNew[id] = false;
             this.unset('parts');
             this.set('parts', partsNew);
 
-            this.hotspotCollection.remove(this.hotspotCollection.where( { 'part-id': id } ))
+            this.hotspotCollection.remove(this.hotspotCollection.where( { 'part-id': id } ));
         },
 
         resetFirebase: function() {

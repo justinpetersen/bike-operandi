@@ -198,6 +198,10 @@ h6 {
   display: none;
 }
 
+#part-add-button {
+  display: none;
+}
+
 .form-group {
   margin-bottom: 5px;
 }
@@ -206,6 +210,12 @@ h6 {
   position: absolute;
   top: 10px;
   left: 10px;
+}
+
+.absolute-right-button {
+  position: absolute;
+  top: 15px;
+  right: 10px;
 }
 
 /* BIKE DETAIL MODAL

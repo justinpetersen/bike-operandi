@@ -8,6 +8,13 @@ define([
         model: PartModel,
 
         getParts: function(ids) {
+            // Support passing either a single part ID String or an Object that is a lookup table of IDs
+            if (typeof ids === 'string') {
+                var id = ids;
+                ids = {};
+                ids[id] = true;
+            }
+
             var partsCollection = new Backbone.Collection();
             for (var i in ids) {
                 if (ids[i]) {

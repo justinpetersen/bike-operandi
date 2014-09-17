@@ -7,11 +7,13 @@ define([
         attributes: { 'class': 'part-container part-container-sm col-xs-12' },
 
         hidePartEditForm: function() {
-        	// this.$el.find('#part-edit-button').show();
-        	this.$el.find('#part-edit-cancel-button').hide();
+        	this.$el.find('#part-add-button').show();
         	this.$el.find('#part-title').show();
-        	this.$el.find('#part-edit-form').hide();
         },
+
+		triggers: {
+			'click #part-add-button': 'onAddClick'
+		}
     });
 
     return PartListItemView;

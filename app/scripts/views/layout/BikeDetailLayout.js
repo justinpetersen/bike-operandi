@@ -74,6 +74,7 @@ define([
             }
 
             this.addPartsCollectionView = new PartListCollectionView({ collection: allPartsCollection });
+            this.addPartsCollectionView.setModels(bikeModel, partCollection, allPartsCollection);
             this.addParts.show(this.addPartsCollectionView);
 
             this.partsCollectionView = new PartsCollectionView({ collection: partCollection });
