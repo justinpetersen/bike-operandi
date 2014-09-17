@@ -34,12 +34,12 @@ define([
             $('#parts-row-container').isotope('prepended', childView.$el);
         },
 
-        onDeleteClick: function(itemView) {
-            this.collection.remove(itemView.model);
-        },
-
         onRemoveChild: function(childView) {
             $('#parts-row-container').isotope('layout');
+        },
+
+        onDeleteClick: function(itemView) {
+            this.collection.remove(itemView.model);
         },
 
         setFilters: function(filters) {
