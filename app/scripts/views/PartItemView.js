@@ -5,7 +5,7 @@ define([
     'use strict';
 
     var PartItemView = Marionette.ItemView.extend({
-        attributes: { 'class': 'part-container col-lg-3 col-sm-4 col-xs-12' },
+        attributes: { 'class': 'part-container col-lg-3 col-sm-4 col-xs-6' },
 
         template: JST['app/scripts/templates/PartItem.ejs'],
 

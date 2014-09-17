@@ -14,8 +14,7 @@ define([
         onRender: function() {
             console.log('PartsCollectionView.onRender');
             if (this.collection.length > 0) {
-                // this.initIsotope();
-
+                // KLUDGE: This delay is a workaround for the bug of Isotope elements stacking
                 setTimeout($.proxy(this.initIsotope, this), 1000);
             }
         },
