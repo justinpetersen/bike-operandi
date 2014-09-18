@@ -11,10 +11,15 @@ define([
 
         triggers: {
             'click #part-add-save-button': 'onSaveClick',
+            'click #part-add-cancel-button': 'onCancelClick'
         },
 
         onSaveClick: function() {
             this.saveFormValues();
+        },
+
+        onCancelClick: function() {
+            $('#add-part-modal').modal('hide');
         },
 
         onRender: function() {
@@ -27,6 +32,7 @@ define([
 
         initialize: function() {
             this.listenTo(this, 'onSaveClick', this.onSaveClick);
+            this.listenTo(this, 'onCancelClick', this.onCancelClick);
         },
 
         showModal: function( partCollection ) {

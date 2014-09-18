@@ -9,7 +9,7 @@ define([
 
         attributes: {
             'type': 'button',
-            'class': 'btn btn-default'
+            'class': 'btn btn-primary btn-xs'
         },
 
         template: JST['app/scripts/templates/Button.ejs'],

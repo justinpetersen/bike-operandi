@@ -4,9 +4,9 @@
 <a href="<%= url %>" target="_blank">
 	<h5 class="part-title" id="part-title"><%= title %></h5>
 </a>
-<button type="button" class="btn btn-default btn-xs edit-button absolute-edit-button" id="part-edit-button"><span class='glyphicon glyphicon glyphicon-pencil'></span> Edit</button>
-<button type="button" class="btn btn-default btn-xs edit-button absolute-edit-button" id="part-edit-cancel-button"><span class='glyphicon glyphicon glyphicon-remove'></span> Cancel</button>
-<button type="button" class="btn btn-default btn-xs edit-button absolute-right-button" id="part-add-button"><span class='glyphicon glyphicon glyphicon-plus'></span> Add</button>
+<button type="button" class="btn btn-default btn-xs absolute-edit-button" id="part-edit-button"><span class='glyphicon glyphicon glyphicon-pencil'></span> Edit</button>
+<button type="button" class="btn btn-default btn-xs absolute-edit-button" id="part-edit-cancel-button"><span class='glyphicon glyphicon glyphicon-remove'></span> Cancel</button>
+<button type="button" class="btn btn-default btn-xs absolute-right-button" id="part-add-button"><span class='glyphicon glyphicon glyphicon-plus'></span> Add</button>
 <form role="form" class="edit-form" id="part-edit-form">
   <div class="form-group">
     <input type="text" class="form-control input-sm" id="input-image" placeholder="<%= image %>" value="<%= image %>">
@@ -14,6 +14,6 @@
   <div class="form-group">
     <input type="text" class="form-control input-sm" id="input-title" placeholder="<%= title %>" value="<%= title %>">
   </div>
-  <button type="button" class="btn btn-primary btn-xs" id="part-edit-save-button"><span class='glyphicon glyphicon glyphicon-cloud-upload'></span> Save</button>
-  <button type="button" class="btn btn-danger btn-xs" id="part-edit-delete-button"><span class='glyphicon glyphicon glyphicon-ban-circle'></span> Remove</button>
+  <button type="button" class="btn btn-primary btn-xs" id="part-edit-save-button"><span class='glyphicon glyphicon glyphicon-floppy-saved'></span> Save</button>
+  <button type="button" class="btn btn-danger btn-xs" id="part-edit-delete-button"><span class='glyphicon glyphicon glyphicon-trash'></span> Remove</button>
 </form>
