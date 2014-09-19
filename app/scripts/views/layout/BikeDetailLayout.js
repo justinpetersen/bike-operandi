@@ -5,10 +5,11 @@ define([
     'views/HotspotsCollectionView',
     'views/EditDetailsView',
     'views/PartListCollectionView',
+    'views/layout/AddHotspotsLayout',
     'views/PartsCollectionView',
     'collections/ButtonCollection',
     'views/ButtonCompositeView'
-], function (Marionette, BikeHeaderView, BikeView, HotspotsCollectionView, EditDetailsView, PartListCollectionView, PartsCollectionView, ButtonCollection, ButtonCompositeView) {
+], function (Marionette, BikeHeaderView, BikeView, HotspotsCollectionView, EditDetailsView, PartListCollectionView, AddHotspotsLayout, PartsCollectionView, ButtonCollection, ButtonCompositeView) {
     'use strict';
 
     var BikeDetailLayout = Marionette.Layout.extend({
@@ -21,6 +22,7 @@ define([
             operations: '#operations-container',
             editDetails: '#edit-details-container',
             addParts: '#add-parts-container',
+            addHotspots: '#add-hotspots-container',
             parts: '#parts-container'
         },
 
@@ -36,6 +38,8 @@ define([
 
         addPartsCollectionView: null,
 
+        addHotspotsLayout: null,
+
         partsCollectionView: null,
 
         onRender: function() {
@@ -49,14 +53,19 @@ define([
         onOperationsButtonClick: function(event) {
             switch (event.model.get('value')) {
                 case 'details':
-                    // this.bikeHeaderView.showPartEditForm();
-                    this.showEditDetailsView();
                     this.hideAddPartsLayout();
+                    this.hideAddHotspotsLayout();
+                    this.showEditDetailsView();
                     break;
                 case 'parts':
-                    this.showAddPartsLayout();
                     this.hideEditDetailsView();
-                    // this.bikeHeaderView.hidePartEditForm();
+                    this.hideAddHotspotsLayout();
+                    this.showAddPartsLayout();
+                    break;
+                case 'hotspots':
+                    this.hideEditDetailsView();
+                    this.hideAddPartsLayout();
+                    this.showAddHotspotsLayout();
                     break;
             }
         },
@@ -66,10 +75,8 @@ define([
         },
 
         showModal: function(bikeModel, partCollection, allPartsCollection, showBikeImage) {
-            if (bikeModel) {
-                this.bikeHeaderView = new BikeHeaderView({ model: bikeModel });
-                this.header.show(this.bikeHeaderView);
-            }
+            this.bikeHeaderView = new BikeHeaderView({ model: bikeModel });
+            this.header.show(this.bikeHeaderView);
 
             if (showBikeImage) {
                 this.bikeView = new BikeView({ model: bikeModel });
@@ -90,6 +97,10 @@ define([
             this.addPartsCollectionView.setModels(bikeModel, partCollection, allPartsCollection);
             this.addParts.show(this.addPartsCollectionView);
 
+            this.addHotspotsLayout = new AddHotspotsLayout();
+            this.addHotspots.show(this.addHotspotsLayout);
+            this.addHotspotsLayout.setModels(bikeModel, partCollection, allPartsCollection);
+
             this.partsCollectionView = new PartsCollectionView({ collection: partCollection });
             this.parts.show(this.partsCollectionView);
 
@@ -102,7 +113,7 @@ define([
             var operationsCollection = new ButtonCollection([
                 { label: 'Edit Details', value: 'details' },
                 { label: 'Add Parts', value: 'parts' },
-                { label: 'Add Hotspots', value: 'parts' }
+                { label: 'Add Hotspots', value: 'hotspots' }
             ]);
             this.operationButtonCompositeView = new ButtonCompositeView({ collection: operationsCollection });
             this.listenTo(this.operationButtonCompositeView, 'onButtonClick', this.onOperationsButtonClick);
@@ -115,18 +126,34 @@ define([
 
         showEditDetailsView: function() {
             this.$el.find('#edit-details-container').show();
+            this.$el.find('#parts-container').hide();
         },
 
         hideEditDetailsView: function() {
             this.$el.find('#edit-details-container').hide();
+            this.$el.find('#parts-container').show();
         },
 
         showAddPartsLayout: function() {
             this.$el.find('#add-parts-container').show();
+            this.$el.find('#bike-container').hide();
         },
 
         hideAddPartsLayout: function() {
             this.$el.find('#add-parts-container').hide();
+            this.$el.find('#bike-container').show();
+        },
+
+        showAddHotspotsLayout: function() {
+            this.$el.find('#add-hotspots-container').show();
+            this.$el.find('#bike-container').hide();
+            this.$el.find('#parts-container').hide();
+        },
+
+        hideAddHotspotsLayout: function() {
+            this.$el.find('#add-hotspots-container').hide();
+            this.$el.find('#bike-container').show();
+            this.$el.find('#parts-container').show();
         },
 
         // TODO: Move this to router
