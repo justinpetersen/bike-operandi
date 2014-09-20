@@ -26,12 +26,13 @@ define([
             parts: '#parts-container'
         },
 
-        showBikeImage: true,
+        bikeModel: null,
 
         bikeHeaderView: null,
 
         bikeView: null,
 
+        // TODO: Move this into AddHotspotLayout
         hotspotsCollectionView: null,
 
         operationButtonCollectionView: null,
@@ -54,6 +55,10 @@ define([
 
         onCancelClick: function() {
             this.hideModal();
+        },
+
+        onDragHotspotOutside: function(itemView) {
+            this.bikeModel.removeHotspot(itemView.model.get('id'));
         },
 
         onOperationsButtonClick: function(event) {
@@ -81,6 +86,8 @@ define([
         },
 
         showModal: function(bikeModel, partCollection, allPartsCollection) {
+            this.bikeModel = bikeModel;
+
             this.bikeHeaderView = new BikeHeaderView({ model: bikeModel });
             this.header.show(this.bikeHeaderView);
 
@@ -91,6 +98,7 @@ define([
             this.hotspotsCollectionView = new HotspotsCollectionView();
             this.hotspotsCollectionView.showHotspots(bikeModel.getHotspotCollection());
             this.hotspots.show(this.hotspotsCollectionView);
+            this.listenTo(this.hotspotsCollectionView, 'onDragOutside', this.onDragHotspotOutside);
 
             this.editDetailsView = new EditDetailsView({ model: bikeModel });
             this.editDetails.show(this.editDetailsView);
@@ -120,9 +128,9 @@ define([
 
         showOperations: function() {
             var operationsCollection = new ButtonCollection([
-                { label: 'Edit Details', value: 'details' },
-                { label: 'Add Parts', value: 'parts' },
-                { label: 'Add Hotspots', value: 'hotspots' }
+                { label: 'Bike Details', value: 'details' },
+                { label: 'Equipment Grouping', value: 'parts' },
+                { label: 'Hotspots', value: 'hotspots' }
             ]);
             this.operationButtonCompositeView = new ButtonCompositeView({ collection: operationsCollection });
             this.listenTo(this.operationButtonCompositeView, 'onButtonClick', this.onOperationsButtonClick);

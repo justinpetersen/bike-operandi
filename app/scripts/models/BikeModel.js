@@ -33,14 +33,18 @@ define([
             return this.hotspotCollection;
         },
 
-        initHotspotCollection: function(collection) {
+        initHotspotCollection: function() {
             var FirebaseHotspotCollection = HotspotCollection.extend( { firebase: this.collection.firebase.child(this.get('id')).child('hotspots') } );
             this.hotspotCollection = new FirebaseHotspotCollection();
             for (var i=0; i<this.hotspotCollection.length; i++) {
                 var hotspot = this.hotspotCollection.at(i);
-                var partModel = this.partCollection.findWhere( { id: hotspot.get('part-id') } );
-                hotspot.setPartModel(partModel);
+                this.initHotspotPart(hotspot);
             }
+        },
+
+        initHotspotPart: function(hotspot) {
+            var partModel = this.partCollection.findWhere( { id: hotspot.get('part-id') } );
+            hotspot.setPartModel(partModel);
         },
 
         initialize: function(attrs, options) {
@@ -63,8 +67,20 @@ define([
             this.hotspotCollection.remove(this.hotspotCollection.where( { 'part-id': id } ));
         },
 
-        addHotspot: function(id) {
-            console.log('BikeModel.addHotspot: ' + id);
+        addHotspot: function(partId) {
+            var id = this.hotspotCollection.at(this.hotspotCollection.length - 1).get('id') + 1;
+            var hotspot = this.hotspotCollection.add({
+                id: id,
+                'part-id': partId,
+                x: 0,
+                y: 0
+            });
+
+            this.initHotspotPart(this.hotspotCollection.at(this.hotspotCollection.length - 1));
+        },
+
+        removeHotspot: function(id) {
+            this.hotspotCollection.remove(this.hotspotCollection.where( { 'id': id } ));
         }
     });
 

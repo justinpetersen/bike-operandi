@@ -17,7 +17,6 @@ define([
 
         onClick: function(eventData) {
             var hotspotPosition = this.getHotspotPositionRatio(eventData.clientX, eventData.clientY);
-            // console.log(hotspotPosition.left + ', ' + hotspotPosition.top);
         },
 
         onPopoverShown: function() {
@@ -36,11 +35,16 @@ define([
             var position = this.getHotspotPositionRatio(itemView.$el.position().left + 16, itemView.$el.position().top + 16);
             itemView.model.set('x', position.left);
             itemView.model.set('y', position.top);
+
+            if (position.left < 0 || position.left > 1 || position.top < 0 || position.top > 1) {
+                this.trigger('onDragOutside', itemView);
+            }
         },
 
         showHotspots: function(collection) {
             // TODO: There is probably a better way to reset the collection and trigger a render
             this.collection = collection;
+            this.listenTo(this.collection, 'add', this.render);
             this.listenTo(this.collection, 'remove', this.render);
             this.render();
             this.fadeInHotspots();

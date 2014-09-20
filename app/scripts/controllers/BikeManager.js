@@ -20,11 +20,7 @@ define([
         },
 
         onPartsSync: function() {
-            if (this.RESET_FIREBASE) {
-                this.resetFirebase();
-            } else {
-                this.trigger('onSyncComplete');
-            }
+            this.trigger('onSyncComplete');
         },
 
         initialize: function() {
@@ -36,6 +32,7 @@ define([
             this.bikeCollection = new FirebaseBikeCollection();
             this.listenTo(this.bikeCollection, 'sync', this.onBikesSync);
 
+            // TODO: Rename this to BikeCategoryCollection for consistency between bikes and parts
             var FirebaseBikeFilterCollection = BikeFilterCollection.extend({ firebase: 'https://bike-operandi.firebaseio.com/filters' });
             this.bikeFilterCollection = new FirebaseBikeFilterCollection();
 

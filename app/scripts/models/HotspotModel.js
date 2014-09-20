@@ -10,20 +10,32 @@ define([
             id: '',
             x: 0,
             y: 0,
+            // The following properties are accessed from the PartModel in the custom getters below
             title: '',
             image: '',
             url: '#'
         },
 
+        partModel: null,
+
         title: function() {
+            if (this.partModel == null) {
+                return this.defaults.title;
+            }
             return this.partModel.get('title');
         },
 
         image: function() {
+            if (this.partModel == null) {
+                return this.defaults.image;
+            }
             return this.partModel.get('image');
         },
 
         url: function() {
+            if (this.partModel == null) {
+                return this.defaults.url;
+            }
             return this.partModel.get('url');
         },
 
@@ -34,8 +46,6 @@ define([
             }
             return Backbone.Model.prototype.get.call(this, attr);
         },
-
-        partModel: null,
 
         setPartModel: function(model) {
             this.partModel = model;
