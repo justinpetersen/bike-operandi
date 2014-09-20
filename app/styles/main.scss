@@ -231,15 +231,19 @@ h6 {
 /* BIKE DETAIL MODAL
 -------------------------------------------------- */
 
+#bike-edit-modal {
+  #operations-container {
+    display: block;
+  }
+}
+
 #detail-hotspots-container {
   display: none;
   position: absolute;
 }
 
 #edit-details-container {
-  display: none;
   padding: 15px;
-  border-bottom: 1px solid #e5e5e5;
 }
 
 #add-parts-container {
@@ -343,6 +347,10 @@ h6 {
       display: inline;
     }
   }
+}
+
+#edit-bike-button {
+  display: none;
 }
 
 /* HOTSPOTS

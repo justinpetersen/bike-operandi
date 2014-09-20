@@ -24,6 +24,10 @@ define([
 
         partListCollectionView: null,
 
+        onAddHotspot: function(itemView) {
+            this.bikeModel.addHotspot(itemView.model.get('id'));
+        },
+
         setModels: function(bikeModel, partCollection, allPartsCollection) {
             this.bikeModel = bikeModel;
             this.partCollection = partCollection;
@@ -35,6 +39,8 @@ define([
             this.partListCollectionView = new PartListCollectionView({ collection: partCollection });
             this.partListCollectionView.setModels(bikeModel, partCollection, allPartsCollection);
             this.parts.show(this.partListCollectionView);
+
+            this.listenTo(this.partListCollectionView, 'onAddClick', this.onAddHotspot);
         }
     });
 

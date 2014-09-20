@@ -18,6 +18,8 @@ define([
 
     		this.bikeModel.addPart(id);
     		this.partCollection.unshift(this.allPartsCollection.getParts(id).at(0));
+
+            this.trigger('onAddClick', itemView);
     	},
 
     	initialize: function() {

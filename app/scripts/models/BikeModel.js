@@ -63,6 +63,10 @@ define([
             this.set('parts', partsNew);
         },
 
+        addHotspot: function(id) {
+            console.log('BikeModel.addHotspot: ' + id);
+        },
+
         removePart: function(id) {
             var partsNew = this.get('parts');
             partsNew[id] = false;

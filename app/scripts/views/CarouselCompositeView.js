@@ -45,6 +45,10 @@ define([
             this.trigger('onHotspotsClick');
         },
 
+        onEditClick: function(itemView) {
+            this.trigger('onEditClick', itemView);
+        },
+
         pauseCarousel: function() {
             $('.carousel').carousel('pause');
         },
@@ -62,6 +66,7 @@ define([
             this.listenTo(this.collection, 'sync', this.onSync);
             this.on('itemview:onPartsClick', $.proxy(this.onPartsClick, this));
             this.on('itemview:onHotspotsClick', $.proxy(this.onHotspotsClick, this));
+            this.on('itemview:onEditClick', $.proxy(this.onEditClick, this));
         },
 
         initCarousel: function() {

@@ -9,6 +9,8 @@ define([
     var HotspotsCollectionView = Marionette.CollectionView.extend({
         itemView: HotspotItemView,
 
+        targetImage: null,
+
         onRender: function() {
             this.updateHotspotPositions();
         },
@@ -42,6 +44,12 @@ define([
             this.listenTo(this.collection, 'remove', this.render);
             this.render();
             this.fadeInHotspots();
+        },
+
+        setTargetImage: function(image) {
+            this.targetImage = image;
+
+            this.updateHotspotPositions();
         },
 
         initialize: function() {
@@ -93,6 +101,9 @@ define([
 
         initDraggable: function(itemView) {
             itemView.$el.draggable( { stop: $.proxy(this.onDragStop, this, itemView) } );
+
+            // KLUDGE: This is necessary to fix the hotspot positions
+            itemView.$el.css('position', 'absolute');
         },
 
         getPopoverPlacement: function(x, y) {
@@ -128,8 +139,12 @@ define([
             // KLUDGE: There is probably a more elegant way to access these dimensions.
             var clientWidth = $('#hero-container').width();
             var clientHeight = $('#hero-container').height();
+            if (this.targetImage != null) {
+                clientWidth = this.targetImage.width();
+                clientHeight = this.targetImage.height();
+            }
 
-            var nativeImageWidth = 1118
+            var nativeImageWidth = 1118;
             var nativeImageHeight = 629;
 
             // Calculate browser and image ratios.
