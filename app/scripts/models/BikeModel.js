@@ -6,13 +6,10 @@ define([
     'use strict';
 
     var BikeModel = Backbone.Model.extend({
-        RESET_FIREBASE: false,
-
         defaults: {
             title: '',
             image: '',
             tags: '',
-            'part-hotspots': [],
             parts: {},
             hotspots: {}
         },
@@ -20,12 +17,6 @@ define([
         partCollection: null,
 
         hotspotCollection: null,
-
-        onAdd: function() {
-            if (this.RESET_FIREBASE) {
-                this.resetFirebase();
-            }
-        },
 
         onPartRemoved: function(model) {
             this.removePart(model.get('id'));
@@ -63,10 +54,6 @@ define([
             this.set('parts', partsNew);
         },
 
-        addHotspot: function(id) {
-            console.log('BikeModel.addHotspot: ' + id);
-        },
-
         removePart: function(id) {
             var partsNew = this.get('parts');
             partsNew[id] = false;
@@ -76,32 +63,8 @@ define([
             this.hotspotCollection.remove(this.hotspotCollection.where( { 'part-id': id } ));
         },
 
-        resetFirebase: function() {
-            this.createPartTable();
-            this.createHotspotCollection();
-        },
-
-        createPartTable: function() {
-            var ids = {};
-            var partHotspots = this.get('part-hotspots');
-            for (var i=0; i<partHotspots.length; i++) {
-                ids[partHotspots[i].asin] = true;
-            }
-            this.set('parts', ids);
-        },
-
-        createHotspotCollection: function() {
-            var hotspots = {};
-            var partHotspots = this.get('part-hotspots');
-            for (var i=0; i<partHotspots.length; i++) {
-                hotspots[i] = {
-                    id: i,
-                    'part-id': partHotspots[i].asin,
-                    x: partHotspots[i].x,
-                    y: partHotspots[i].y
-                };
-            }
-            this.set('hotspots', hotspots);
+        addHotspot: function(id) {
+            console.log('BikeModel.addHotspot: ' + id);
         }
     });
 

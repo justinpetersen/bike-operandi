@@ -7,8 +7,6 @@ define([
     'use strict';
 
     var BikeManager = Marionette.Controller.extend({
-        RESET_FIREBASE: false,
-
         bikeCollection: null,
 
         bikeFilterCollection: null,
@@ -50,20 +48,6 @@ define([
             this.partCollection = new FirebasePartCollection();
             this.partCollection.comparator = 'title';
             this.listenTo(this.partCollection, 'sync', this.onPartsSync);
-        },
-
-        resetFirebase: function() {
-            this.createGlobalPartCollection();
-        },
-
-        createGlobalPartCollection: function() {
-            var hotspots;
-            for (var i=0; i<this.bikeCollection.length; i++) {
-                hotspots = this.bikeCollection.at(i).get('part-hotspots');
-                for (var j=0; j<hotspots.length; j++) {
-                    this.partCollection.add( { id: hotspots[j].asin, title: hotspots[j].title, image: hotspots[j].image } );
-                }
-            }
         }
     });
 
