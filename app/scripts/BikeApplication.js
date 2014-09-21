@@ -92,6 +92,9 @@ define([
 
         onModalHidden: function() {
             this.carouselCompositeView.resumeCarousel();
+            
+            // KLUDGE: Update hotspot positions in case changes have been made in the edit view
+            this.hotspotsCollectionView.render();
         },
 
         onThumbnailClick: function(itemView) {
@@ -136,6 +139,7 @@ define([
             this.initBikeEditLayout();
             this.initAddPartLayout();
             this.initThumbnails();
+
             this.initViewEvents();
         },
 

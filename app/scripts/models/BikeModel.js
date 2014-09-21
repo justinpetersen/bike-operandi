@@ -1,8 +1,9 @@
 define([
     'backbone',
     'collections/PartCollection',
-    'collections/HotspotCollection'
-], function (Backbone, PartCollection, HotspotCollection) {
+    'collections/HotspotCollection',
+    'models/HotspotModel'
+], function (Backbone, PartCollection, HotspotCollection, HotspotModel) {
     'use strict';
 
     var BikeModel = Backbone.Model.extend({
@@ -69,14 +70,16 @@ define([
 
         addHotspot: function(partId) {
             var id = this.hotspotCollection.at(this.hotspotCollection.length - 1).get('id') + 1;
-            var hotspot = this.hotspotCollection.add({
+            var hotspot = new HotspotModel({
                 id: id,
                 'part-id': partId,
                 x: 0,
-                y: 0
+                y: 0,
+                title: 'Test'
             });
+            this.initHotspotPart(hotspot);
 
-            this.initHotspotPart(this.hotspotCollection.at(this.hotspotCollection.length - 1));
+            this.hotspotCollection.add(hotspot);
         },
 
         removeHotspot: function(id) {

@@ -46,7 +46,7 @@ define([
         partsCollectionView: null,
 
         onRender: function() {
-            $('#bike-detail-modal').on('hidden.bs.modal', $.proxy(this.onModalHidden, this));
+            $('#bike-edit-modal').on('hidden.bs.modal', $.proxy(this.onModalHidden, this));
         },
 
         onSaveClick: function() {

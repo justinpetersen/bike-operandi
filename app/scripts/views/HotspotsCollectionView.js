@@ -69,11 +69,13 @@ define([
                 hotspotPosition.top = hotspotPosition.top - 16;
                 itemView.$el.css(hotspotPosition);
 
+                if (itemView.model.get('title') != '') {
+                    that.addPopover(itemView);
+                }
+
                 if (that.getUrlVars()['edit']) {
                     that.initDraggable(itemView);
                 }
-
-                that.addPopover(itemView);
             });
         },
 
@@ -98,7 +100,7 @@ define([
                 trigger: 'hover'
             };
             // TODO: Remove use of id
-            var popover = $('#' + itemView.model.get('id')).popover(options);
+            var popover = this.$el.find('#' + itemView.model.get('id')).popover(options);
             popover.on('shown.bs.popover', $.proxy(this.onPopoverShown, this));
             popover.on('hidden.bs.popover', $.proxy(this.onPopoverHidden, this));
         },
@@ -106,7 +108,7 @@ define([
         initDraggable: function(itemView) {
             itemView.$el.draggable( { stop: $.proxy(this.onDragStop, this, itemView) } );
 
-            // KLUDGE: This is necessary to fix the hotspot positions
+            // KLUDGE: This is necessary to fix the hotspot positions in the edit view
             itemView.$el.css('position', 'absolute');
         },
 
