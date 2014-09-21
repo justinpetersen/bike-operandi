@@ -46,7 +46,7 @@ define([
         partsCollectionView: null,
 
         onRender: function() {
-            $('#bike-edit-modal').on('hidden.bs.modal', $.proxy(this.onModalHidden, this));
+            this.$el.find('#bike-edit-modal').on('hidden.bs.modal', $.proxy(this.onModalHidden, this));
         },
 
         onSaveClick: function() {
@@ -119,11 +119,11 @@ define([
             this.showOperations();
             this.hideAddPartsLayout();
 
-            $('#bike-edit-modal').modal('show');
+            this.$el.find('#bike-edit-modal').modal('show');
         },
 
         hideModal: function() {
-            $('#bike-edit-modal').modal('hide');
+            this.$el.find('#bike-edit-modal').modal('hide');
         },
 
         showOperations: function() {
@@ -161,7 +161,7 @@ define([
         showAddHotspotsLayout: function() {
             this.$el.find('#detail-hotspots-container').show();
             this.$el.find('#add-hotspots-container').show();
-            this.hotspotsCollectionView.setTargetImage($('#bike-container'));
+            this.hotspotsCollectionView.setTargetImage(this.$el.find('#bike-container'));
         },
 
         hideAddHotspotsLayout: function() {

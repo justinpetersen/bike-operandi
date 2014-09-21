@@ -26,7 +26,7 @@ define([
         partsCollectionView: null,
 
         onRender: function() {
-            $('#bike-detail-modal').on('hidden.bs.modal', $.proxy(this.onModalHidden, this));
+            this.$el.find('#bike-detail-modal').on('hidden.bs.modal', $.proxy(this.onModalHidden, this));
         },
 
         onModalHidden: function() {
@@ -41,16 +41,23 @@ define([
                 this.bikeView = new BikeView({ model: bikeModel });
                 this.bike.show(this.bikeView);
 
-                // TODO: Enable hotspots
                 this.hotspotsCollectionView = new HotspotsCollectionView();
                 this.hotspotsCollectionView.showHotspots(bikeModel.getHotspotCollection());
                 this.hotspots.show(this.hotspotsCollectionView);
+
+                // KLUDGE: Wait for image to load so hotspots can be positioned correctly
+                setTimeout($.proxy(this.showHotspots, this), 500);
             }
 
             this.partsCollectionView = new PartsCollectionView({ collection: partCollection });
             this.parts.show(this.partsCollectionView);
 
-            $('#bike-detail-modal').modal('show');
+            this.$el.find('#bike-detail-modal').modal('show');
+        },
+
+        showHotspots: function() {
+            this.hotspotsCollectionView.setTargetImage(this.$el.find(this.regions.bike));
+            this.$el.find(this.regions.hotspots).show();
         }
     });
 
