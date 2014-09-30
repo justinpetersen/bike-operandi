@@ -9,10 +9,8 @@ define([
     'views/layout/BikeEditLayout',
     'views/layout/AddPartLayout',
     'views/layout/ThumbnailFiltersLayout',
-    'views/FilterButtonCollectionView',
-    'views/ThumbnailsCompositeView',
     'views/layout/PartFilterLayout'
-], function (Marionette, BikeManager, NavLayout, CarouselCompositeView, HotspotsCollectionView, HotspotsCarouselLayout, BikeDetailLayout, BikeEditLayout, AddPartLayout, ThumbnailFiltersLayout, FilterButtonCollectionView, ThumbnailsCompositeView, PartFilterLayout) {
+], function (Marionette, BikeManager, NavLayout, CarouselCompositeView, HotspotsCollectionView, HotspotsCarouselLayout, BikeDetailLayout, BikeEditLayout, AddPartLayout, ThumbnailFiltersLayout, PartFilterLayout) {
     'use strict';
 
     var BikeApplication = Marionette.Application.extend({
@@ -33,12 +31,6 @@ define([
         addPartLayout: null,
 
         thumbnailFiltersLayout: null,
-
-        filterButtonCollectionView: null,
-
-        thumbnailsCompositeView: null,
-
-        partsCollectionView: null,
 
         partFilterLayout: null,
 
@@ -70,10 +62,6 @@ define([
             }
         },
 
-        onSelectedFiltersChanged: function() {
-            this.thumbnailsCompositeView.setFilters(this.bikeManager.bikeFilterCollection.selectedFilters);
-        },
-
         onPopoverShown: function() {
             this.carouselCompositeView.pauseCarousel();
         },
@@ -101,12 +89,14 @@ define([
             this.showBikeDetailLayout(itemView.model, true);
         },
 
-        onShowAllClick: function() {
-            this.clearFilters();
-            return false;
+        onBikesOperationsButtonClick: function(event) {
+            switch (event.model.get('value')) {
+                case 'add':
+                    console.log('Add new bike!');
+            }
         },
 
-        onOperationsButtonClick: function(event) {
+        onPartsOperationsButtonClick: function(event) {
             switch (event.model.get('value')) {
                 case 'add':
                     this.showAddPartLayout();
@@ -124,6 +114,7 @@ define([
             this.addInitializer(function(options){
                 this.initBikeManager();
                 this.initViews();
+                this.showBikes();
             });
         },
 
@@ -138,7 +129,6 @@ define([
             this.initBikeDetailLayout();
             this.initBikeEditLayout();
             this.initAddPartLayout();
-            this.initThumbnails();
 
             this.initViewEvents();
         },
@@ -173,18 +163,6 @@ define([
             this.addPartLayout = new AddPartLayout();
         },
 
-        initThumbnails: function() {
-            this.thumbnailFiltersLayout = new ThumbnailFiltersLayout();
-            this.thumbnailFiltersLayout.render();
-            this.content.show(this.thumbnailFiltersLayout);
-
-            this.filterButtonCollectionView = new FilterButtonCollectionView({ collection: this.bikeManager.bikeFilterCollection });
-            this.thumbnailFiltersLayout.filters.show(this.filterButtonCollectionView);
-
-            this.thumbnailsCompositeView = new ThumbnailsCompositeView({ collection: this.bikeManager.bikeCollection });
-            this.thumbnailFiltersLayout.thumbnails.show(this.thumbnailsCompositeView);
-        },
-
         initViewEvents: function() {
             this.listenTo(this.navLayout, 'onNavButtonClick', this.onNavButtonClick);
             this.listenTo(this.carouselCompositeView, 'onCarouselSlide', this.onCarouselSlide);
@@ -196,9 +174,6 @@ define([
             this.listenTo(this.carouselCompositeView, 'onEditClick', this.onEditClick);
             this.listenTo(this.bikeDetailLayout, 'onModalHidden', this.onModalHidden);
             this.listenTo(this.bikeEditLayout, 'onModalHidden', this.onModalHidden);
-            this.listenTo(this.filterButtonCollectionView, 'onSelectedFiltersChanged', this.onSelectedFiltersChanged);
-            this.listenTo(this.thumbnailsCompositeView, 'onThumbnailClick', this.onThumbnailClick);
-            this.listenTo(this.thumbnailsCompositeView, 'onShowAllClick', this.onShowAllClick);
         },
 
         showHotspots: function(index) {
@@ -238,9 +213,12 @@ define([
             $('#hero-container').show();
             this.carouselCompositeView.resumeCarousel();
 
+            this.thumbnailFiltersLayout = new ThumbnailFiltersLayout();
+            this.listenTo(this.thumbnailFiltersLayout, 'onOperationsButtonClick', this.onBikesOperationsButtonClick);
+            this.listenTo(this.thumbnailFiltersLayout, 'onThumbnailClick', this.onThumbnailClick);
+            this.thumbnailFiltersLayout.render();
             this.content.show(this.thumbnailFiltersLayout);
-            this.thumbnailFiltersLayout.filters.show(this.filterButtonCollectionView);
-            this.thumbnailFiltersLayout.thumbnails.show(this.thumbnailsCompositeView);
+            this.thumbnailFiltersLayout.showThumbnailFilters(this.bikeManager.bikeFilterCollection, this.bikeManager.bikeCollection);
         },
 
         showParts: function() {
@@ -249,7 +227,7 @@ define([
             $('#hero-container').hide();
 
             this.partFilterLayout = new PartFilterLayout();
-            this.listenTo(this.partFilterLayout, 'onOperationsButtonClick', this.onOperationsButtonClick);
+            this.listenTo(this.partFilterLayout, 'onOperationsButtonClick', this.onPartsOperationsButtonClick);
             this.partFilterLayout.render();
             this.content.show(this.partFilterLayout);
             this.partFilterLayout.showPartFilters(this.bikeManager.partCategoryCollection, this.bikeManager.partCollection);
@@ -263,11 +241,6 @@ define([
                 this.showHotspots(this.carouselCompositeView.getActiveIndex());
                 this.hotspotsOn = true;
             }
-        },
-
-        clearFilters: function() {
-            this.filterButtonCollectionView.clearSelectedFilters();
-            this.thumbnailsCompositeView.setFilters(['*']);
         }
     });
 

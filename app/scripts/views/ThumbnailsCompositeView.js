@@ -16,10 +16,6 @@ define([
 
         template: JST['app/scripts/templates/ThumbnailsComposite.ejs'],
 
-        triggers: {
-            'click #show-all-button': 'onShowAllClick'
-        },
-
         onSync: function() {
             this.render();
         },

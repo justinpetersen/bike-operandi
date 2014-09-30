@@ -18,7 +18,7 @@ define([
 
         filterButtonCollectionView: null,
 
-        operationButtonCollectionView: null,
+        operationButtonCompositeView: null,
 
         partCompositeView: null,
 
@@ -47,7 +47,6 @@ define([
             this.filters.show(this.filterButtonCollectionView);
 
             this.partCompositeView = new PartCompositeView({ collection: partCollection });
-            this.listenTo(this.partCompositeView, 'onShowAllClick', this.onShowAllClick);
             this.parts.show(this.partCompositeView);
 
             this.showOperations();
