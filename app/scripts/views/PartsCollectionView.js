@@ -19,11 +19,14 @@ define([
         },
 
         onAddChild: function(childView) {
+            if (this.collection.length == 1) {
+                this.resetIsotope();
+            }
             this.$el.isotope('prepended', childView.$el);
         },
 
         onRemoveChild: function(childView) {
-            this.$el.isotope('layout');
+            this.fixIsotope();
         },
 
     	onDeleteClick: function(itemView) {
@@ -38,7 +41,9 @@ define([
     	},
 
         fixIsotope: function() {
-            this.$el.isotope('layout');
+            if (this.collection.length > 0) {
+                this.$el.isotope('layout');
+            }
         },
 
         initIsotope: function() {
@@ -54,6 +59,7 @@ define([
                 }
             });
 
+            // TODO: Figure out why this event handler is here and the others are in initialize()
             this.on('after:item:added', $.proxy(this.onAddChild, this));
         }
     });

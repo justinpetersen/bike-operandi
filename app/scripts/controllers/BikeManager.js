@@ -33,7 +33,7 @@ define([
             this.listenTo(this.bikeCollection, 'sync', this.onBikesSync);
 
             // TODO: Rename this to BikeCategoryCollection for consistency between bikes and parts
-            var FirebaseBikeFilterCollection = BikeFilterCollection.extend({ firebase: 'https://bike-operandi.firebaseio.com/filters' });
+            var FirebaseBikeFilterCollection = BikeFilterCollection.extend({ firebase: 'https://bike-operandi.firebaseio.com/bike-categories' });
             this.bikeFilterCollection = new FirebaseBikeFilterCollection();
 
             var PartCategoryCollection = BikeFilterCollection.extend({ firebase: 'https://bike-operandi.firebaseio.com/part-categories' });

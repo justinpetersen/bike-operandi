@@ -7,10 +7,11 @@ define([
     'views/layout/HotspotsCarouselLayout',
     'views/layout/BikeDetailLayout',
     'views/layout/BikeEditLayout',
+    'views/layout/AddBikeLayout',
     'views/layout/AddPartLayout',
     'views/layout/ThumbnailFiltersLayout',
     'views/layout/PartFilterLayout'
-], function (Marionette, BikeManager, NavLayout, CarouselCompositeView, HotspotsCollectionView, HotspotsCarouselLayout, BikeDetailLayout, BikeEditLayout, AddPartLayout, ThumbnailFiltersLayout, PartFilterLayout) {
+], function (Marionette, BikeManager, NavLayout, CarouselCompositeView, HotspotsCollectionView, HotspotsCarouselLayout, BikeDetailLayout, BikeEditLayout, AddBikeLayout, AddPartLayout, ThumbnailFiltersLayout, PartFilterLayout) {
     'use strict';
 
     var BikeApplication = Marionette.Application.extend({
@@ -27,6 +28,8 @@ define([
         bikeDetailLayout: null,
 
         bikeEditLayout: null,
+
+        addBikeLayout: null,
 
         addPartLayout: null,
 
@@ -85,6 +88,10 @@ define([
             this.hotspotsCollectionView.render();
         },
 
+        onBikeAdded: function(bikeModel) {
+            this.showBikeEditLayout(bikeModel);
+        },
+
         onThumbnailClick: function(itemView) {
             this.showBikeDetailLayout(itemView.model, true);
         },
@@ -92,7 +99,7 @@ define([
         onBikesOperationsButtonClick: function(event) {
             switch (event.model.get('value')) {
                 case 'add':
-                    console.log('Add new bike!');
+                    this.showAddBikeLayout();
             }
         },
 
@@ -128,6 +135,7 @@ define([
             this.initHotspotCarousel();
             this.initBikeDetailLayout();
             this.initBikeEditLayout();
+            this.initAddBikeLayout();
             this.initAddPartLayout();
 
             this.initViewEvents();
@@ -159,11 +167,16 @@ define([
             this.bikeEditLayout = new BikeEditLayout();
         },
 
+        initAddBikeLayout: function() {
+            this.addBikeLayout = new AddBikeLayout();
+        },
+
         initAddPartLayout: function() {
             this.addPartLayout = new AddPartLayout();
         },
 
         initViewEvents: function() {
+            // TODO: Move carousel and hotspot functionality into CarouselCompositeView
             this.listenTo(this.navLayout, 'onNavButtonClick', this.onNavButtonClick);
             this.listenTo(this.carouselCompositeView, 'onCarouselSlide', this.onCarouselSlide);
             this.listenTo(this.carouselCompositeView, 'onCarouselSlid', this.onCarouselSlid);
@@ -174,6 +187,9 @@ define([
             this.listenTo(this.carouselCompositeView, 'onEditClick', this.onEditClick);
             this.listenTo(this.bikeDetailLayout, 'onModalHidden', this.onModalHidden);
             this.listenTo(this.bikeEditLayout, 'onModalHidden', this.onModalHidden);
+            this.listenTo(this.addBikeLayout, 'onModalHidden', this.onModalHidden);
+            this.listenTo(this.addBikeLayout, 'onBikeAdded', this.onBikeAdded);
+            this.listenTo(this.addPartLayout, 'onModalHidden', this.onModalHidden);
         },
 
         showHotspots: function(index) {
@@ -201,6 +217,11 @@ define([
             this.modal.show(this.bikeEditLayout);
             this.bikeEditLayout.showModal(bikeModel, partCollection, this.bikeManager.partCollection);
             this.carouselCompositeView.pauseCarousel();
+        },
+
+        showAddBikeLayout: function() {
+            this.modal.show(this.addBikeLayout);
+            this.addBikeLayout.showModal(this.bikeManager.bikeCollection);
         },
 
         showAddPartLayout: function() {

@@ -1,7 +1,8 @@
 define([
+    'jquery',
     'marionette',
     'collections/PartCollection'
-], function (Marionette, PartCollection) {
+], function ($, Marionette, PartCollection) {
     'use strict';
 
     var AddPartLayout = Marionette.Layout.extend({
@@ -16,14 +17,15 @@ define([
 
         onSaveClick: function() {
             this.saveFormValues();
+            this.$el.find('#add-part-modal').modal('hide');
         },
 
         onCancelClick: function() {
-            $('#add-part-modal').modal('hide');
+            this.$el.find('#add-part-modal').modal('hide');
         },
 
         onRender: function() {
-            $('#add-part-modal').on('hidden.bs.modal', $.proxy(this.onModalHidden, this));
+            this.$el.find('#add-part-modal').on('hidden.bs.modal', $.proxy(this.onModalHidden, this));
         },
 
         onModalHidden: function() {
@@ -35,20 +37,18 @@ define([
             this.listenTo(this, 'onCancelClick', this.onCancelClick);
         },
 
-        showModal: function( partCollection ) {
+        showModal: function(partCollection) {
             this.partCollection = partCollection;
-            $('#add-part-modal').modal('show');
+            this.$el.find('#add-part-modal').modal('show');
         },
 
         saveFormValues: function() {
             this.partCollection.add({
                 id: this.$el.find('#input-id').val(),
-                image: this.$el.find('#input-image').val(),
                 title: this.$el.find('#input-title').val(),
+                image: this.$el.find('#input-image').val(),
                 url: this.$el.find('#input-url').val()
             });
-
-            $('#add-part-modal').modal('hide');
         }
     });
 

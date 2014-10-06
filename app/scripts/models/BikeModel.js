@@ -69,7 +69,10 @@ define([
         },
 
         addHotspot: function(partId) {
-            var id = this.hotspotCollection.at(this.hotspotCollection.length - 1).get('id') + 1;
+            var id = '0';
+            if (this.hotspotCollection.length > 0) {
+                id = parseInt(this.hotspotCollection.at(this.hotspotCollection.length - 1).get('id')) + 1;
+            }
             var hotspot = new HotspotModel({
                 id: id,
                 'part-id': partId,
