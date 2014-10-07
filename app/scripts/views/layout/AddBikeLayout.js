@@ -1,16 +1,23 @@
 define([
     'jquery',
     'marionette',
+    'views/FilterButtonCollectionView',
     'collections/BikeCollection'
-], function ($, Marionette, BikeCollection) {
+], function ($, Marionette, FilterButtonCollectionView, BikeCollection) {
     'use strict';
 
     var AddBikeLayout = Marionette.Layout.extend({
         template: JST['app/scripts/templates/AddBikeLayout.ejs'],
 
+        regions: {
+            filters: '#filters-container'
+        },
+
         bikeCollection: null,
 
         queueEditBike: false,
+
+        filterButtonCollectionView: null,
 
         triggers: {
             'click #bike-add-save-button': 'onSaveClick',
@@ -18,10 +25,10 @@ define([
         },
 
         onSaveClick: function() {
-            this.saveFormValues();
-
-            this.queueEditBike = true;
-            this.$el.find('#add-bike-modal').modal('hide');
+            if (this.saveFormValues()) {
+                this.queueEditBike = true;
+                this.$el.find('#add-bike-modal').modal('hide');
+            }
         },
 
         onCancelClick: function() {
@@ -46,18 +53,46 @@ define([
             this.listenTo(this, 'onCancelClick', this.onCancelClick);
         },
 
-        showModal: function(bikeCollection) {
+        showModal: function(bikeFilterCollection, bikeCollection) {
             this.bikeCollection = bikeCollection;
             this.$el.find('#add-bike-modal').modal('show');
+
+            this.showBikeFilters(bikeFilterCollection);
+        },
+
+        showBikeFilters: function(bikeFilterCollection) {
+            var prunedBikeFilterCollection = bikeFilterCollection.pruneShowAll();
+            this.filterButtonCollectionView = new FilterButtonCollectionView({ collection: prunedBikeFilterCollection });
+            this.filters.show(this.filterButtonCollectionView);
         },
 
         saveFormValues: function() {
+            if (!this.validateFormValues()) {
+                return false;
+            }
+
             var id = parseInt(this.bikeCollection.at(this.bikeCollection.length - 1).get('id')) + 1;
+            var tags = this.filterButtonCollectionView.collection.selectedFilters.join(',');
             this.bikeCollection.add({
                 title: this.$el.find('#input-title').val(),
                 image: this.$el.find('#input-image').val(),
+                tags: tags,
                 id: id
             });
+
+            return true;
+        },
+
+        validateFormValues: function() {
+            if (this.$el.find('#input-title').val().length == 0) {
+                return false;
+            }
+            
+            if (this.$el.find('#input-image').val().length == 0) {
+                return false;
+            }
+
+            return true;
         }
     });
 

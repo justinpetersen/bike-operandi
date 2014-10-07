@@ -221,7 +221,7 @@ define([
 
         showAddBikeLayout: function() {
             this.modal.show(this.addBikeLayout);
-            this.addBikeLayout.showModal(this.bikeManager.bikeCollection);
+            this.addBikeLayout.showModal(this.bikeManager.bikeFilterCollection, this.bikeManager.bikeCollection);
         },
 
         showAddPartLayout: function() {
